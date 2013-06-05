@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    
+    
+    <parameters>
+        <!-- User -->
+        <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
+        <parameter key="usersurl">gala.user.my/users</parameter>
+        <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
+        <!-- -->
+    </parameters>
+
+    <services>
+        <service id="galaxy.user_provider.service" class="%user_provider.service.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="galaxy.security.authentication.provider"
+                 class="Galaxy\FrontendBundle\Security\Authentication\Provider\GalaxyProvider" public="false">
+            <argument /> <!-- User Provider -->
+        </service>
+
+        <service id="galaxy.security.authentication.listener"
+                 class="Galaxy\FrontendBundle\Security\Firewall\AuthListener" 
+                 public="false"
+                 parent="security.authentication.listener.abstract"
+                 abstract="true">
+            <!-- * @param SecurityContextInterface               $securityContext       A SecurityContext instance
+     * @param AuthenticationManagerInterface         $authenticationManager An AuthenticationManagerInterface instance
+     * @param SessionAuthenticationStrategyInterface $sessionStrategy
+     * @param HttpUtils                              $httpUtils             An HttpUtilsInterface instance
+     * @param string                                 $providerKey
+     * @param AuthenticationSuccessHandlerInterface  $successHandler
+     * @param AuthenticationFailureHandlerInterface  $failureHandler
+     * @param array                                  $options               An array of options for the processing of a
+     *                                                                      successful, or failed authentication attempt
+     * @param LoggerInterface                        $logger                A LoggerInterface instance
+     * @param EventDispatcherInterface               $dispatcher            An EventDispatcherInterface instance
+     *
+     * @throws \InvalidArgumentException -->
+        </service>
+    </services>
+    
+</container>
