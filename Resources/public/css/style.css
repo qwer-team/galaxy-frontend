@@ -1,0 +1,560 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+html {
+    height: 100%;
+}
+.clear{
+	clear: both;
+}
+body {
+    height: 100%;
+    width: 100%;
+    font: 11px Arial, Helvetica, sans-serif;
+}
+.fliper{
+	min-width: 900px;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background: #000 url(../images/space_1.png) no-repeat;
+	background-size: cover;
+	position: relative;
+}
+.fliper header{
+	height: 54px;
+	background: #001d2f url(../images/header.png) top center no-repeat;
+}
+.fliper header .header-content{
+	height: 54px;
+	background: url(../images/header-border.png) bottom center no-repeat;
+}
+.fliper header a.logo{
+	display: block;
+	height: 54px;
+	width: 176px;
+	background: url(../images/logo.png);
+	float: left;
+}
+.fliper header .user-name{
+	float: right;
+	background: url(../images/user-name-bg.png);
+	border: 1px #1e485a solid;
+	border-radius: 7px;
+	padding: 5px 10px;
+	color: #94fdfe;
+	font-size: 14px;
+	text-shadow: 0px 0px 7px #66f6fb;
+	text-transform: uppercase;
+	margin: 13px 15px 0 0;
+}
+.fliper header .user-name span{
+	color: #00aeef;
+	text-shadow: 0px 0px 17px #66f6fb;
+}
+.fliper .left-sidebar{
+	width: 200px;
+	padding: 15px 0 0 15px;
+}
+.fliper .lives-count{
+	float: left;
+	border: 1px #1d3337 solid;
+	border-radius: 7px;
+	background: rgba(11, 25, 30, 0.7);
+	padding: 3px 0;	
+}
+.fliper .lives-count .live-item{
+	position: relative;
+	width: 20px;
+	height: 15px;
+	float: left;
+	margin: 2px 3px;
+}
+.fliper .lives-count .icon{
+	width: 20px;
+	height: 15px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url(../images/level.png) top right;
+	z-index: 3;
+}
+.fliper .lives-count .live-item .light,
+.fliper .statistic .stat-item .stat-icon .light{
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	top: 50%;
+	width: 1px;
+	height: 1px;
+    box-shadow:  0 0 20px 4px #00F9FF;
+    -webkit-box-shadow:  0 0 25px 4px #00F9FF;
+}
+.fliper .lives-count .live-item.active .light{
+	box-shadow:  0 0 18px 6px #00F9FF;
+    -webkit-box-shadow:  0 0 25px 6px #00F9FF;
+}
+.fliper .lives-count .active .icon{
+	background-position: 0 0;
+}
+.fliper .statistic {
+	margin-top: 20px;
+	padding-left: 30px;
+}
+.fliper .statistic .stat-item{
+	margin-bottom: 10px;
+}
+.fliper .statistic .stat-item .stat-icon{
+	width: 33px;
+	position: relative;
+	height: 21px;
+	float: left;
+}
+.fliper .statistic .stat-item .stat-icon .light{
+	left: 11px;
+	box-shadow:  0 -2px 15px 8px #00F9FF;
+    -webkit-box-shadow:  0 -2px 20px 8px #00F9FF;
+    background: rgba(0, 249, 255, 0.7);
+}
+.fliper .statistic .stat-item .stat-icon .icon{
+	position: absolute;
+	z-index: 3;
+	top:0;
+	left: 0;
+	width: 22px;
+	height: 21px;
+	background: url(../images/statistic-icons.png);
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-1{
+	background-position: 0 0;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-2{
+	background-position: 0 -31px;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-3{
+	background-position: 0 -58px;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-4{
+	background-position: 0 -86px;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-5{
+	background-position: 0 -114px;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-6{
+	background-position: 0 -140px;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-7{
+	background-position: 0 -164px;
+}
+.fliper .statistic .stat-item .stat-icon .icon.icon-8{
+	background-position: 0 -192px;
+}
+.fliper .statistic .stat-item span{
+	font-size: 16px;
+	color: #00aeef;
+	text-shadow: 0px 0px 17px #66f6fb;
+}
+.fliper .statistic .stat-coord{
+	padding: 25px 0;
+}
+.fliper .statistic .stat-coord .stat-item span:first-child{
+	color: #8dd539;
+	display: inline-block;
+	padding: 0 15px 0 5px;
+}
+
+.fliper .control-panel{
+	position: absolute;
+	width: 1268px;
+	height: 156px;
+	background: url(../images/control-panel.png);
+	bottom: 0;
+	left: 50%;
+	margin-left: -634px;
+}
+.fliper .control-panel a.control{
+	position: absolute;
+	background: url(../images/controls-icon.png) no-repeat;
+	width: 51px;
+	height: 46px;
+}
+.fliper .control-panel a.control.control-1{
+	background-position: -372px -14px;
+    left: 300px;
+    top: 28px;
+}
+.fliper .control-panel a.control.control-2{
+	background-position: -418px -14px;
+    left: 342px;
+    top: 22px;
+}
+.fliper .control-panel a.control.control-3{
+	background-position: -465px -14px;
+    left: 584px;
+    top: 2px;
+}
+.fliper .control-panel a.control.control-4{
+	background-position: -513px -14px;
+    left: 631px;
+    top: 1px;
+}
+.fliper .control-panel a.control.control-5{
+	background-position: -559px -14px;
+    left: 677px;
+    top: 1px;
+}
+.fliper .control-panel a.control.control-6{
+	background-position: -604px -14px;
+    left: 1084px;
+    top: 60px;
+}
+
+.fliper .control-panel a.control.control-1:hover,
+.fliper .control-panel a.control.control-1:active{
+	background-position: -372px -63px;
+}
+.fliper .control-panel a.control.control-2:hover,
+.fliper .control-panel a.control.control-2:active{
+	background-position: -418px -63px;
+}
+.fliper .control-panel a.control.control-3:hover,
+.fliper .control-panel a.control.control-3:active{
+	background-position: -465px -63px;
+}
+.fliper .control-panel a.control.control-4:hover,
+.fliper .control-panel a.control.control-4:active{
+	background-position: -513px -63px;
+}
+.fliper .control-panel a.control.control-5:hover,
+.fliper .control-panel a.control.control-5:active{
+	background-position: -559px -63px;
+}
+.fliper .control-panel a.control.control-6:hover,
+.fliper .control-panel a.control.control-6:active{
+	background-position: -604px -63px;
+}
+
+.fliper .control-panel a.control.control-7{
+	background-position: 0 -3px;
+    left: 204px;
+    top: 80px;
+    width: 79px;
+    height: 61px;
+}
+.fliper .control-panel a.control.control-8{
+	background-position: -118px 0;
+    left: 862px;
+    top: 66px;
+    width: 70px;
+    height: 71px;
+}
+.fliper .control-panel a.control.control-9{
+	background-position: -226px -3px;
+    left: 995px;
+    top: 80px;
+    width: 79px;
+    height: 61px;
+}
+
+.fliper .control-panel a.control.control-7:hover,
+.fliper .control-panel a.control.control-7:active{
+	background-position: 0 -76px;
+}
+.fliper .control-panel a.control.control-8:hover,
+.fliper .control-panel a.control.control-8:active{
+	background-position: -118px -73px;
+}
+.fliper .control-panel a.control.control-9:hover,
+.fliper .control-panel a.control.control-9:active{
+	background-position: -226px -76px;
+}
+.fliper .control-panel .select-coordinats{
+	width: 471px;
+	height: 86px;
+	position: absolute;
+	top: 57px;
+	left: 387px;
+}
+.fliper .control-panel .coordinata-x-bg,
+.fliper .control-panel .coordinata-y-bg,
+.fliper .control-panel .coordinata-z-bg{
+	width: 148px;
+	height: 82px;
+	background: url(../images/controls-icon.png) 0 -225px;
+	position: absolute;
+	z-index: 9;
+	top: -1px;
+	left: -8px;
+}
+.fliper .control-panel .coordinata-y-bg{
+	left: 122px;
+    top: 1px;
+}
+.fliper .control-panel .coordinata-z-bg{
+	left: 249px;
+    top: 3px;
+}
+.fliper .control-panel .coordinata-total-bg{
+	width: 95px;
+	height: 82px;
+	background: url(../images/controls-icon.png) -148px -225px;
+	position: absolute;
+	z-index: 9;
+	top: 2px;
+	left: 375px;
+}
+.fliper .control-panel .coordinata-total-bg.active{
+	background-position: -148px -306px;
+}
+.fliper .control-panel .coordinata-x-bg.active,
+.fliper .control-panel .coordinata-y-bg.active,
+.fliper .control-panel .coordinata-z-bg.active{
+	background-position: 0 -307px;
+}
+.fliper .select-coordinats .c-line-1,
+.fliper .select-coordinats .c-line-2,
+.fliper .select-coordinats .c-line-3{
+	height: 1px;
+	width: 16px;
+	position: absolute;
+	z-index: 5;
+	background: #50bece;
+	top: 40px;
+	left: 123px;
+}
+.fliper .select-coordinats .c-line-2{
+	left: 252px;
+    top: 42px;
+}
+.fliper .select-coordinats .c-line-3{
+	left: 378px;
+    top: 44px;
+}
+.fliper .select-coordinats .coordinata-x,
+.fliper .select-coordinats .coordinata-y,
+.fliper .select-coordinats .coordinata-z,
+.fliper .select-coordinats .coordinata-total{
+	font-size: 16px;
+	color: #b5e61d;
+	position: absolute;
+	width: 114px;
+	text-align: center;
+	z-index: 10;
+}
+.fliper .select-coordinats div span{
+	color: #18a5e8;
+	padding-left: 3px;
+}
+.fliper .select-coordinats div input[type="text"],
+.fliper .select-coordinats div input[type="number"]{
+	color: #18a5e8;
+	font-size: 16px;
+	display: inline-block;
+	width: 35px;
+	border: 0;
+	margin-left: 3px;
+	background: transparent;
+}
+.fliper .select-coordinats div.coordinata-x{
+	left: 7px;
+    top: 29px;
+}
+.fliper .select-coordinats div.coordinata-y{
+	left: 138px;
+	top: 31px;
+}
+.fliper .select-coordinats div.coordinata-z{
+	left: 266px;
+	top: 33px;
+}
+.fliper .select-coordinats div.coordinata-total{
+	left: 366px;
+	top: 33px;
+}
+.fliper .select-coordinats div.coordinata-x .bt-plus,
+.fliper .select-coordinats div.coordinata-x .bt-minus,
+.fliper .select-coordinats div.coordinata-y .bt-plus,
+.fliper .select-coordinats div.coordinata-y .bt-minus,
+.fliper .select-coordinats div.coordinata-z .bt-plus,
+.fliper .select-coordinats div.coordinata-z .bt-minus{
+	width: 40px;
+	height: 26px;
+	display: block;
+	background: url(../images/controls-icon.png) -318px 0;
+	position: absolute;
+	right: -6px;
+    top: -15px;   
+}
+.fliper .select-coordinats div.coordinata-x .bt-minus,
+.fliper .select-coordinats div.coordinata-y .bt-minus,
+.fliper .select-coordinats div.coordinata-z .bt-minus{
+	background-position: -318px -26px;
+	right: 75px;
+    top: 11px;
+}
+.fliper .select-coordinats div.coordinata-y .bt-plus{
+	right: -4px;
+    top: -15px;
+}
+.fliper .select-coordinats div.coordinata-z .bt-plus{
+	right: -4px;
+    top: -15px;
+}
+.fliper .select-coordinats div.coordinata-y .bt-minus,
+.fliper .select-coordinats div.coordinata-z .bt-minus{
+    top: 12px;
+}
+.fliper .select-coordinats div.coordinata-x .bt-plus:hover,
+.fliper .select-coordinats div.coordinata-y .bt-plus:hover,
+.fliper .select-coordinats div.coordinata-z .bt-plus:hover{
+	background-position: -317px -60px;
+}
+.fliper .select-coordinats div.coordinata-x .bt-minus:hover,
+.fliper .select-coordinats div.coordinata-y .bt-minus:hover,
+.fliper .select-coordinats div.coordinata-z .bt-minus:hover{
+	background-position: -318px -87px;
+}
+.tooltip{
+	position: absolute;
+	height: 73px;
+	z-index: 50;
+}
+.select-coordinats .tooltip{
+	bottom: 94px;
+    right: -440px;
+}
+.select-coordinats .tooltip.tooltip-pos-left{
+	bottom: 128px;
+    right: 216px;
+}
+.tooltip.last-ms{
+	left: 289px;
+    top: -8px;
+}
+.tooltip .tooltip-center{
+	height: 73px;
+	background: url(../images/tooltip-center.png) top left repeat-x;
+	white-space: nowrap;
+}
+.tooltip .tooltip-left,
+.tooltip .tooltip-right{
+	background: url(../images/tooltip-corner.png);
+	width: 65px;
+	height: 73px;
+	position: absolute;
+	top: 0;
+}
+.tooltip .tooltip-left{
+	left: -65px;
+}
+.tooltip .tooltip-right{
+	right: -65px;
+	background-position: top right;
+}
+.tooltip .tooltip-center .tooltip-text{
+	padding-top: 29px;
+	font-size: 11px;
+	text-transform: uppercase;
+	color: #00f9ff;
+	text-shadow: 0px 0px 7px #66f6fb;
+	font-weight: bold;
+}
+.tooltip .tooltip-line{
+	width: 66px;
+	height: 1px;
+	background: #46a4dc;
+	position: absolute;
+	top: 35px;
+	left: -114px;
+}
+.tooltip.tooltip-pos-left .tooltip-line{
+	left: auto;
+	right: -114px;
+	top: 36px;
+}
+.tooltip .tooltip-line .line-45{
+	width: 1px;
+	height: 75px;
+	background: #46a4dc;
+	position: absolute;
+	top: 0;
+	left: -38px;
+	-webkit-transform: skew(-45deg);
+       -moz-transform: skew(-45deg);
+         -o-transform: skew(-45deg);
+}
+.tooltip.tooltip-pos-left .tooltip-line .line-45{
+	width: 1px;
+	height: 109px;
+	background: #46a4dc;
+	position: absolute;
+	top: 0;
+	left: 102px;
+	-webkit-transform: skew(34deg);
+       -moz-transform: skew(34deg);
+         -o-transform: skew(34deg);
+}
+.tooltip.tooltip-pos-left .tooltip-line .light-dot{
+	left: 127px;
+	top: 94px;
+}
+.tooltip .tooltip-line .light-dot{
+	background: url(../images/tooltip-dot.png);
+	width: 26px;
+	height: 26px;
+	position: absolute;
+	left: -87px;
+	top: 61px;
+}
+.tooltip .tooltip-line .dot{
+	position: absolute;
+	top:-1px;
+	left: -1px;
+	width: 3px;
+	height: 3px;
+	background: #00f9ff;
+	border-radius: 1px;
+}
+aside .tooltip{
+	display: none;
+}
+.stat-item{
+	float: left;
+	cursor: pointer;
+}
+.stat-item span i{
+	
+}
+@media only screen and (max-width: 1420px) {
+	.select-coordinats .tooltip{
+		bottom: 128px;
+	    right: 216px;
+	}
+	.select-coordinats .tooltip .tooltip-line{
+		left: auto;
+		right: -114px;
+		top: 36px;
+	}
+	.select-coordinats .tooltip .tooltip-line .line-45{
+		width: 1px;
+		height: 109px;
+		background: #46a4dc;
+		position: absolute;
+		top: 0;
+		left: 102px;
+		-webkit-transform: skew(34deg);
+	       -moz-transform: skew(34deg);
+	         -o-transform: skew(34deg);
+	}
+	.select-coordinats .tooltip .tooltip-line .light-dot{
+		left: 127px;
+		top: 94px;
+	}
+}
