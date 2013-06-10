@@ -11,10 +11,18 @@ class UserProvider extends ContainerAware implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         $rawUrl = $this->container->getParameter("user_providers.user_login.url");
-        echo $url = str_replace("{login}", $username, $rawUrl);
+        $url = str_replace("{login}", $username, $rawUrl);
         $response = json_decode($this->makeRequest($url));
         
         $user = new User();
+        $userId = $response->data->id;
+        
+        $gameInfo = $this->getGameInfo($userId);
+        $fundsInfo = $this->getFundsInfo($userId);
+        
+        $user->setFundsInfo($fundsInfo);
+        $user->setGameInfo($gameInfo);
+        $user->setId($userId);
         $user->setUsername($username);
         $user->setPassword($response->data->password);
         $user->setEnabled($response->data->enabled);
@@ -30,7 +38,20 @@ class UserProvider extends ContainerAware implements UserProviderInterface
         $user->setExpired(false);
         $user->setRoles(array('ROLE_USER', 'ROLE_ADMIN'));
         $user->setCredentialsExpired(false);*/
+        print_r($user);
         return $user;
+    }
+    
+    private function getGameInfo($userId){
+        $rawUrl = $this->container->getParameter("user_providers.game_info.url");
+        $url = str_replace("{userId}", $userId, $rawUrl);
+        return $response = json_decode($this->makeRequest($url));
+    }
+    
+    private function getFundsInfo($userId){
+        $rawUrl = $this->container->getParameter("user_providers.funds_info.url");
+        $url = str_replace("{userId}", $userId, $rawUrl);
+        return $response = json_decode($this->makeRequest($url));
     }
 
     public function refreshUser(\Symfony\Component\Security\Core\User\UserInterface $user)

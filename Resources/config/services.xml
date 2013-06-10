@@ -11,6 +11,11 @@
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
         <parameter key="usersurl">gala.user.my/users</parameter>
         <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
+        <parameter key="docsurl">gala.my/documents</parameter>
+        <parameter key="user_providers.funds_info.url">%docsurl%/{userId}/funds.json</parameter>
+        <parameter key="gameurl">http://gala.my/games</parameter>
+        <parameter key="user_providers.game_info.url">%gameurl%/{userId}/user/info.json</parameter>
+        <parameter key="jump.url">http://gala.my/jump</parameter>
         <!-- -->
     </parameters>
 

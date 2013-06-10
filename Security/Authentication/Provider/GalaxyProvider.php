@@ -25,6 +25,7 @@ class GalaxyProvider implements AuthenticationProviderInterface
 
         $pass = $token->getPass();
         if ($user->getPassword() == $pass) {
+            $user->setPassword(null);
             $authenticatedToken = new GalaxyToken($user->getRoles());
             $authenticatedToken->setUser($user);
 

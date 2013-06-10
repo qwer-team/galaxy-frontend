@@ -4,7 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="galaxy_frontend_homepage" pattern="/hello/{name}">
-        <default key="_controller">GalaxyFrontendBundle:Default:index</default>
+    <route id="flipper" pattern="/flipper">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:index</default>
     </route>
+    <route id="user_json" pattern="/user">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:getUser</default>
+        <default key="_format">json</default>
+    </route>
+    <route id="jump_json" pattern="/jump">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:jump</default>
+        <default key="_format">json</default>
+    </route>
+    <!-- -->
 </routes>
