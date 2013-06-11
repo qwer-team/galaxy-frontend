@@ -32,30 +32,52 @@ class FlipperController extends Controller
     {
         $jumpRequest = new JumpRequest();
         $form = $this->createForm(new JumpRequestType(), $jumpRequest);
-        
+
         $form->bind($request);
         $result = array("result" => "fail");
-        if($form->isValid()){
+        if ($form->isValid()) {
             $jumpUrl = $this->get("service_container")->getParameter("jump.url");
-            
-            $user = $this->getUser();
+
+            $token = $this->container->get('security.context')->getToken();
+            $user = $token->getUser();
+            $x = $jumpRequest->getX();
+            $y = $jumpRequest->getY();
+            $z = $jumpRequest->getZ();
+            $superJump = $jumpRequest->getSuperjump();
+            $userId = $user->getId();
             $data = array(
-                "x" => $jumpRequest->getX(),
-                "y" => $jumpRequest->getY(),
-                "z" => $jumpRequest->getZ(),
-                "superjump" => $jumpRequest->getSuperjump(),
-                "userId" => $user->getId(),
+                "x" => $x,
+                "y" => $y,
+                "z" => $z,
+                "superjump" => (int)$superJump,
+                "userId" => $userId,
             );
             
             $response = json_decode($this->makeRequest($jumpUrl, $data));
-            $result = array("result" => $response->result, "req" => 1);
+            $result = array("result" => "success", "req" => 1);
+            if ($response->result == "success") {
+                $result["pointType"] = $response->response->type->name;
+                $userInfoService = $this->get("galaxy.user_info.service");
+                $fundsInfo = $userInfoService->getFundsInfo($userId);
+                $gameInfo = $userInfoService->getGameInfo($userId);
+                $user->setFundsInfo($fundsInfo);
+                $user->setGameInfo($gameInfo);
+
+                $token->setUser($user);
+                $result["user"] = $user->jsonSerialize();
+                $result["atata"] = $response->atata;
+                $result["params"] = $response->params;
+                
+            } else {
+                $result["result"] = $response->result;
+            }
         }
-        
+
         $response = new Response();
         $response->setContent(json_encode($result));
         return $response;
     }
-    
+
     private function makeRequest($url, $data = null)
     {
         $curl = curl_init();

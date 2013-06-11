@@ -17,8 +17,9 @@ class UserProvider extends ContainerAware implements UserProviderInterface
         $user = new User();
         $userId = $response->data->id;
         
-        $gameInfo = $this->getGameInfo($userId);
-        $fundsInfo = $this->getFundsInfo($userId);
+        $userInfoService = $this->container->get("galaxy.user_info.service");
+        $fundsInfo = $userInfoService->getFundsInfo($userId);
+        $gameInfo = $userInfoService->getGameInfo($userId);
         
         $user->setFundsInfo($fundsInfo);
         $user->setGameInfo($gameInfo);
@@ -42,17 +43,7 @@ class UserProvider extends ContainerAware implements UserProviderInterface
         return $user;
     }
     
-    private function getGameInfo($userId){
-        $rawUrl = $this->container->getParameter("user_providers.game_info.url");
-        $url = str_replace("{userId}", $userId, $rawUrl);
-        return $response = json_decode($this->makeRequest($url));
-    }
     
-    private function getFundsInfo($userId){
-        $rawUrl = $this->container->getParameter("user_providers.funds_info.url");
-        $url = str_replace("{userId}", $userId, $rawUrl);
-        return $response = json_decode($this->makeRequest($url));
-    }
 
     public function refreshUser(\Symfony\Component\Security\Core\User\UserInterface $user)
     {

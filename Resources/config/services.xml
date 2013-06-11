@@ -9,6 +9,7 @@
     <parameters>
         <!-- User -->
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
+        <parameter key="user_info.service.class">Galaxy\FrontendBundle\Service\UserInfoService</parameter>
         <parameter key="usersurl">gala.user.my/users</parameter>
         <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
         <parameter key="docsurl">gala.my/documents</parameter>
@@ -22,6 +23,11 @@
     <services>
         <service id="galaxy.user_provider.service" class="%user_provider.service.class%">
             <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="galaxy.user_info.service" class="%user_info.service.class%">
+             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
         </service>

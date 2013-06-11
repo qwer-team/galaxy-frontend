@@ -6,10 +6,11 @@ use FOS\UserBundle\Entity\User as FOSUser;
 
 class User extends FOSUser // implements  \JsonSerializable
 {
+
     protected $gameInfo;
     protected $fundsInfo;
     protected $sessionJump = 0;
-    
+
     public function setSalt($salt)
     {
         $this->salt = $salt;
@@ -19,7 +20,7 @@ class User extends FOSUser // implements  \JsonSerializable
     {
         $this->id = $id;
     }
-    
+
     public function getGameInfo()
     {
         return $this->gameInfo;
@@ -39,7 +40,7 @@ class User extends FOSUser // implements  \JsonSerializable
     {
         $this->fundsInfo = $fundsInfo;
     }
-    
+
     public function getSessionJump()
     {
         return $this->sessionJump;
@@ -50,26 +51,30 @@ class User extends FOSUser // implements  \JsonSerializable
         $this->sessionJump = $sessionJump;
     }
 
-    
+    public function addSessionJump()
+    {
+        $this->sessionJump++;
+    }
+
     public function serialize()
     {
         return serialize(array(
-            $this->password,
-            $this->salt,
-            $this->usernameCanonical,
-            $this->username,
-            $this->expired,
-            $this->locked,
-            $this->credentialsExpired,
-            $this->enabled,
-            $this->id,
-            $this->gameInfo,
-            $this->fundsInfo,
-            $this->sessionJump,
-        ));
+                    $this->password,
+                    $this->salt,
+                    $this->usernameCanonical,
+                    $this->username,
+                    $this->expired,
+                    $this->locked,
+                    $this->credentialsExpired,
+                    $this->enabled,
+                    $this->id,
+                    $this->gameInfo,
+                    $this->fundsInfo,
+                    $this->sessionJump,
+                ));
     }
-    
-     public function unserialize($serialized)
+
+    public function unserialize($serialized)
     {
         $data = unserialize($serialized);
         // add a few extra elements in the array to ensure that we have enough keys when unserializing
@@ -77,27 +82,28 @@ class User extends FOSUser // implements  \JsonSerializable
         $data = array_merge($data, array_fill(0, 2, null));
 
         list(
-            $this->password,
-            $this->salt,
-            $this->usernameCanonical,
-            $this->username,
-            $this->expired,
-            $this->locked,
-            $this->credentialsExpired,
-            $this->enabled,
-            $this->id,
-            $this->gameInfo,
-            $this->fundsInfo,
-            $this->sessionJump,
-        ) = $data;
+                $this->password,
+                $this->salt,
+                $this->usernameCanonical,
+                $this->username,
+                $this->expired,
+                $this->locked,
+                $this->credentialsExpired,
+                $this->enabled,
+                $this->id,
+                $this->gameInfo,
+                $this->fundsInfo,
+                $this->sessionJump,
+                ) = $data;
     }
 
     public function jsonSerialize()
     {
         $res = array();
-        foreach($this as $key => $value){
+        foreach ($this as $key => $value) {
             $res[$key] = $value;
         }
         return $res;
     }
+
 }

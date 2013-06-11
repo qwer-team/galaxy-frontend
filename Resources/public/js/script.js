@@ -3,13 +3,13 @@ var galaxy = angular.module("galaxy", []);
 function FlipperCtrl($scope, $http) {
     $scope.tooltipMessage = "empty";
     $scope.tooltipStyle = {};
-    $http.get('/user').success(function(data) {
+    $scope.updateUserInfo = function(data){
         $scope.user = data;
         $scope.x = data.gameInfo.x;
         $scope.y = data.gameInfo.y;
         $scope.z = data.gameInfo.z;
-    }); 
-    
+    }
+    $http.get('/user').success($scope.updateUserInfo); 
     $scope.jumpTooltip = false;
     $scope.jumpTooltipText = "empty";
     $scope.distance = function(){
@@ -88,14 +88,11 @@ function FlipperCtrl($scope, $http) {
     $scope.pointMax = 1000;
     $scope.jump = function(){
         var dist = $scope.distance();
-        if(dist == 0){
-            return;
-        }
         var gameInfo = $scope.user.gameInfo;
         var superjumps = gameInfo.superJumps;
         var superjump = false;
         if( dist > gameInfo.flipper.maxJump ){
-            if(superjumps == 0){
+            if(superjumps == 0){ // сделать меньше равно
                 return;
             } else {
                 superjump = true;
@@ -110,7 +107,10 @@ function FlipperCtrl($scope, $http) {
         $http.post('/jump', data).success($scope.jumpCallback);
     }
     $scope.jumpCallback = function(data, status){
-        console.log(data);
+        alert(data.pointType);
+        if(data.result == 'success'){
+            updateUserInfo(data.user);
+        }
     }
 }
 
