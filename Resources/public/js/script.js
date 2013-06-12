@@ -109,7 +109,7 @@ function FlipperCtrl($scope, $http) {
     $scope.jumpCallback = function(data, status){
         alert(data.pointType);
         if(data.result == 'success'){
-            updateUserInfo(data.user);
+            $scope.updateUserInfo(data.user);
         }
     }
 }

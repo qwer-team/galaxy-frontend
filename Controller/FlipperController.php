@@ -56,6 +56,7 @@ class FlipperController extends Controller
             $response = json_decode($this->makeRequest($jumpUrl, $data));
             $result = array("result" => "success", "req" => 1);
             if ($response->result == "success") {
+                
                 $result["pointType"] = $response->response->type->name;
                 $userInfoService = $this->get("galaxy.user_info.service");
                 $fundsInfo = $userInfoService->getFundsInfo($userId);
