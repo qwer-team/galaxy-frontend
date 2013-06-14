@@ -24,11 +24,12 @@ class GalaxyProvider implements AuthenticationProviderInterface
         $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
         $pass = $token->getPass();
-        if ($user->getPassword() == $pass) {
+        $currentDate = new \DateTime();
+        $userLockedExpiresAt = $user->getLockedExpiresAt();
+        if ($user->getPassword() == $pass && $userLockedExpiresAt < $currentDate) {
             $user->setPassword(null);
             $authenticatedToken = new GalaxyToken($user->getRoles());
             $authenticatedToken->setUser($user);
-
             return $authenticatedToken;
         }
 

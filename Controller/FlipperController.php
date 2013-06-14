@@ -54,10 +54,14 @@ class FlipperController extends Controller
             );
             
             $response = json_decode($this->makeRequest($jumpUrl, $data));
-            $result = array("result" => "success", "req" => 1);
+            $result = array("result" => "success", "req" => $response);
             if ($response->result == "success") {
-                
                 $result["pointType"] = $response->response->type->name;
+                $tag = $response->response->type->tag;
+                $result["tag"] = $tag;
+                $pointImageFolder = $this->container->getParameter("image.folder");
+                $imagePath = str_replace("{tag}", $tag, $pointImageFolder);
+                $result["pointImagePath"] = $imagePath;
                 $userInfoService = $this->get("galaxy.user_info.service");
                 $fundsInfo = $userInfoService->getFundsInfo($userId);
                 $gameInfo = $userInfoService->getGameInfo($userId);
@@ -66,9 +70,8 @@ class FlipperController extends Controller
 
                 $token->setUser($user);
                 $result["user"] = $user->jsonSerialize();
-                $result["atata"] = $response->atata;
                 $result["params"] = $response->params;
-                
+                $tag == "black" ? $this->container->get('security.context')->setToken() : '';
             } else {
                 $result["result"] = $response->result;
             }

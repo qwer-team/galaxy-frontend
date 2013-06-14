@@ -1,13 +1,22 @@
 var galaxy = angular.module("galaxy", []);
 
-function FlipperCtrl($scope, $http) {
+function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipMessage = "empty";
     $scope.tooltipStyle = {};
+    $scope.pointImagePath = "";
+    $scope.pointImage = false;
     $scope.updateUserInfo = function(data){
         $scope.user = data;
         $scope.x = data.gameInfo.x;
         $scope.y = data.gameInfo.y;
         $scope.z = data.gameInfo.z;
+    }
+    $scope.updatePointImage = function(data){
+        $scope.pointImagePath = data.pointImagePath;
+        $scope.pointImage = true;
+    }
+    $scope.logoutUser = function(){
+       
     }
     $http.get('/user').success($scope.updateUserInfo); 
     $scope.jumpTooltip = false;
@@ -110,6 +119,13 @@ function FlipperCtrl($scope, $http) {
         alert(data.pointType);
         if(data.result == 'success'){
             $scope.updateUserInfo(data.user);
+            $scope.updatePointImage(data);
+            if(data.tag == "black"){
+                alert("Через 10 сек разлогинка");
+                $timeout(function() {
+                   location.reload()
+                }, 10000);
+            }
         }
     }
 }

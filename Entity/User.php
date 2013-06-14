@@ -10,7 +10,22 @@ class User extends FOSUser // implements  \JsonSerializable
     protected $gameInfo;
     protected $fundsInfo;
     protected $sessionJump = 0;
-
+    protected $lockedExpiresAt;
+    
+    public function getLockedExpiresAt()
+    {
+        return $this->lockedExpiresAt;
+    }
+    
+    public function getName(){
+        return $this->username;
+    }
+    
+    public function setLockedExpiresAt($lockedExpiresAt)
+    {
+        $this->lockedExpiresAt = $lockedExpiresAt;
+    }
+    
     public function setSalt($salt)
     {
         $this->salt = $salt;
@@ -71,6 +86,7 @@ class User extends FOSUser // implements  \JsonSerializable
                     $this->gameInfo,
                     $this->fundsInfo,
                     $this->sessionJump,
+                    $this->lockedExpiresAt,
                 ));
     }
 
@@ -94,6 +110,7 @@ class User extends FOSUser // implements  \JsonSerializable
                 $this->gameInfo,
                 $this->fundsInfo,
                 $this->sessionJump,
+                $this->lockedExpiresAt,
                 ) = $data;
     }
 

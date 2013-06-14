@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class GalaxyFrontendExtension extends Extension
 {
+
     /**
      * {@inheritDoc}
      */
@@ -22,7 +23,12 @@ class GalaxyFrontendExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        if ($container->getParameter('kernel.environment') == "dev") {
+            $loader->load('services_dev.xml');
+        } else {
+            $loader->load('services.xml');
+        }
     }
+
 }

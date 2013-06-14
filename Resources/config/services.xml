@@ -10,13 +10,14 @@
         <!-- User -->
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
         <parameter key="user_info.service.class">Galaxy\FrontendBundle\Service\UserInfoService</parameter>
-        <parameter key="usersurl">gala.user.my/users</parameter>
+        <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
         <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
-        <parameter key="docsurl">gala.my/documents</parameter>
+        <parameter key="docsurl">http://demo10.qwer.com.ua/documents</parameter>
         <parameter key="user_providers.funds_info.url">%docsurl%/{userId}/funds.json</parameter>
-        <parameter key="gameurl">http://gala.my/games</parameter>
+        <parameter key="gameurl">http://demo10.qwer.com.ua/games</parameter>
         <parameter key="user_providers.game_info.url">%gameurl%/{userId}/user/info.json</parameter>
-        <parameter key="jump.url">http://gala.my/jump</parameter>
+        <parameter key="jump.url">http://demo10.qwer.com.ua/jump</parameter>
+        <parameter key="image.folder">/bundles/galaxyfrontend/images/point/{tag}.png</parameter>
         <!-- -->
     </parameters>
 
