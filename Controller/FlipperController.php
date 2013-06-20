@@ -27,6 +27,17 @@ class FlipperController extends Controller
         $response->setContent(json_encode($user->jsonSerialize()));
         return $response;
     }
+    
+    public function getUserLogsAction($page, $length)
+    {
+        $user = $this->getUser();
+        $response = new Response();
+        $userInfoService = $this->container->get("galaxy.user_info.service");
+        $userId = $user->getId();
+        $userLogs = $userInfoService->getLogsInfo($userId, $page, $length);
+        $response->setContent(json_encode($userLogs));
+        return $response;
+    }
 
     public function jumpAction(Request $request)
     {

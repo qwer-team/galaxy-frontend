@@ -5,6 +5,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipStyle = {};
     $scope.pointImagePath = "";
     $scope.pointImage = false;
+    $scope.userLog = false;
     $scope.updateUserInfo = function(data){
         $scope.user = data;
         $scope.x = data.gameInfo.x;
@@ -15,10 +16,21 @@ function FlipperCtrl($scope, $http, $timeout) {
         $scope.pointImagePath = data.pointImagePath;
         $scope.pointImage = true;
     }
-    $scope.logoutUser = function(){
-       
+   $scope.updateUserLogs = function(data){
+       $scope.userLogs = data;
     }
-    $http.get('/user').success($scope.updateUserInfo); 
+    
+    $scope.logs = function(){
+        if($scope.userLog){
+            $scope.userLog = false;
+        }else{
+            $http.get('/user_logs').success($scope.updateUserLogs);
+            $scope.userLog = true;
+        }
+         
+    }
+    $http.get('/user').success($scope.updateUserInfo);
+    
     $scope.jumpTooltip = false;
     $scope.jumpTooltipText = "empty";
     $scope.distance = function(){
@@ -93,6 +105,8 @@ function FlipperCtrl($scope, $http, $timeout) {
             $scope[varName] = parseInt(old);
         }
     }
+    
+    
     $scope.pointMin = 1;
     $scope.pointMax = 1000;
     $scope.jump = function(){
