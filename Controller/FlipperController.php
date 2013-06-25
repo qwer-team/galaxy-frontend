@@ -28,6 +28,10 @@ class FlipperController extends Controller
         return $response;
     }
     
+    
+    /**
+     * @Template("GalaxyFrontendBundle:Flipper:logs.html.twig")
+     */
     public function getUserLogsAction($page, $length)
     {
         $user = $this->getUser();
@@ -35,8 +39,16 @@ class FlipperController extends Controller
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $userId = $user->getId();
         $userLogs = $userInfoService->getLogsInfo($userId, $page, $length);
-        $response->setContent(json_encode($userLogs));
-        return $response;
+        $userLogsCount = $userInfoService->getLogsCount($userId);
+        $pagesCount = ceil($userLogsCount->count / $length);
+        $data = array(
+            "userLogs" => $userLogs,
+            'page' => $page,
+            "count" => $pagesCount,
+            "length" => $length,
+        );
+       
+        return $data;
     }
 
     public function jumpAction(Request $request)
@@ -60,10 +72,10 @@ class FlipperController extends Controller
                 "x" => $x,
                 "y" => $y,
                 "z" => $z,
-                "superjump" => (int)$superJump,
+                "superjump" => (int) $superJump,
                 "userId" => $userId,
             );
-            
+
             $response = json_decode($this->makeRequest($jumpUrl, $data));
             $result = array("result" => "success", "req" => $response);
             if ($response->result == "success") {
@@ -81,7 +93,6 @@ class FlipperController extends Controller
 
                 $token->setUser($user);
                 $result["user"] = $user->jsonSerialize();
-                $result["params"] = $response->params;
                 $tag == "black" ? $this->container->get('security.context')->setToken() : '';
             } else {
                 $result["result"] = $response->result;

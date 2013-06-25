@@ -5,7 +5,10 @@
         <title>Fliper 1</title>
     {% block javascript %}
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-1.9.1.min.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/script.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.colorbox.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/colorBoxScript.js' )  }}"></script>
     {% endblock %}
     {% block css %}
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
@@ -21,7 +24,7 @@
             <table width="100%" border="1">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Id</th>
                         <th>UserId</th>
                         <th>Text</th>
                         <th>Date</th>
@@ -29,7 +32,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in userLogs">
-                        <td>1</td>
+                        <td>{{ item.id }}</td>
                         <td>{{ item.userId }}</td>
                         <td>{{ item.text }}</td>
                         <td>{{ item.date }}</td>
@@ -171,7 +174,7 @@
                     <a href="#" class="control control-1"></a>
                     <a href="#" class="control control-2"></a>
                     <a href="#" class="control control-3"></a>
-                    <a href="#" class="control control-4"  ng-click="logs()"></a>
+                    <a href="/user_logs" class="control control-4 iframe cboxElement"></a>
                     <a href="#" class="control control-5"></a>
                     <a href="#" class="control control-6"></a>
                     <a href="#" class="control control-7"></a>

@@ -27,6 +27,15 @@ class UserInfoService extends ContainerAware
         return $response = json_decode($this->makeRequest($url));
     }
     
+    public function getLogsCount($userId)
+    {
+        $rawUrl = $this->container->getParameter("user_providers.log_info_count.url");
+        $url = str_replace("{userId}", $userId, $rawUrl);
+        $response = json_decode($this->makeRequest($url));
+        return $response;
+    }
+
+
     private function makeRequest($url, $data = null)
     {
         $curl = curl_init();

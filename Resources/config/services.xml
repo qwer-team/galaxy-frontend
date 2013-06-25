@@ -17,6 +17,7 @@
         <parameter key="gameurl">http://demo10.qwer.com.ua/games</parameter>
         <parameter key="user_providers.game_info.url">%gameurl%/{userId}/user/info.json</parameter>
         <parameter key="user_providers.log_info.url">%gameurl%/{userId}/users/{page}/logs/{length}.json</parameter>
+        <parameter key="user_providers.log_info_count.url">%gameurl%/{userId}/log/count.json</parameter>
         <parameter key="jump.url">http://demo10.qwer.com.ua/jump</parameter>
         <parameter key="image.folder">/bundles/galaxyfrontend/images/point/{tag}.png</parameter>
         <!-- -->

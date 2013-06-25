@@ -1,0 +1,45 @@
+<table width="100%" border="1">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>UserId</th>
+            <th>Text</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in userLogs %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.userId }}</td>
+            <td>{{ item.text }}</td>
+            <td>{{ item.date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<div class="pagination">
+  <ul>
+    {% if page != 1 %}
+    <li>
+        <a href="{{ path('user_logs', {page: page - 1, length: length}) }}">Prev</a>
+    </li>
+    <li><a href="{{ path('user_logs', {page: page - 1, length: length}) }}">{{page - 1}}</a></li>
+    {% endif %}
+    
+    {% set blockCnt = (page == 1)? 10 : 11 %}
+    <li class="disabled"><a>{{page}}</a></li>
+    {% for i in 1..blockCnt %}
+        {% if (page + i) <= count %}
+            <li><a href="{{ path('user_logs', {page: page + i, length: length}) }}">{{page + i}}</a></li>
+        {% endif %}
+    {% endfor %}
+    
+    {% if page != count %}
+    <li><a href="{{ path('user_logs', {page: page + 1, length: length}) }}">Next</a></li>
+    {% endif %}
+  </ul>
+</div>

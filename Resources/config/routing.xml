@@ -12,9 +12,8 @@
         <default key="_controller">GalaxyFrontendBundle:Flipper:getUser</default>
         <default key="_format">json</default>
     </route>
-    <route id="user_logs_json" pattern="/user_logs">
+    <route id="user_logs" pattern="/user_logs/{page}/{length}">
         <default key="_controller">GalaxyFrontendBundle:Flipper:getUserLogs</default>
-        <default key="_format">json</default>
         <default key="page">1</default>
         <default key="length">10</default>
     </route>

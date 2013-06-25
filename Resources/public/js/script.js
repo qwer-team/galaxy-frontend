@@ -16,19 +16,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         $scope.pointImagePath = data.pointImagePath;
         $scope.pointImage = true;
     }
-   $scope.updateUserLogs = function(data){
-       $scope.userLogs = data;
-    }
-    
-    $scope.logs = function(){
-        if($scope.userLog){
-            $scope.userLog = false;
-        }else{
-            $http.get('/user_logs').success($scope.updateUserLogs);
-            $scope.userLog = true;
-        }
-         
-    }
+  
     $http.get('/user').success($scope.updateUserInfo);
     
     $scope.jumpTooltip = false;
