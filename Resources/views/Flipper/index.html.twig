@@ -21,9 +21,10 @@
         </div>
         <div style="position: absolute; left:650px; top: 100px; width: 650px; height: 100px; z-index: 1000;background-color: white; display: none;"
              ng-show="capturedPrize">
-            Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].elementName}}
+            Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].name}},
+            Картинка: {{elements[capturedPrize.elementId].img1}}, Кол прыжков: {{elements[capturedPrize.elementId].available}}
             <br />
-            <button>Купить</button>
+            <button ng-show="hasMonyeForPrize()">Купить</button>
         </div>
         <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
 

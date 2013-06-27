@@ -24,6 +24,22 @@ function FlipperCtrl($scope, $http, $timeout) {
             });
         }
     }
+    $scope.hasMonyeForPrize = function(){
+        if(!$scope.elements){
+            return false;
+        }
+        var element = $scope.elements[$scope.capturedPrize.id];
+        if(element.account == 1){
+            if(element.prize > $scope.user.gameInfo.active){
+                return false;
+            }
+        } else {
+            if(element.prize > $scope.user.gameInfo.deposite){
+                return false;
+            }
+        }
+        return true;
+    }
     $scope.updatePointImage = function(data){
         $scope.pointImagePath = data.pointImagePath;
         $scope.pointImage = true;

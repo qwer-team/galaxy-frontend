@@ -35,18 +35,27 @@ class UserInfoService extends ContainerAware
         return $response;
     }
     
-    public function getPrizeInfo()
-    {
+    public function getPrizesFromSpace(){
         $url = $this->container->getParameter("space.prizes_info.url");
         $response = json_decode($this->makeRequest($url));
+        return $response;
+    }
+    
+    public function getPrizeInfo()
+    {
+        $response = $this->getPrizesFromSpace();
         
         $elements = array();
         foreach($response as $prize){
             $prizeName = $prize->name;
             foreach($prize->elements as $element){
                 $elements[$element->id] = array(
-                    'prizeName' => $prizeName,
-                    'elementName' => $element->name,
+                    "name" => $element->name,
+                    "prizeName" => $prizeName,
+                    "img1" => $element->img1,
+                    "available" => $element->available,
+                    "account"   => $element->account,
+                    "price"   => $element->price,
                 );
             }
         }
