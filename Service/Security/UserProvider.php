@@ -29,6 +29,7 @@ class UserProvider extends ContainerAware implements UserProviderInterface
         $user->setPassword($response->data->password);
         $user->setEnabled($response->data->enabled);
         $user->setEmail($response->data->email);
+        $user->setEmailCanonical($response->data->email);
         $user->setExpired($response->data->expired);
         $user->setRoles($response->data->roles);
         $user->setCredentialsExpired($response->data->credentials_expired);

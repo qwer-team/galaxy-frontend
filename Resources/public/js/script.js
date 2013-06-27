@@ -12,6 +12,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         $scope.x = data.gameInfo.x;
         $scope.y = data.gameInfo.y;
         $scope.z = data.gameInfo.z;
+        $scope.capturedPrize = false;
         angular.forEach(data.gameInfo.basket, function(value){
             console.log(value);
             if(value.bought == false){
@@ -21,6 +22,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         if($scope.capturedPrize){
             $http.get('/elements').success(function(data){
                 $scope.elements = data;
+                console.log(data);
             });
         }
     }
@@ -28,13 +30,16 @@ function FlipperCtrl($scope, $http, $timeout) {
         if(!$scope.elements){
             return false;
         }
-        var element = $scope.elements[$scope.capturedPrize.id];
+        var element = $scope.elements[$scope.capturedPrize.elementId];
+        console.log(element, $scope.capturedPrize.id);
         if(element.account == 1){
             if(element.prize > $scope.user.gameInfo.active){
+                alert("active "+$scope.user.gameInfo.active);
                 return false;
             }
         } else {
             if(element.prize > $scope.user.gameInfo.deposite){
+                alert("depo "+$scope.user.gameInfo.depo);
                 return false;
             }
         }
@@ -145,6 +150,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         };
         $http.post('/jump', data).success($scope.jumpCallback);
     }
+    
     $scope.jumpCallback = function(data, status){
         alert(data.pointType);
         if(data.result == 'success'){
@@ -158,6 +164,18 @@ function FlipperCtrl($scope, $http, $timeout) {
             }
         }
     }
+    
+    $scope.buyElement = function(){
+        $http.get('/buyElement').success($scope.buyCallback);
+    }
+    
+    $scope.buyCallback = function(data, status){
+        if(data.result == 'success'){
+            if(data.prize)
+                alert(data.prize);
+            $scope.updateUserInfo(data.user);
+        }
+    };
 }
 
 galaxy.directive('leftTooltip', function () {

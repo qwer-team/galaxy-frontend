@@ -31,14 +31,14 @@ class FlipperController extends Controller
     public function getPrizesInfoAction()
     {
         $session = $this->getRequest()->getSession();
-        if($session->has('prize_elements')){
+        if ($session->has('prize_elements')) {
             $prizesElements = $session->get('prize_elements');
-        }else{
+        } else {
             $service = $this->get("galaxy.user_info.service");
             $prizesElements = $service->getPrizeInfo();
             $session->set('prize_elements', $prizesElements);
         }
-        
+
         $response = new Response();
         $response->setContent(json_encode($prizesElements));
         return $response;
@@ -117,6 +117,89 @@ class FlipperController extends Controller
         $response = new Response();
         $response->setContent(json_encode($result));
         return $response;
+    }
+
+    public function buyElementAction()
+    {
+        $rawUrl = $this->get("service_container")->getParameter("buy_element.url");
+        $token = $this->container->get('security.context')->getToken();
+        $user = $token->getUser();
+
+        $url = str_replace("{userId}", $user->getId(), $rawUrl);
+        $json = json_decode($this->makeRequest($url));
+
+        $result = array('result' => 'fail');
+        if ($json->result == 'success') {
+            $userId = $user->getId();
+            $result['result'] = 'success';
+            $userInfoService = $this->get("galaxy.user_info.service");
+            $fundsInfo = $userInfoService->getFundsInfo($userId);
+            $gameInfo = $userInfoService->getGameInfo($userId);
+            $user->setFundsInfo($fundsInfo);
+            $user->setGameInfo($gameInfo);
+            $token->setUser($user);
+
+            $info = $userInfoService->getPrizesFromSpace();
+            $result["prize"] = null;
+            $prize = $this->checkAllPrize($info, $gameInfo->basket, $json->elementId);
+            if ($prize) {
+                $result["prize"] = $prize;
+                $this->sendMessage($prize, $user->getEmail());
+            }
+
+            $result["user"] = $user->jsonSerialize();
+        }
+
+        $response = new Response();
+        $response->setContent(json_encode($result));
+        return $response;
+    }
+
+    private function sendMessage($prize, $email)
+    {
+        $message = \Swift_Message::newInstance()
+                ->setSubject('prize')
+                ->setFrom('gala@gala.com')
+                ->setTo($email)
+                ->setBody($prize)
+        ;
+        $this->get('mailer')->send($message);
+    }
+
+    private function checkAllPrize($info, $basket, $elementId)
+    {
+        $prizeCur = null;
+        foreach ($info as $prize) {
+            foreach ($prize->elements as $element) {
+                if ($element->id == $elementId) {
+                    $prizeCur = $prize;
+                    break;
+                }
+            }
+            if ($prizeCur) {
+                break;
+            }
+        }
+
+        $basketIds = array();
+        foreach ($basket as $item) {
+            if ($item->bought) {
+                $basketIds[] = $item->elementId;
+            }
+        }
+
+        $all = true;
+        foreach ($prizeCur->elements as $element) {
+            if (!in_array($element->id, $basketIds)) {
+                $all = false;
+                break;
+            }
+        }
+
+        if ($all) {
+            return $prizeCur->name;
+        }
+        return null;
     }
 
     private function makeRequest($url, $data = null)

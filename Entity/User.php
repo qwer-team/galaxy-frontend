@@ -87,6 +87,7 @@ class User extends FOSUser // implements  \JsonSerializable
                     $this->fundsInfo,
                     $this->sessionJump,
                     $this->lockedExpiresAt,
+                    $this->email,
                 ));
     }
 
@@ -111,6 +112,7 @@ class User extends FOSUser // implements  \JsonSerializable
                 $this->fundsInfo,
                 $this->sessionJump,
                 $this->lockedExpiresAt,
+                $this->email,
                 ) = $data;
     }
 

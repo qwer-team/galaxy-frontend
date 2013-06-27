@@ -24,7 +24,7 @@
             Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].name}},
             Картинка: {{elements[capturedPrize.elementId].img1}}, Кол прыжков: {{elements[capturedPrize.elementId].available}}
             <br />
-            <button ng-show="hasMonyeForPrize()">Купить</button>
+            <button ng-show="hasMonyeForPrize()" ng-click="buyElement()">Купить</button>
         </div>
         <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
 

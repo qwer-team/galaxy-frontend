@@ -22,6 +22,8 @@
         <parameter key="image.folder">/bundles/galaxyfrontend/images/point/{tag}.png</parameter>
         <parameter key="space.url">http://localhost:8080/gala</parameter>
         <parameter key="space.prizes_info.url">%space.url%/prize/list</parameter>
+        <parameter key="elements.url">gala.my</parameter>
+        <parameter key="buy_element.url">%elements.url%/elements/{userId}/buy.json</parameter>
         <!-- -->
     </parameters>
 
