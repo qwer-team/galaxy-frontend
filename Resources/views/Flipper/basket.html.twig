@@ -1,0 +1,35 @@
+<table width="100%" border="1">
+
+    <thead>
+        <tr>
+            Корзина
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td rowspan="{{ item.elements|length }}"
+                    >Приз:{{ item.name }}<img src="http://gala.my{{ item.img2 }}"> 
+                </td>
+                {% for element in item.elements %}
+                    <td {% if element.basket == true %} style="background-color: #00F9FF" {% endif %}>
+                        
+                        Елемент: {{ element.name }}
+                        {% if element.basket == true %}
+                        <img src="http://gala.my{{ element.img2 }}">
+                        {% else %}
+                        <img src="http://gala.my{{ element.img1 }}"> 
+                        {% endif %}
+                        
+                        {% if element.basket == true %}
+                        осталось прыжков {{ element.basket.jumpsRemain }}
+                        {% endif %}
+                        
+                    </td> 
+            {% endfor %}
+            </tr>
+        {% endfor %}
+            </tbody>
+
+        </table>
+
