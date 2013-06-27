@@ -1,0 +1,31 @@
+<table width="100%" border="1">
+
+    <thead>
+        <tr>
+            Корзина
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td rowspan="{{ item.elements|length }}"
+                    >Приз:{{ item.name }}<img src="http://gala.my{{ item.img2 }}"> 
+                </td>
+                {% for element in item.elements %}
+                {% if element.basket == true %}
+                    <td>
+                        Елемент: {{ element.name }}
+                        <img src="http://gala.my{{ element.img2 }}">
+                        осталось прыжков {{ element.basket.jumpsRemain }}
+                        стоимость {{ element.price }}
+                        <button type="button" >Продать</button>
+                    </td> 
+        
+                    {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+            </tbody>
+
+        </table>
+

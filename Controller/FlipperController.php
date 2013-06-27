@@ -83,6 +83,25 @@ class FlipperController extends Controller
 
         return $data;
     }
+    
+    /**
+     * @Template("GalaxyFrontendBundle:Flipper:basketSell.html.twig")
+     */
+    public function getUserBasketSellAction()
+    {
+        $user = $this->getUser();
+        $userInfoService = $this->container->get("galaxy.user_info.service");
+        $prizeService = $this->container->get("galaxy.prize.service");
+        $basket = $user->getGameInfo()->basket;
+        $prizeList = $userInfoService->getPrizesFromSpace();
+        $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket);
+        
+        $data = array(
+            "items" => $buyElementsPrize,
+        );
+
+        return $data;
+    }
 
     public function jumpAction(Request $request)
     {
