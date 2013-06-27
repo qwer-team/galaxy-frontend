@@ -21,6 +21,9 @@
         <default key="page">1</default>
         <default key="length">10</default>
     </route>
+    <route id="user_basket" pattern="/user_basket">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:getUserBasket</default>
+    </route>
     <route id="jump_json" pattern="/jump">
         <default key="_controller">GalaxyFrontendBundle:Flipper:jump</default>
         <default key="_format">json</default>
