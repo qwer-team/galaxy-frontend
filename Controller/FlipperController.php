@@ -27,8 +27,23 @@ class FlipperController extends Controller
         $response->setContent(json_encode($user->jsonSerialize()));
         return $response;
     }
-    
-    
+
+    public function getPrizesInfoAction()
+    {
+        $session = $this->getRequest()->getSession();
+        if($session->has('prize_elements')){
+            $prizesElements = $session->get('prize_elements');
+        }else{
+            $service = $this->get("galaxy.user_info.service");
+            $prizesElements = $service->getPrizeInfo();
+            $session->set('prize_elements', $prizesElements);
+        }
+        
+        $response = new Response();
+        $response->setContent(json_encode($prizesElements));
+        return $response;
+    }
+
     /**
      * @Template("GalaxyFrontendBundle:Flipper:logs.html.twig")
      */
@@ -47,7 +62,7 @@ class FlipperController extends Controller
             "count" => $pagesCount,
             "length" => $length,
         );
-       
+
         return $data;
     }
 

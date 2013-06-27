@@ -34,6 +34,24 @@ class UserInfoService extends ContainerAware
         $response = json_decode($this->makeRequest($url));
         return $response;
     }
+    
+    public function getPrizeInfo()
+    {
+        $url = $this->container->getParameter("space.prizes_info.url");
+        $response = json_decode($this->makeRequest($url));
+        
+        $elements = array();
+        foreach($response as $prize){
+            $prizeName = $prize->name;
+            foreach($prize->elements as $element){
+                $elements[$element->id] = array(
+                    'prizeName' => $prizeName,
+                    'elementName' => $element->name,
+                );
+            }
+        }
+        return $elements;
+    }
 
 
     private function makeRequest($url, $data = null)

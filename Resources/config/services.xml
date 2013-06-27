@@ -20,6 +20,8 @@
         <parameter key="user_providers.log_info_count.url">%gameurl%/{userId}/log/count.json</parameter>
         <parameter key="jump.url">http://demo10.qwer.com.ua/jump</parameter>
         <parameter key="image.folder">/bundles/galaxyfrontend/images/point/{tag}.png</parameter>
+        <parameter key="space.url">http://localhost:8080/gala</parameter>
+        <parameter key="space.prizes_info.url">%space.url%/prize/list</parameter>
         <!-- -->
     </parameters>
 

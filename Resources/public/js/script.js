@@ -6,11 +6,23 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.pointImagePath = "";
     $scope.pointImage = false;
     $scope.userLog = false;
+    $scope.capturedPrize = false;
     $scope.updateUserInfo = function(data){
         $scope.user = data;
         $scope.x = data.gameInfo.x;
         $scope.y = data.gameInfo.y;
         $scope.z = data.gameInfo.z;
+        angular.forEach(data.gameInfo.basket, function(value){
+            console.log(value);
+            if(value.bought == false){
+                $scope.capturedPrize = value;
+            } 
+        });
+        if($scope.capturedPrize){
+            $http.get('/elements').success(function(data){
+                $scope.elements = data;
+            });
+        }
     }
     $scope.updatePointImage = function(data){
         $scope.pointImagePath = data.pointImagePath;
@@ -125,7 +137,7 @@ function FlipperCtrl($scope, $http, $timeout) {
             if(data.tag == "black"){
                 alert("Через 10 сек разлогинка");
                 $timeout(function() {
-                   location.reload()
+                    location.reload()
                 }, 10000);
             }
         }
