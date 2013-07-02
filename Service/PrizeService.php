@@ -5,7 +5,7 @@ namespace Galaxy\FrontendBundle\Service;
 class PrizeService
 {
 
-    public function getElementsPrize($prizeList, $basket)
+    public function getElementsPrize($prizeList, $basket, $fundsInfo)
     {
         $prizes = array();
         foreach ($prizeList as $prize) {
@@ -17,6 +17,16 @@ class PrizeService
                         $element->basket = $item;
                         $prizes[$prize->id] = $prize;
                     }
+                }
+                if($element->basket){
+                    if($element->account == 1){
+                        $rate = 1;
+                    } else {
+                        $acc = "3";
+                        $rate = $fundsInfo->rates->$acc;
+                    }
+                    $cost = $element->price * ($element->basket->jumpsRemain / $element->available) * $rate * (1 - ($prize->penalty / 100));
+                    $element->cost = ceil($cost);
                 }
             }
         }

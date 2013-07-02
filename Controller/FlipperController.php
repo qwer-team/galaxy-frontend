@@ -64,7 +64,7 @@ class FlipperController extends Controller
 
         return $data;
     }
-    
+
     /**
      * @Template("GalaxyFrontendBundle:Flipper:basket.html.twig")
      */
@@ -74,16 +74,17 @@ class FlipperController extends Controller
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $prizeService = $this->container->get("galaxy.prize.service");
         $basket = $user->getGameInfo()->basket;
+        $fundsInfo = $user->getFundsInfo();
         $prizeList = $userInfoService->getPrizesFromSpace();
-        $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket);
-        
+        $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket, $fundsInfo);
+
         $data = array(
             "items" => $buyElementsPrize,
         );
 
         return $data;
     }
-    
+
     /**
      * @Template("GalaxyFrontendBundle:Flipper:basketSell.html.twig")
      */
@@ -94,13 +95,35 @@ class FlipperController extends Controller
         $prizeService = $this->container->get("galaxy.prize.service");
         $basket = $user->getGameInfo()->basket;
         $prizeList = $userInfoService->getPrizesFromSpace();
-        $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket);
-        
+        $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket, $user->getFundsInfo());
+
+        $moneyYok = !$this->checkMoneyForJump($user);
+
         $data = array(
             "items" => $buyElementsPrize,
+            "moneyYok" => $moneyYok,
         );
 
         return $data;
+    }
+    
+    
+
+    private function checkMoneyForJump($user)
+    {
+        $flipper = $user->getGameInfo()->flipper;
+        $funds = $user->getFundsInfo();
+
+        if ($flipper->paymentFromDeposit) {
+            if($flipper->costJump > $funds->deposite) {
+                return false;
+            }
+        } else {
+            if($flipper->costJump > $funds->active) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public function jumpAction(Request $request)
