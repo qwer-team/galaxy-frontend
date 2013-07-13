@@ -11,21 +11,24 @@ class User extends FOSUser // implements  \JsonSerializable
     protected $fundsInfo;
     protected $sessionJump = 0;
     protected $lockedExpiresAt;
-    
+    protected $birthday;
+    protected $message;
+
     public function getLockedExpiresAt()
     {
         return $this->lockedExpiresAt;
     }
-    
-    public function getName(){
+
+    public function getName()
+    {
         return $this->username;
     }
-    
+
     public function setLockedExpiresAt($lockedExpiresAt)
     {
         $this->lockedExpiresAt = $lockedExpiresAt;
     }
-    
+
     public function setSalt($salt)
     {
         $this->salt = $salt;
@@ -71,6 +74,26 @@ class User extends FOSUser // implements  \JsonSerializable
         $this->sessionJump++;
     }
 
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
     public function serialize()
     {
         return serialize(array(
@@ -88,6 +111,8 @@ class User extends FOSUser // implements  \JsonSerializable
                     $this->sessionJump,
                     $this->lockedExpiresAt,
                     $this->email,
+                    $this->birthday,
+                    $this->message,
                 ));
     }
 
@@ -113,6 +138,8 @@ class User extends FOSUser // implements  \JsonSerializable
                 $this->sessionJump,
                 $this->lockedExpiresAt,
                 $this->email,
+                $this->birthday,
+                $this->message,
                 ) = $data;
     }
 

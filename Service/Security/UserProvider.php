@@ -34,6 +34,8 @@ class UserProvider extends ContainerAware implements UserProviderInterface
         $user->setRoles($response->data->roles);
         $user->setCredentialsExpired($response->data->credentials_expired);
         $user->setLockedExpiresAt(isset($response->data->locked_expires_at) ? new \DateTime($response->data->locked_expires_at) : NULL);
+        $user->setBirthday(isset($response->data->birthday) ? new \DateTime($response->data->birthday) : NULL);
+        $user->setMessage(isset($response->data->message) ? new \DateTime($response->data->message) : NULL);
         /* $user = new User();
           $user->setUsername('vassa');
           $user->setPassword('123');

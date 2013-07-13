@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Galaxy\FrontendBundle\Form\JumpRequestType;
 use Galaxy\FrontendBundle\Entity\JumpRequest;
+use Qwer\Curl\Curl;
 
 class FlipperController extends Controller
 {
@@ -64,7 +65,7 @@ class FlipperController extends Controller
 
         return $data;
     }
-    
+
     /**
      * @Template("GalaxyFrontendBundle:Flipper:basket.html.twig")
      */
@@ -76,14 +77,14 @@ class FlipperController extends Controller
         $basket = $user->getGameInfo()->basket;
         $prizeList = $userInfoService->getPrizesFromSpace();
         $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket);
-        
+
         $data = array(
             "items" => $buyElementsPrize,
         );
 
         return $data;
     }
-    
+
     /**
      * @Template("GalaxyFrontendBundle:Flipper:basketSell.html.twig")
      */
@@ -95,7 +96,7 @@ class FlipperController extends Controller
         $basket = $user->getGameInfo()->basket;
         $prizeList = $userInfoService->getPrizesFromSpace();
         $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket);
-        
+
         $data = array(
             "items" => $buyElementsPrize,
         );
@@ -192,6 +193,62 @@ class FlipperController extends Controller
         return $response;
     }
 
+    public function getQuestionAction()
+    {
+        $token = $this->container->get('security.context')->getToken();
+        $user = $token->getUser();
+        $game = $user->getGameInfo();
+
+        $result = array("result" => "fail");
+        if ($game->questions) {
+            $service = $this->get("galaxy.user_info.service");
+            $result = $service->getQuestion($user->getId());
+            $result->rightAnswer = null;
+            $time = new \DateTime($result->started);
+            $now = new \DateTime();
+            $interval = $now->diff($time);
+            $intervalSeconds = $interval->i * 60 + $interval->s;
+            $seconds = $result->seconds - $intervalSeconds;
+            
+            $result->interval = $intervalSeconds;
+            $result->seconds = $seconds;
+        }
+
+        $response = new Response();
+        $response->setContent(json_encode($result));
+        return $response;
+    }
+
+    public function answerQuestionAction($questionId, $answer)
+    {
+        $token = $this->container->get('security.context')->getToken();
+        $user = $token->getUser();
+        $game = $user->getGameInfo();
+
+        $hasQuestion = false;
+        if ($game->questions) {
+            foreach ($game->questions as $question) {
+                if ($question->id == $questionId) {
+                    $hasQuestion = true;
+                    break;
+                }
+            }
+        }
+
+        $result = array("result" => "fail");
+        if ($hasQuestion) {
+            $service = $this->get("galaxy.user_info.service");
+            $result = $service->answerQuestion($questionId, $answer);
+            $user = $this->getUser();
+            $userInfoService = $this->get("galaxy.user_info.service");
+            $gameInfo = $userInfoService->getGameInfo($user->getId());
+            $user->setGameInfo($gameInfo);
+        }
+        $response = new Response();
+        $response->setContent(json_encode($result));
+        return $response;
+    }
+
     private function sendMessage($prize, $email)
     {
         $message = \Swift_Message::newInstance()
@@ -241,16 +298,35 @@ class FlipperController extends Controller
 
     private function makeRequest($url, $data = null)
     {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        if (!is_null($data)) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-        $response = curl_exec($curl);
-        curl_close($curl);
+        return Curl::makeRequest($url, $data);
+    }
 
+    public function checkQuestionAction($questionId)
+    {
+        $token = $this->container->get('security.context')->getToken();
+        $user = $token->getUser();
+        $game = $user->getGameInfo();
+
+        $hasQuestion = false;
+        if ($game->questions) {
+            foreach ($game->questions as $question) {
+                if ($question->id == $questionId) {
+                    $hasQuestion = true;
+                    break;
+                }
+            }
+        }
+
+        $questionService = $this->get("question.service");
+        $seconds = 15;
+        $result = $questionService->listenResult($questionId, $seconds);
+        if (!is_null($result)) {
+            $userInfoService = $this->get("galaxy.user_info.service");
+            $gameInfo = $userInfoService->getGameInfo($user->getId());
+            $user->setGameInfo($gameInfo);
+        }
+        $response = new Response();
+        $response->setContent(json_encode(array("result" => $result)));
         return $response;
     }
 

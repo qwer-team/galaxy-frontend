@@ -19,12 +19,35 @@
         <div style="position: absolute; left:850px; top: 400px; width: 120px; height: 120px; z-index: 1000;display: none;" ng-show="pointImage">
             <img border="0" ng-src="{{ pointImagePath }}" alt="Point">
         </div>
-        <div style="position: absolute; left:650px; top: 100px; width: 650px; height: 100px; z-index: 1000;background-color: white; display: none;"
-             ng-show="capturedPrize">
-            Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].name}},
-            Картинка: {{elements[capturedPrize.elementId].img1}}, Кол прыжков: {{elements[capturedPrize.elementId].available}}
-            <br />
-            <button ng-show="hasMonyeForPrize()" ng-click="buyElement()">Купить</button>
+        <div style="position: absolute; left:650px; top: 100px; width: 650px; height: 150px; z-index: 1000;background-color: white; display: none;"
+             ng-show="capturedPrize || user.gameInfo.message">
+            <div ng-show="capturedPrize">
+                Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].name}},
+                Картинка: {{elements[capturedPrize.elementId].img1}}, Кол прыжков: {{elements[capturedPrize.elementId].available}}
+                <br />
+                <button ng-show="hasMonyeForPrize()" ng-click="buyElement()">Купить</button>
+                <br>
+            </div>
+            <div ng-show="user.gameInfo.message">
+                <h1>Сообщение</h1>
+                <div>
+                    картинка {{user.gameInfo.message.image}}<br />
+                    текст {{user.gameInfo.message.text}}<br />
+                </div>
+            </div>
+        </div>
+        <div style="position: absolute; left:650px; top: 250px; width: 650px; height: 120px; z-index: 1000;background-color: white; display: none;"
+             ng-show="user.gameInfo.questions">
+            {{question.text}}__time {{question.seconds}}
+            <ul >
+                <li >
+                    <label ng-repeat="answer in question.answers">
+                        <input  type="radio" ng-model="$parent.rightAnswer" name="answer" value="{{$index}}">{{ answer }}
+                    </label>
+                </li>
+            </ul>
+            
+            <input ng-click="answer()" type="submit" value="pli">
         </div>
         <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
 
@@ -178,7 +201,7 @@
                     </div><!-- .statistic -->
                 </aside><!-- .left-sidebar -->
                 <!-- content -->
-                
+
                 <!-- endcontent -->
                 <div class="control-panel">
                     <a href="#" class="control control-1"></a>

@@ -25,6 +25,11 @@
         <parameter key="space.prizes_info.url">%space.url%/prize/list</parameter>
         <parameter key="elements.url">gala.my</parameter>
         <parameter key="buy_element.url">%elements.url%/elements/{userId}/buy.json</parameter>
+        <parameter key="game.get_question.url">%questions.url%/{userId}.json</parameter>
+        <parameter key="questions.url">>http://demo10.qwer.com.ua/questions</parameter>
+        <parameter key="game.answer_question.url">%questions.url%/{questionId}/answers/{answer}.json</parameter>
+        <parameter key="question.memcache.key">quest</parameter>
+        
         <!-- -->
     </parameters>
 
@@ -50,19 +55,14 @@
                  public="false"
                  parent="security.authentication.listener.abstract"
                  abstract="true">
-            <!-- * @param SecurityContextInterface               $securityContext       A SecurityContext instance
-     * @param AuthenticationManagerInterface         $authenticationManager An AuthenticationManagerInterface instance
-     * @param SessionAuthenticationStrategyInterface $sessionStrategy
-     * @param HttpUtils                              $httpUtils             An HttpUtilsInterface instance
-     * @param string                                 $providerKey
-     * @param AuthenticationSuccessHandlerInterface  $successHandler
-     * @param AuthenticationFailureHandlerInterface  $failureHandler
-     * @param array                                  $options               An array of options for the processing of a
-     *                                                                      successful, or failed authentication attempt
-     * @param LoggerInterface                        $logger                A LoggerInterface instance
-     * @param EventDispatcherInterface               $dispatcher            An EventDispatcherInterface instance
-     *
-     * @throws \InvalidArgumentException -->
+        </service>
+        <service id="question.service" class="Galaxy\FrontendBundle\Service\QuestionService">
+            <call method="setMemcache">
+                <argument type="service" id="memcache.default" />
+            </call>
+            <call method="setQuestionMemcacheKey">
+                <argument type="string">%question.memcache.key%</argument>
+            </call>
         </service>
     </services>
     

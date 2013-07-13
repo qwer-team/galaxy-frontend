@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <routes xmlns="http://symfony.com/schema/routing"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     
     <route id="flipper" pattern="/flipper">
@@ -33,6 +33,22 @@
     </route>
     <route id="jump_json" pattern="/jump">
         <default key="_controller">GalaxyFrontendBundle:Flipper:jump</default>
+        <default key="_format">json</default>
+    </route>
+    <route id="question_json" pattern="/question">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:getQuestion</default>
+        <default key="_format">json</default>
+    </route>
+    <route id="answer_json" pattern="/answer/{questionId}/{answer}">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:answerQuestion</default>
+        <default key="_format">json</default>
+    </route>
+    <route id="check_json" pattern="/check/{questionId}">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:checkQuestion</default>
+        <default key="_format">json</default>
+    </route>
+    <route id="reset_json" pattern="/reset/{questionId}/{result}">
+        <default key="_controller">GalaxyFrontendBundle:Question:resetQuestion</default>
         <default key="_format">json</default>
     </route>
     <!-- -->

@@ -22,8 +22,36 @@ function FlipperCtrl($scope, $http, $timeout) {
         if($scope.capturedPrize){
             $http.get('/elements').success(function(data){
                 $scope.elements = data;
-                console.log(data);
             });
+        }
+        if(data.gameInfo.questions.length > 0){
+            console.log('questoins');
+            $http.get('/question').success(function(data){
+                $scope.question = data;
+                if(!$scope.questionTimeout){
+                    $timeout($scope.updateQuestionTime, 1000);
+                    $scope.questionTimeout = true;
+                }
+                if(data.result != 'fail'){
+                    var url = "check/" + $scope.question.id;
+                    $http.get(url).success($scope.checkQuestion);
+                }
+            });
+        }
+    }
+    $scope.questionTimeout = false;
+    $scope.checkQuestion = function(data, status){
+        if(data.result == null){
+            var url = "check/" + $scope.question.id;
+            $http.get(url).success($scope.checkQuestion);
+        } else {
+            $http.get('/user').success($scope.updateUserInfo);
+        }
+    }
+    $scope.updateQuestionTime = function(){
+        $scope.question.seconds--;
+        if($scope.question.seconds > 0){
+            $timeout($scope.updateQuestionTime, 1000);
         }
     }
     $scope.hasMonyeForPrize = function(){
@@ -176,6 +204,16 @@ function FlipperCtrl($scope, $http, $timeout) {
             $scope.updateUserInfo(data.user);
         }
     };
+    $scope.answer = function(){
+        if(!$scope.rightAnswer){
+            return;
+        }
+        var url = '/answer/'+$scope.question.id+"/"+$scope.rightAnswer;
+        $http.get(url).success($scope.answerResult);
+    }
+    $scope.answerResult = function(data, status){
+        $http.get('/user').success($scope.updateUserInfo);
+    }
 }
 
 galaxy.directive('leftTooltip', function () {
