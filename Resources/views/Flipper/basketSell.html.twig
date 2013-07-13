@@ -17,8 +17,8 @@
                         Елемент: {{ element.name }}
                         <img src="http://gala.my{{ element.img2 }}">
                         осталось прыжков {{ element.basket.jumpsRemain }}
-                        стоимость {{ element.price }}
-                        <button type="button" >Продать</button>
+                        {% if moneyYok %}<div>стоимость {{ element.cost }}
+                        <button type="button" >Продать</button></div>{% endif %}
                     </td> 
         
                     {% endif %}
