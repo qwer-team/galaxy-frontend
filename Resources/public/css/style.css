@@ -628,3 +628,7 @@ aside .tooltip{
 .cboxIE #cboxMiddleRight {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
 }
+
+.lightAmount{
+    color: red !important;
+}

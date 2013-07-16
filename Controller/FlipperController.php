@@ -24,8 +24,15 @@ class FlipperController extends Controller
     public function getUserAction()
     {
         $user = $this->getUser();
+        $content = array("result" => "fail");
+        $status = 401;
+        if ($user) {
+            $content = $user->jsonSerialize();
+            $status = 200;
+        }
         $response = new Response();
-        $response->setContent(json_encode($user->jsonSerialize()));
+        $response->setContent(json_encode($content));
+        $response->setStatusCode($status);
         return $response;
     }
 
@@ -107,8 +114,6 @@ class FlipperController extends Controller
 
         return $data;
     }
-    
-    
 
     private function checkMoneyForJump($user)
     {
@@ -116,11 +121,11 @@ class FlipperController extends Controller
         $funds = $user->getFundsInfo();
 
         if ($flipper->paymentFromDeposit) {
-            if($flipper->costJump > $funds->deposite) {
+            if ($flipper->costJump > $funds->deposite) {
                 return false;
             }
         } else {
-            if($flipper->costJump > $funds->active) {
+            if ($flipper->costJump > $funds->active) {
                 return false;
             }
         }
@@ -224,17 +229,34 @@ class FlipperController extends Controller
 
         $result = array("result" => "fail");
         if ($game->questions) {
-            $service = $this->get("galaxy.user_info.service");
-            $result = $service->getQuestion($user->getId());
-            $result->rightAnswer = null;
-            $time = new \DateTime($result->started);
-            $now = new \DateTime();
-            $interval = $now->diff($time);
-            $intervalSeconds = $interval->i * 60 + $interval->s;
-            $seconds = $result->seconds - $intervalSeconds;
-            
-            $result->interval = $intervalSeconds;
-            $result->seconds = $seconds;
+            $userService = $this->container->get("galaxy.user.service");
+            $user = $this->getUser();
+            $response = $userService->getUser($user->getUsername());
+
+            $expires = null;
+            $curdate = new \DateTime;
+            if (isset($response->data->locked_expires_a) &&
+                    $response->data->locked_expires_at) {
+                $expires = new \DateTime($response->data->locked_expires_at);
+            }
+            if ($expires && $curdate < $expires) {
+                $this->container->get('security.context')->setToken();
+            } else {
+                $service = $this->get("galaxy.user_info.service");
+                $userId = $user->getId();
+                $fundsInfo = $service->getFundsInfo($userId);
+                $user->setFundsInfo($fundsInfo);
+                $result = $service->getQuestion($userId);
+                $result->rightAnswer = null;
+                $time = new \DateTime($result->started);
+                $now = new \DateTime();
+                $interval = $now->diff($time);
+                $intervalSeconds = $interval->i * 60 + $interval->s;
+                $seconds = $result->seconds - $intervalSeconds;
+
+                $result->interval = $intervalSeconds;
+                $result->seconds = $seconds;
+            }
         }
 
         $response = new Response();
@@ -264,8 +286,11 @@ class FlipperController extends Controller
             $result = $service->answerQuestion($questionId, $answer);
             $user = $this->getUser();
             $userInfoService = $this->get("galaxy.user_info.service");
-            $gameInfo = $userInfoService->getGameInfo($user->getId());
+            $userId = $user->getId();
+            $gameInfo = $userInfoService->getGameInfo($userId);
+            $fundsInfo = $userInfoService->getFundsInfo($userId);
             $user->setGameInfo($gameInfo);
+            $user->setFundsInfo($fundsInfo);
         }
         $response = new Response();
         $response->setContent(json_encode($result));
@@ -345,8 +370,25 @@ class FlipperController extends Controller
         $result = $questionService->listenResult($questionId, $seconds);
         if (!is_null($result)) {
             $userInfoService = $this->get("galaxy.user_info.service");
-            $gameInfo = $userInfoService->getGameInfo($user->getId());
+            $userId = $user->getId();
+            $gameInfo = $userInfoService->getGameInfo($userId);
+            $fundsInfo = $userInfoService->getFundsInfo($userId);
             $user->setGameInfo($gameInfo);
+            $user->setFundsInfo($fundsInfo);
+            if ($result == 2) {
+                $userService = $this->container->get("galaxy.user.service");
+                $response = $userService->getUser($user->getUsername());
+
+                $expires = null;
+                $curdate = new \DateTime;
+                if (isset($response->data->locked_expires_at) && 
+                                    $response->data->locked_expires_at) {
+                    $expires = new \DateTime($response->data->locked_expires_at);
+                }
+                if ($expires && $curdate < $expires) {
+                    $this->container->get('security.context')->setToken();
+                }
+            }
         }
         $response = new Response();
         $response->setContent(json_encode(array("result" => $result)));

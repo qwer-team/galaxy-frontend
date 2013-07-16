@@ -11,10 +11,9 @@ class UserProvider extends ContainerAware implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        $rawUrl = $this->container->getParameter("user_providers.user_login.url");
-        $url = str_replace("{login}", $username, $rawUrl);
-        $response = json_decode($this->makeRequest($url));
-
+        $userService = $this->container->get("galaxy.user.service");
+        $response = $userService->getUser($username);
+        
         $user = new User();
         $userId = $response->data->id;
 
@@ -44,7 +43,7 @@ class UserProvider extends ContainerAware implements UserProviderInterface
           $user->setExpired(false);
           $user->setRoles(array('ROLE_USER', 'ROLE_ADMIN'));
           $user->setCredentialsExpired(false); */
-        print_r($user);
+        //print_r($user);
 
         return $user;
     }
@@ -60,20 +59,4 @@ class UserProvider extends ContainerAware implements UserProviderInterface
         return ($class == "Galaxy\FrontendBundle\Entity\User" ||
                 $class == "\Galaxy\FrontendBundle\Entity\User");
     }
-
-    private function makeRequest($url, $data = null)
-    {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        if (!is_null($data)) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        return $response;
-    }
-
 }
