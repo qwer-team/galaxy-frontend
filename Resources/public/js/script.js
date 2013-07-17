@@ -220,10 +220,13 @@ function FlipperCtrl($scope, $http, $timeout) {
     }
     
     $scope.logout = function(){
-        alert("Через 10 сек разлогинка");
-        $timeout(function() {
-            location.reload()
-        }, 10000);
+        if(!$scope.logoutAlerted){
+            alert("Через 10 сек разлогинка");
+            $timeout(function() {
+                location.reload()
+            }, 10000);
+            $scope.logoutAlerted = true;
+        }
     }
     
     $scope.buyElement = function(){

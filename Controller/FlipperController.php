@@ -287,10 +287,25 @@ class FlipperController extends Controller
             $user = $this->getUser();
             $userInfoService = $this->get("galaxy.user_info.service");
             $userId = $user->getId();
-            $gameInfo = $userInfoService->getGameInfo($userId);
-            $fundsInfo = $userInfoService->getFundsInfo($userId);
-            $user->setGameInfo($gameInfo);
-            $user->setFundsInfo($fundsInfo);
+            
+
+            $userService = $this->get("galaxy.user.service");
+            $response = $userService->getUser($user->getUsername());
+            $expires = null;
+            $curdate = new \DateTime;
+            if (isset($response->data->locked_expires_at) &&
+                    $response->data->locked_expires_at) {
+                $expires = new \DateTime($response->data->locked_expires_at);
+            }
+            if ($expires && $curdate < $expires) {
+                $result = array("result" => "disabled");
+                $this->container->get('security.context')->setToken();
+            } else {
+                $gameInfo = $userInfoService->getGameInfo($userId);
+                $fundsInfo = $userInfoService->getFundsInfo($userId);
+                $user->setGameInfo($gameInfo);
+                $user->setFundsInfo($fundsInfo);
+            }
         }
         $response = new Response();
         $response->setContent(json_encode($result));
@@ -368,6 +383,7 @@ class FlipperController extends Controller
         $questionService = $this->get("question.service");
         $seconds = 15;
         $result = $questionService->listenResult($questionId, $seconds);
+        $resArr = array("result" => $result);
         if (!is_null($result)) {
             $userInfoService = $this->get("galaxy.user_info.service");
             $userId = $user->getId();
@@ -376,22 +392,25 @@ class FlipperController extends Controller
             $user->setGameInfo($gameInfo);
             $user->setFundsInfo($fundsInfo);
             if ($result == 2) {
+                $resArr['result'] = 'secondo';
+                sleep(3);
                 $userService = $this->container->get("galaxy.user.service");
                 $response = $userService->getUser($user->getUsername());
 
                 $expires = null;
                 $curdate = new \DateTime;
-                if (isset($response->data->locked_expires_at) && 
-                                    $response->data->locked_expires_at) {
+                if (isset($response->data->locked_expires_at) &&
+                        $response->data->locked_expires_at) {
                     $expires = new \DateTime($response->data->locked_expires_at);
                 }
                 if ($expires && $curdate < $expires) {
                     $this->container->get('security.context')->setToken();
+                    $resArr['result'] = "disabled";
                 }
             }
         }
         $response = new Response();
-        $response->setContent(json_encode(array("result" => $result)));
+        $response->setContent(json_encode($resArr));
         return $response;
     }
 
