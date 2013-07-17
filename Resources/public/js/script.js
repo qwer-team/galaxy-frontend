@@ -1,4 +1,4 @@
-var galaxy = angular.module("galaxy", []);
+var galaxy = angular.module("galaxy", ['uiSlider']);
 
 function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipMessage = "empty";
@@ -9,6 +9,8 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.capturedPrize = false;
     $scope.updateUserInfo = function(data){
         $scope.user = data;
+        $scope.cost = 0;
+        $scope.floor = 0;
         $scope.x = data.gameInfo.x;
         $scope.y = data.gameInfo.y;
         $scope.z = data.gameInfo.z;
@@ -154,6 +156,14 @@ function FlipperCtrl($scope, $http, $timeout) {
             $scope[varName] = parseInt(old);
         }
     }
+    $scope.toDeposite = function(value, max){
+        console.log(value);
+        console.log(max);
+        if(parseInt(value) > parseInt(max)){
+            $scope.cost = parseInt(max);
+        }
+    }
+    
     
     
     $scope.pointMin = 1;
@@ -179,6 +189,23 @@ function FlipperCtrl($scope, $http, $timeout) {
         $http.post('/jump', data).success($scope.jumpCallback);
     }
     
+    $scope.activeToDeposite = function(){
+        var data = {
+            value: parseInt($scope.cost) 
+        };
+        $http.post('/store/active_to_deposite', data).success($scope.transferCallback);
+    }
+    $scope.depositeToActive = function(){
+        var data = {
+            value: parseInt($scope.cost) 
+        };
+        $http.post('/store/deposite_to_active', data).success($scope.transferCallback);
+    }
+    $scope.transferCallback = function(data){
+        if(data.result == 'success'){
+           alert("transfer ok");
+        }
+    }
     $scope.jumpCallback = function(data, status){
         alert(data.pointType);
         if(data.result == 'success'){

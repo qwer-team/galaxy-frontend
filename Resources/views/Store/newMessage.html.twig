@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" ng-app="galaxy">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fliper 1</title>
+    {% block javascript %}
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-1.9.1.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/script.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.colorbox.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/colorBoxScript.js' )  }}"></script>
+    {% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
+    {% endblock %}
+    </head>
+
+    <body >
+            <div style="background-color: #00FFFFFF">
+                    <form action="{{ path('store_create_message') }}" method="post" {{ form_enctype(form) }} >
+            {{ form_row(form.imgfile) }}
+            {{ form_row(form.text) }}
+            {{ form_row(form.question) }}
+            {{ form_row(form.answers) }}
+            <br />
+            <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</div>
+        </body>
+
+    </html>

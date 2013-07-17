@@ -7,9 +7,14 @@
     
     
     <parameters>
+        <parameter key="image.resize.height">100</parameter>
+        <parameter key="image.resize.width">100</parameter>
+        <parameter key="image.resize.min.width">30</parameter>
+        <parameter key="image.resize.min.height">30</parameter>
         <!-- User -->
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
         <parameter key="user_info.service.class">Galaxy\FrontendBundle\Service\UserInfoService</parameter>
+        <parameter key="space.point_service.class">Galaxy\FrontendBundle\Service\PointService</parameter>
         <parameter key="prize.service.class">Galaxy\FrontendBundle\Service\PrizeService</parameter>
         <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
         <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
@@ -23,13 +28,36 @@
         <parameter key="image.folder">/bundles/galaxyfrontend/images/point/{tag}.png</parameter>
         <parameter key="space.url">http://localhost:8080/gala</parameter>
         <parameter key="space.prizes_info.url">%space.url%/prize/list</parameter>
+        <parameter key="space.get_message_type.url">%space.url%/type/show/message</parameter>
         <parameter key="elements.url">gala.my</parameter>
         <parameter key="buy_element.url">%elements.url%/elements/{userId}/buy.json</parameter>
         <parameter key="game.get_question.url">%questions.url%/{userId}.json</parameter>
         <parameter key="questions.url">>http://demo10.qwer.com.ua/questions</parameter>
         <parameter key="game.answer_question.url">%questions.url%/{questionId}/answers/{answer}.json</parameter>
         <parameter key="question.memcache.key">quest</parameter>
-        
+        <!-- Info -->
+        <parameter key="gala.url">gala.my</parameter>
+        <parameter key="ingo.message_service.class">Galaxy\FrontendBundle\Service\InfoService</parameter>
+        <parameter key="info.messages_list.url">%gala.url%/api/messages/{page}/lengths/{length}.json</parameter>
+        <parameter key="info.messages_count.url">%gala.url%/api/message/count.json</parameter>
+        <parameter key="info.message_create.url">%gala.url%/api/message/create.json</parameter>
+        <parameter key="info.message_get.url">%gala.url%/api/messages/{id}.json</parameter>
+        <parameter key="info.message_update.url">%gala.url%/api/messages/{id}/update.json</parameter>
+        <parameter key="info.message_delete.url">%gala.url%/api/messages/{id}/delete.json</parameter>
+        <parameter key="info.message_last_id.url">%gala.url%/api/message/last/id.json</parameter>
+        <parameter key="info.theme_list.url">%gala.url%/api/theme/list.json</parameter>
+        <parameter key="info.theme.url">%gala.url%/api/themes/{id}.json</parameter>
+        <parameter key="info.template.url">%gala.url%/api/template.json</parameter>
+        <parameter key="info.template_update.url">%gala.url%/api/template/update.json</parameter>
+        <!-- Documents -->
+        <parameter key="document.game.remote_service.class">Galaxy\FrontendBundle\Service\DocumentsRemoteService</parameter>
+        <parameter key="documents.get_funds.url">%docsurl%/{userId}/funds.json</parameter>
+        <parameter key="documents.debit_funds.url">%docsurl%/servicesDebit/create/approve.json</parameter>
+        <parameter key="documents.trans_funds.url">%docsurl%/fundsTransfer/create/approve.json</parameter>
+        <!-- -->
+        <!-- Game -->
+        <parameter key="game.remote_service.class">Galaxy\FrontendBundle\Service\GameRemoteService</parameter>
+        <parameter key="game.user_info.increase_message.url">%galaurl%/increases/{id}/messages.json</parameter>
         <!-- -->
     </parameters>
 
@@ -41,7 +69,7 @@
         </service>
         <service id="galaxy.prize.service" class="%prize.service.class%"/>  
         <service id="galaxy.user_info.service" class="%user_info.service.class%">
-             <call method="setContainer">
+            <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
         </service>
@@ -62,6 +90,82 @@
             </call>
             <call method="setQuestionMemcacheKey">
                 <argument type="string">%question.memcache.key%</argument>
+            </call>
+        </service>
+        <service id="info.service" class="%ingo.message_service.class%">
+            <call method="setMessagesListUrl">
+                <argument type="string">%info.messages_list.url%</argument>>
+            </call>
+            <call method="setMessagesCountUrl">
+                <argument type="string">%info.messages_count.url%</argument>>
+            </call>
+            <call method="setMessageCreateUrl">
+                <argument type="string">%info.message_create.url%</argument>>
+            </call>
+            <call method="setMessageGetUrl">
+                <argument type="string">%info.message_get.url%</argument>>
+            </call>
+            <call method="setMessageUpdateUrl">
+                <argument type="string">%info.message_update.url%</argument>>
+            </call>
+            <call method="setMessageDeleteUrl">
+                <argument type="string">%info.message_delete.url%</argument>>
+            </call>
+            <call method="setMessageLastIdUrl">
+                <argument type="string">%info.message_last_id.url%</argument>>
+            </call>
+            <call method="setThemeListUrl">
+                <argument type="string">%info.theme_list.url%</argument>>
+            </call>
+            <call method="setThemeUrl">
+                <argument type="string">%info.theme.url%</argument>>
+            </call>
+            <call method="setTemplateUrl">
+                <argument>%info.template.url%</argument>
+            </call>
+            <call method="setTemplateUpdateUrl">
+                <argument>%info.template_update.url%</argument>
+            </call>
+        </service>
+        <service id="point.service" class="%space.point_service.class%">
+            <call method="setGetMessageTypeUrl">
+                <argument type="string">%space.get_message_type.url%</argument>>
+            </call>
+        </service>
+        
+        <service id="documents.service" class="%document.game.remote_service.class%">
+            <call method="setTransFundsUrl">
+                <argument type="string">%documents.trans_funds.url%</argument>>
+            </call>
+            <call method="setDebitFundsUrl">
+                <argument type="string">%documents.debit_funds.url%</argument>>
+            </call>
+        </service>
+        
+        <service id="game.service" class="%game.remote_service.class%">
+            <call method="setIncMessCountUrl">
+                <argument type="string">%game.user_info.increase_message.url%</argument>>
+            </call>
+        </service>
+        
+        <service id="storage" class="Galaxy\FrontendBundle\Service\StorageService">
+            <call method="setFolder">
+                <argument type="string" >%kernel.root_dir%/../web/images/</argument>
+            </call>
+            <call method="setrelUrl">
+                <argument type="string" >/images/</argument>
+            </call>
+            <call method="setWidth">
+                <argument type="string" >%image.resize.width%</argument>
+            </call>
+            <call method="setHeight">
+                <argument type="string" >%image.resize.height%</argument>
+            </call>
+            <call method="setMinWidth">
+                <argument type="string" >%image.resize.min.width%</argument>
+            </call>
+            <call method="setMinHeight">
+                <argument type="string" >%image.resize.min.height%</argument>
             </call>
         </service>
     </services>
