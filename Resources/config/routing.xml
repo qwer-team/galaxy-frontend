@@ -64,10 +64,13 @@
     <route id="store_buy_message" pattern="/store/buy_message" methods="post">
         <default key="_controller">GalaxyFrontendBundle:Store:buyMessage</default>
     </route>
-    <route id="store_active_to_deposite" pattern="/store/active_to_deposite" methods="post">
-        <default key="_controller">GalaxyFrontendBundle:Store:activeToDeposite</default>
-    </route>
     <route id="store_deposite_to_active" pattern="/store/deposite_to_active" methods="post">
         <default key="_controller">GalaxyFrontendBundle:Store:depositeToActive</default>
+    </route>
+    <route id="store_safe_to_active" pattern="/store/safe_to_active" methods="post">
+        <default key="_controller">GalaxyFrontendBundle:Store:safeToActive</default>
+    </route>
+    <route id="store_active_to_safe" pattern="/store/active_to_safe" methods="post">
+        <default key="_controller">GalaxyFrontendBundle:Store:activeToSafe</default>
     </route>
 </routes>

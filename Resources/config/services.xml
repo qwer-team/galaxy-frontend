@@ -54,6 +54,7 @@
         <parameter key="documents.get_funds.url">%docsurl%/{userId}/funds.json</parameter>
         <parameter key="documents.debit_funds.url">%docsurl%/servicesDebit/create/approve.json</parameter>
         <parameter key="documents.trans_funds.url">%docsurl%/fundsTransfer/create/approve.json</parameter>
+        <parameter key="documents.get_funds.url">%docsurl%/{userId}/funds.json</parameter>
         <!-- -->
         <!-- Game -->
         <parameter key="game.remote_service.class">Galaxy\FrontendBundle\Service\GameRemoteService</parameter>
@@ -139,6 +140,9 @@
             </call>
             <call method="setDebitFundsUrl">
                 <argument type="string">%documents.debit_funds.url%</argument>>
+            </call>
+            <call method="setGetFundsUrl">
+                <argument type="string">%documents.get_funds.url%</argument>
             </call>
         </service>
         

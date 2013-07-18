@@ -214,7 +214,7 @@
                                 <div class="light"></div>
                                 <div class="icon icon-8"></div>
                             </div>
-                            <span>{{user.fundsInfo.transDeposite}}</span>
+                            <span>{{user.fundsInfo.transSafe}}</span>
                             <div class="clear"></div>
                         </div>
                         <div class="clear"></div>
@@ -234,22 +234,59 @@
             </div><!-- .fliper -->
         </body>
 {% endverbatim %}
-        {% if messageType.onCost %}<a href="{{ path("store_new_message") }}">Оставить Сообщение</a>{% endif %}
+        {% if messageType.messActive %}<a href="{{ path("store_new_message") }}">Оставить Сообщение</a>{% endif %}
         <body >
             <div style="background-color: #00FFFFFF">
-                    <form action="{{ path('store_buy_message') }}" method="post" >
+                   
             <br />
-            <button type="submit" class="btn btn-primary">Купить сообщение</button>
-    </form>
-</div>{% verbatim %}
-                <br>
-                <ul style="height: 200px">
+            <button type="submit" ng-click="buyMessageCount()" class="btn btn-primary" {% if not messageType.messCountDepActive %}disabled="true"{% endif %}>Купить сообщение</button>
     
-        <p>Active: {{user.fundsInfo.active - cost}}</p>
-        <p>Deposite: {{user.fundsInfo.deposite + (cost * user.fundsInfo.rates.3)}}</p> 
-        <slider floor="{{ floor }}" style="width: 30%" ceiling="{{user.fundsInfo.active}}" step="{{user.fundsInfo.active / 100}}" precision="2" ng-model="cost"   class="ng-isolate-scope ng-scope ng-pristine ng-valid"></slider>
+</div>{% verbatim %}
+<br>
+      <ul style="height: 200px">
+        <p>Active: {{user.fundsInfo.active - costActive}}</p>
+        <p>Safe: {{user.fundsInfo.safe + costActive * 1}}</p> 
+        <slider floor="{{ floor }}" style="width: 30%" ceiling="{{user.fundsInfo.active}}" step="{{1}}" precision="2" ng-model="costActive"   class="ng-isolate-scope ng-scope ng-pristine ng-valid"></slider>
+        <input type="text" 
+               ng-model="costActive" 
+               ng-change="toDeposite({{costActive}}, {{user.fundsInfo.active}})"
+               type="number" name="" id=""
+               min="{{0}}"
+               max="{{user.fundsInfo.active}}"
+               data-integer-input=""
+                                          />
        <br />
-            <button type="submit" ng-click="activeToDeposite()" class="btn btn-primary">Перевести на депозитный</button>
-</ul>{% endverbatim %}
+       <button type="submit" ng-click="activeToSafe()" class="btn btn-primary">С Активного на безопасный</button>
+     </ul>
+     <ul style="height: 200px">
+        <p>Safe: {{user.fundsInfo.safe - costSafe}}</p>
+        <p>Active: {{user.fundsInfo.active + costSafe * 1}}</p> 
+        <slider floor="{{ floor }}" style="width: 30%" ceiling="{{user.fundsInfo.safe}}" step="{{1}}" precision="2" ng-model="costSafe"   class="ng-isolate-scope ng-scope ng-pristine ng-valid"></slider>
+        <input type="text" 
+               ng-model="costSafe" 
+               ng-change="toDeposite({{costSafe}}, {{user.fundsInfo.safe}})"
+               type="number" name="" id=""
+               min="{{0}}"
+               max="{{user.fundsInfo.safe}}"
+               data-integer-input=""
+                                          />
+       <br />
+       <button type="submit" ng-click="safeToActive()" class="btn btn-primary">С безопасного на активный</button>
+     </ul>
+     <ul style="height: 200px">
+        <p>Active: {{user.fundsInfo.active + costDeposite * user.fundsInfo.rates.3}}</p>
+        <p>Deposite: {{user.fundsInfo.deposite - costDeposite}}</p> 
+        <input disabled="true" type="text" 
+               ng-model="costDeposite" 
+               ng-change="toDeposite({{costDeposite}}, {{user.fundsInfo.deposite}})"
+               type="number" name="" id=""
+               min="{{0}}"
+               max="{{user.fundsInfo.deposite}}"
+               data-integer-input=""
+                                          />
+       <br />
+       <button type="submit" ng-click="depositeToActive()" class="btn btn-primary">С депозитного на активный</button>
+     </ul>
+{% endverbatim %}
         </body>
     </html>

@@ -9,7 +9,9 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.capturedPrize = false;
     $scope.updateUserInfo = function(data){
         $scope.user = data;
-        $scope.cost = 0;
+        $scope.costActive = 0;
+        $scope.costDeposite = 100;
+        $scope.costSafe = 0;
         $scope.floor = 0;
         $scope.x = data.gameInfo.x;
         $scope.y = data.gameInfo.y;
@@ -189,21 +191,40 @@ function FlipperCtrl($scope, $http, $timeout) {
         $http.post('/jump', data).success($scope.jumpCallback);
     }
     
-    $scope.activeToDeposite = function(){
+    $scope.activeToSafe = function(){
         var data = {
-            value: parseInt($scope.cost) 
+            value: parseInt($scope.costActive) 
         };
-        $http.post('/store/active_to_deposite', data).success($scope.transferCallback);
+        if(parseInt($scope.costActive)> 0){
+            $http.post('/store/active_to_safe', data).success($scope.transferCallback);
+        } else alert("Значение должно быть > 0");
+        
+    }
+    $scope.safeToActive = function(){
+        var data = {
+            value: parseInt($scope.costSafe) 
+        };
+        if(parseInt($scope.costSafe) > 0){
+            $http.post('/store/safe_to_active', data).success($scope.transferCallback);
+        }else alert("Значение должно быть > 0");
+        
     }
     $scope.depositeToActive = function(){
         var data = {
-            value: parseInt($scope.cost) 
+            value: parseInt($scope.costDeposite) 
         };
         $http.post('/store/deposite_to_active', data).success($scope.transferCallback);
     }
+    
+    $scope.buyMessageCount = function(){
+        $http.post('/store/buy_message').success($scope.transferCallback);
+    }
+    
     $scope.transferCallback = function(data){
+        console.log(data);
         if(data.result == 'success'){
            alert("transfer ok");
+           $scope.updateUserInfo(data.user);
         }
     }
     $scope.jumpCallback = function(data, status){
