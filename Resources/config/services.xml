@@ -15,6 +15,7 @@
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
         <parameter key="user_info.service.class">Galaxy\FrontendBundle\Service\UserInfoService</parameter>
         <parameter key="space.point_service.class">Galaxy\FrontendBundle\Service\PointService</parameter>
+        <parameter key="user.service.class">Galaxy\FrontendBundle\Service\UserService</parameter>
         <parameter key="prize.service.class">Galaxy\FrontendBundle\Service\PrizeService</parameter>
         <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
         <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
@@ -72,6 +73,11 @@
         <service id="galaxy.user_info.service" class="%user_info.service.class%">
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="galaxy.user.service" class="%user.service.class%">
+            <call method="setGetUserUrl">
+                <argument type="string">%user_providers.user_login.url%</argument>
             </call>
         </service>
         <service id="galaxy.security.authentication.provider"

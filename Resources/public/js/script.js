@@ -7,7 +7,22 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.pointImage = false;
     $scope.userLog = false;
     $scope.capturedPrize = false;
-    $scope.updateUserInfo = function(data){
+    $scope.lightAmount = '';
+    $scope.unlightAmount = function(){
+        $scope.lightAmount = '';
+    }
+    $scope.updateUserInfo = function(data, status){
+        if(status == 401){
+            $scope.logout();
+        }
+        if($scope.user){
+            console.log($scope.user.fundsInfo.active+ ' != ' + data.fundsInfo.active);
+            if($scope.user.fundsInfo.active != data.fundsInfo.active){
+                $scope.lightAmount = 'lightAmount';
+                console.log('lightAmount');
+                $timeout($scope.unlightAmount, 20000);
+            }
+        }
         $scope.user = data;
         $scope.costActive = 0;
         $scope.costDeposite = 100;
@@ -42,6 +57,16 @@ function FlipperCtrl($scope, $http, $timeout) {
                 }
             });
         }
+        if(data.lockedExpiresAt){
+            var lock = new Date(data.lockedExpiresAt.date + " " + data.lockedExpiresAt.timezone);
+            var now = new Date();
+            if(lock > now ){
+                $scope.logout();
+            }
+        }
+    }
+    $scope.userError = function(data, status){
+        $scope.logout();
     }
     $scope.questionTimeout = false;
     $scope.checkQuestion = function(data, status){
@@ -49,14 +74,18 @@ function FlipperCtrl($scope, $http, $timeout) {
             var url = "check/" + $scope.question.id;
             $http.get(url).success($scope.checkQuestion);
         } else {
-            $http.get('/user').success($scope.updateUserInfo);
+            $scope.getUser();
         }
     }
+    $scope.getUser = function(){
+        $http.get('/user').success($scope.updateUserInfo)
+                          .error($scope.userError);
+    };
     $scope.updateQuestionTime = function(){
-        $scope.question.seconds--;
         if($scope.question.seconds > 0){
-            $timeout($scope.updateQuestionTime, 1000);
+            $scope.question.seconds--;
         }
+        $timeout($scope.updateQuestionTime, 1000);
     }
     $scope.hasMonyeForPrize = function(){
         if(!$scope.elements){
@@ -82,7 +111,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         $scope.pointImage = true;
     }
   
-    $http.get('/user').success($scope.updateUserInfo);
+    $scope.getUser();
     
     $scope.jumpTooltip = false;
     $scope.jumpTooltipText = "empty";
@@ -233,11 +262,18 @@ function FlipperCtrl($scope, $http, $timeout) {
             $scope.updateUserInfo(data.user);
             $scope.updatePointImage(data);
             if(data.tag == "black"){
-                alert("Через 10 сек разлогинка");
-                $timeout(function() {
-                    location.reload()
-                }, 10000);
+                $scope.logout();
             }
+        }
+    }
+    
+    $scope.logout = function(){
+        if(!$scope.logoutAlerted){
+            alert("Через 10 сек разлогинка");
+            $timeout(function() {
+                location.reload()
+            }, 10000);
+            $scope.logoutAlerted = true;
         }
     }
     
@@ -260,7 +296,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         $http.get(url).success($scope.answerResult);
     }
     $scope.answerResult = function(data, status){
-        $http.get('/user').success($scope.updateUserInfo);
+        $scope.getUser();
     }
 }
 
