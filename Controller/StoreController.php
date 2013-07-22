@@ -91,9 +91,9 @@ class StoreController extends Controller
         $user = $this->getUser();
         $userId = $user->getId();
         $gameService = $this->get("game.service");
-        $responseDebit = $this->getDebitFunds($userId, $this->deposite);
+        $responseDebit = $this->messageCountDebitFunds($userId, $this->deposite);
         if ($responseDebit->result == 'success') {
-            $responseFunds = (array)$gameService->increaseUserCountMessages($userId);
+            $responseFunds = (array) $gameService->increaseUserCountMessages($userId);
             $this->updateFunds();
             $responseFunds['user'] = $this->updateFunds();
             $responseFunds['result'] = "success";
@@ -108,7 +108,7 @@ class StoreController extends Controller
         $response = new Response();
         $user = $this->getUser();
         $userId = $user->getId();
-        $responseFunds = $this->activeToSafeFunds($userId, $value);
+        $responseFunds = $this->transferFunds($userId, $value, $this->active, $this->transSafe);
         $responseFunds['user'] = $this->updateFunds();
         $response->setContent(json_encode($responseFunds));
         return $response;
@@ -120,7 +120,7 @@ class StoreController extends Controller
         $value = $request->get('value');
         $user = $this->getUser();
         $userId = $user->getId();
-        $responseFunds = $this->depositeToActiveFunds($userId, $value);
+        $responseFunds = $this->transferFunds($userId, $this->depositeToActiveRates($value), $this->active, $this->deposite);
         $responseFunds['user'] = $this->updateFunds();
         $response->setContent(json_encode($responseFunds));
         return $response;
@@ -132,7 +132,7 @@ class StoreController extends Controller
         $value = $request->get('value');
         $user = $this->getUser();
         $userId = $user->getId();
-        $responseFunds = $this->safeToActiveFunds($userId, $value);
+        $responseFunds = $this->transferFunds($userId, $value, $this->safe, $this->transActive);
         $responseFunds['user'] = $this->updateFunds();
         $response->setContent(json_encode($responseFunds));
         return $response;
@@ -169,22 +169,7 @@ class StoreController extends Controller
         return $this->createForm($form, $message === null ? $data : $message);
     }
 
-    private function getTransFunds($userId)
-    {
-        $pointService = $this->get("point.service");
-        $documentsService = $this->get("documents.service");
-        $messageType = $pointService->getMessageType();
-        $cost = $messageType->cost;
-        $data = array(
-            'OA1' => $userId,
-            'summa1' => $cost,
-            'account' => $this->active
-        );
-        $response = $documentsService->transFunds($data);
-        return $response;
-    }
-
-    private function getDebitFunds($userId, $account)
+    private function messageCountDebitFunds($userId, $account)
     {
         $pointService = $this->get("point.service");
         $documentsService = $this->get("documents.service");
@@ -199,7 +184,7 @@ class StoreController extends Controller
         return $response;
     }
 
-    private function activeToSafeFunds($userId, $value)
+    private function transferFunds($userId, $value, $from, $to)
     {
         $documentsService = $this->get("documents.service");
         $userFunds = $documentsService->getFunds($userId);
@@ -208,64 +193,14 @@ class StoreController extends Controller
             $data = array(
                 'OA1' => $userId,
                 'summa1' => $value,
-                'account' => $this->active
+                'account' => $from
             );
             $debitResponse = $documentsService->debitFunds($data);
             if ($debitResponse->result == 'success') {
                 $dataTrans = array(
                     'OA1' => $userId,
                     'summa1' => $value,
-                    'account' => $this->transSafe
-                );
-                $transFunds = $documentsService->transFunds($dataTrans);
-                $response["result"] = $transFunds->result;
-            }
-        }
-        return $response;
-    }
-
-    private function safeToActiveFunds($userId, $value)
-    {
-        $documentsService = $this->get("documents.service");
-        $userFunds = $documentsService->getFunds($userId);
-        $response = array("result" => "fail");
-        if ($userFunds->safe >= $value) {
-            $data = array(
-                'OA1' => $userId,
-                'summa1' => $value,
-                'account' => $this->safe
-            );
-            $debitResponse = $documentsService->debitFunds($data);
-            if ($debitResponse->result == 'success') {
-                $dataTrans = array(
-                    'OA1' => $userId,
-                    'summa1' => $value,
-                    'account' => $this->transActive
-                );
-                $transFunds = $documentsService->transFunds($dataTrans);
-                $response["result"] = $transFunds->result;
-            }
-        }
-        return $response;
-    }
-
-    private function depositeToActiveFunds($userId, $value)
-    {
-        $documentsService = $this->get("documents.service");
-        $userFunds = $documentsService->getFunds($userId);
-        $response = array("result" => "fail");
-        if ($userFunds->deposite >= $value) {
-            $data = array(
-                'OA1' => $userId,
-                'summa1' => $value,
-                'account' => $this->deposite
-            );
-            $debitResponse = $documentsService->debitFunds($data);
-            if ($debitResponse->result == 'success') {
-                $dataTrans = array(
-                    'OA1' => $userId,
-                    'summa1' => $this->depositeToActiveRates($value),
-                    'account' => $this->active
+                    'account' => $to
                 );
                 $transFunds = $documentsService->transFunds($dataTrans);
                 $response["result"] = $transFunds->result;

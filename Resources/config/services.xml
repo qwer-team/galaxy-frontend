@@ -33,7 +33,7 @@
         <parameter key="elements.url">gala.my</parameter>
         <parameter key="buy_element.url">%elements.url%/elements/{userId}/buy.json</parameter>
         <parameter key="game.get_question.url">%questions.url%/{userId}.json</parameter>
-        <parameter key="questions.url">>http://demo10.qwer.com.ua/questions</parameter>
+        <parameter key="questions.url">>http://demo10.qwer.com.ua/api/questions</parameter>
         <parameter key="game.answer_question.url">%questions.url%/{questionId}/answers/{answer}.json</parameter>
         <parameter key="question.memcache.key">quest</parameter>
         <!-- Info -->

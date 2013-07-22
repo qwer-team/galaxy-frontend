@@ -14,7 +14,7 @@
         <parameter key="docsurl">gala.my/documents</parameter>
         <parameter key="gameurl">gala.my/games</parameter>
         <parameter key="jump.url">gala.my/jump</parameter>
-        <parameter key="questions.url">gala.my/questions</parameter>
+        <parameter key="questions.url">gala.my/api/questions</parameter>
         <parameter key="galaurl">gala.my</parameter>
         <!-- -->
     </parameters>
