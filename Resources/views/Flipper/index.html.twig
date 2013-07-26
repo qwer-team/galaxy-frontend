@@ -48,7 +48,7 @@
                     </label>
                 </li>
             </ul>
-            
+
             <input ng-click="answer()" type="submit" value="pli">
         </div>
         <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
@@ -277,6 +277,16 @@
                     </div><!-- .select-coordinats -->
                 </div>
             </div><!-- .fliper -->
+            <div  style="height: 100px">
+                <select size="1" ng-model="pointType">
+                    <option value="1">+%</option>
+                    <option value="2">+ Период для элементов</option>
+                    <option value="3">+ Период принадлежности приза</option>
+                    <option value="4">+ Элемент приза</option>
+                </select>
+                    <button type="button" ng-click="radar()" >Радар</button>
+            </div>
+            
         </body>
 {% endverbatim %}
     </html>

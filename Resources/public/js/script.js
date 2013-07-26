@@ -3,6 +3,7 @@ var galaxy = angular.module("galaxy", ['uiSlider']);
 function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipMessage = "empty";
     $scope.tooltipStyle = {};
+    $scope.pointType = 1;
     $scope.pointImagePath = "";
     $scope.pointImage = false;
     $scope.userLog = false;
@@ -218,6 +219,36 @@ function FlipperCtrl($scope, $http, $timeout) {
             superjump: superjump
         };
         $http.post('/jump', data).success($scope.jumpCallback);
+    }
+    $scope.radar = function(){
+        var data = {
+            pointType: $scope.pointType
+        };
+        $http.post('/flipper/radar', data).success($scope.radarCallback);
+    }
+    $scope.radarCallback = function(data){
+        if(data.result == 'success'){
+           alert("radar куплен");
+           $scope.updateUserInfo(data.user);
+        }else {
+            alert("FAIL");
+        }
+    }
+    
+    $scope.buyFlipper = function(id){
+        var data = {
+            flipperId: parseInt(id) 
+        };
+        $http.post('/store/buy_flipper', data).success($scope.flipperCallback);
+    }
+     $scope.flipperCallback = function(data){
+        console.log(data);
+        if(data.result == 'success'){
+           alert("флипер куплен");
+           $scope.updateUserInfo(data.user);
+        }else {
+            alert("FAIL");
+        }
     }
     
     $scope.activeToSafe = function(){

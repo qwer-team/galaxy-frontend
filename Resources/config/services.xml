@@ -60,6 +60,11 @@
         <!-- Game -->
         <parameter key="game.remote_service.class">Galaxy\FrontendBundle\Service\GameRemoteService</parameter>
         <parameter key="game.user_info.increase_message.url">%galaurl%/increases/{id}/messages.json</parameter>
+        <parameter key="game.get_flipper.url">%galaurl%/flippers/{id}.json</parameter>
+        <parameter key="game.get_flippers_list.url">%galaurl%/flipper/list.json</parameter>
+        <parameter key="game.inc_flipper.url">%galaurl%/increases/{id}/flippers/{flipperId}.json</parameter>
+        <parameter key="game.user_info.reset_radar.url">%galaurl%/radars/{id}/reset.json</parameter>
+        <parameter key="game.user_info.start_radar.url">%galaurl%/radars/{id}/starts/{type}.json</parameter>
         <!-- -->
     </parameters>
 
@@ -155,6 +160,18 @@
         <service id="game.service" class="%game.remote_service.class%">
             <call method="setIncMessCountUrl">
                 <argument type="string">%game.user_info.increase_message.url%</argument>>
+            </call>
+            <call method="setGetFlipperUrl">
+                <argument type="string">%game.get_flipper.url%</argument>>
+            </call>
+            <call method="setFlippersListUrl">
+                <argument type="string">%game.get_flippers_list.url%</argument>>
+            </call>
+            <call method="setResetRadarUrl">
+                <argument type="string">%game.user_info.reset_radar.url%</argument>
+            </call>
+            <call method="setStartRadarUrl">
+                <argument type="string">%game.user_info.start_radar.url%</argument>
             </call>
         </service>
         

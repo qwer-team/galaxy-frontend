@@ -13,6 +13,12 @@ use Qwer\Curl\Curl;
 class FlipperController extends Controller
 {
 
+    private $accounts = array(
+        "1" => "active",
+        "2" => "safe",
+        "3" => "deposite"
+    );
+
     /**
      * @Template()
      */
@@ -33,6 +39,44 @@ class FlipperController extends Controller
         $response = new Response();
         $response->setContent(json_encode($content));
         $response->setStatusCode($status);
+        return $response;
+    }
+
+    public function radarAction(Request $request)
+    {
+        $user = $this->getUser();
+        $gameInfo = $user->getGameInfo();
+        $userInfoService = $this->container->get("galaxy.user_info.service");
+        $gameService = $this->container->get("game.service");
+        $pointType = $request->get('pointType');
+        $responseDebit = $this->radarDebitFunds($user->getId(), $gameInfo->flipper);
+        if ($responseDebit) {
+            $gameService->resetUserInfoRadar($gameInfo->id);
+            $responseRadar = $gameService->radarStart($gameInfo->id, $pointType);
+            echo $responseRadar;
+        }
+        $responseRadar['user'] = $this->updateFunds();
+        $response = new Response();
+        $response->setContent(json_encode($responseRadar));
+        return $response;
+    }
+
+    private function radarDebitFunds($userId, $flipper)
+    {
+        $documentsService = $this->container->get("documents.service");
+        $userFunds = (array)$documentsService->getFunds($userId);
+        $cost = $flipper->radarCost;
+        $accountId = $flipper->radarSpec ? 3 : 1;
+        $accountTitle = $this->accounts[$accountId];
+        $response = false;
+        if($userFunds[$accountTitle] > $cost){
+        $data = array(
+            'OA1' => $userId,
+            'summa1' => $cost,
+            'account' => $accountId
+        );
+        $response = $documentsService->debitFunds($data);
+        }
         return $response;
     }
 
@@ -287,7 +331,7 @@ class FlipperController extends Controller
             $user = $this->getUser();
             $userInfoService = $this->get("galaxy.user_info.service");
             $userId = $user->getId();
-            
+
 
             $userService = $this->get("galaxy.user.service");
             $response = $userService->getUser($user->getUsername());
@@ -412,6 +456,18 @@ class FlipperController extends Controller
         $response = new Response();
         $response->setContent(json_encode($resArr));
         return $response;
+    }
+
+    private function updateFunds()
+    {
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $userInfoService = $this->get("galaxy.user_info.service");
+        $fundsInfo = $userInfoService->getFundsInfo($userId);
+        $gameInfo = $userInfoService->getGameInfo($userId);
+        $user->setFundsInfo($fundsInfo);
+        $user->setGameInfo($gameInfo);
+        return $user->jsonSerialize();
     }
 
 }

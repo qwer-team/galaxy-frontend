@@ -4,11 +4,34 @@ namespace Galaxy\FrontendBundle\Service;
 
 use Qwer\Curl\Curl;
 
-
 class GameRemoteService
 {
 
     private $incMessCountUrl;
+    private $getFlipperUrl;
+    private $flippersListUrl;
+    private $resetRadarUrl;
+    private $startRadarUrl;
+
+    public function setStartRadarUrl($startRadarUrl)
+    {
+        $this->startRadarUrl = $startRadarUrl;
+    }
+
+    public function setResetRadarUrl($resetRadarUrl)
+    {
+        $this->resetRadarUrl = $resetRadarUrl;
+    }
+
+    public function setFlippersListUrl($flippersListUrl)
+    {
+        $this->flippersListUrl = $flippersListUrl;
+    }
+
+    public function setGetFlipperUrl($getFlipperUrl)
+    {
+        $this->getFlipperUrl = $getFlipperUrl;
+    }
 
     public function setIncMessCountUrl($incMessCountUrl)
     {
@@ -19,6 +42,39 @@ class GameRemoteService
     {
         $url = str_replace("{id}", $id, $this->incMessCountUrl);
 
+        $response = json_decode($this->makeRequest($url));
+        return $response;
+    }
+
+    public function getFlipper($id)
+    {
+        $url = str_replace("{id}", $id, $this->getFlipperUrl);
+
+        $response = json_decode($this->makeRequest($url));
+        return $response;
+    }
+
+    public function getFlippersList()
+    {
+        $response = json_decode($this->makeRequest($this->flippersListUrl));
+        return $response;
+    }
+
+    public function resetUserInfoRadar($id)
+    {
+        $url = str_replace("{id}", $id, $this->resetRadarUrl);
+
+        $response = json_decode($this->makeRequest($url));
+        return $response;
+    }
+
+    public function radarStart($id, $type)
+    {
+        $find = array("{id}", "{type}");
+        $replace = array($id, $type);
+
+        $url = str_replace($find, $replace, $this->startRadarUrl);
+        echo $this->makeRequest($url);
         $response = json_decode($this->makeRequest($url));
         return $response;
     }
