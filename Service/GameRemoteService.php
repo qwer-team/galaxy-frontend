@@ -12,6 +12,12 @@ class GameRemoteService
     private $flippersListUrl;
     private $resetRadarUrl;
     private $startRadarUrl;
+    private $zoneBuyUrl;
+
+    public function setZoneBuyUrl($zoneBuyUrl)
+    {
+        $this->zoneBuyUrl = $zoneBuyUrl;
+    }
 
     public function setStartRadarUrl($startRadarUrl)
     {
@@ -74,7 +80,16 @@ class GameRemoteService
         $replace = array($id, $type);
 
         $url = str_replace($find, $replace, $this->startRadarUrl);
-        echo $this->makeRequest($url);
+        $response = json_decode($this->makeRequest($url));
+        return $response;
+    }
+
+    public function zoneBuy($id, $jumps)
+    {
+        $find = array("{id}", "{jumps}");
+        $replace = array($id, $jumps);
+
+        $url = str_replace($find, $replace, $this->zoneBuyUrl);
         $response = json_decode($this->makeRequest($url));
         return $response;
     }

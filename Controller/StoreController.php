@@ -21,6 +21,11 @@ class StoreController extends Controller
     private $safe = 2;
     private $transSafe = 5;
     private $transActive = 4;
+    private $accounts = array(
+        "1" => "active",
+        "2" => "safe",
+        "3" => "deposite"
+    );
 
     /**
      * @Template()
@@ -35,6 +40,54 @@ class StoreController extends Controller
         return array(
             "flippers" => $fliperList,
             "messageType" => $messageType,
+        );
+    }
+
+    public function buyZoneAction(Request $request)
+    {
+        $response = new Response();
+        $userInfoService = $this->get("galaxy.user_info.service");
+        $documentsService = $this->get("documents.service");
+        $gameService = $this->get("game.service");
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $value = $request->get('value');
+        $fundsInfo = (array) $userInfoService->getFundsInfo($userId);
+        $gameInfo = $userInfoService->getGameInfo($userId);
+        $flipper = (array) $gameInfo->flipper;
+        $parameters = $this->getFlipperParameters($flipper, $value);
+        $nameAccount = $this->accounts[$parameters['account']];
+        $result = array("result" => 'fail');
+        if ($fundsInfo[$nameAccount] > $parameters['summa']) {
+            $data = array(
+                'OA1' => $userId,
+                'summa1' => $parameters['summa'],
+                'account' => $parameters['account'],
+            );
+            $documentsService->debitFunds($data);
+            $gameService->zoneBuy($gameInfo->id, $parameters['duration']);
+            $result['result'] = 'success';
+        }
+        $result['user'] = $this->updateFunds();
+        $response->setContent(json_encode($result));
+        return $response;
+    }
+
+    private function getFlipperParameters($flipper, $value)
+    {
+        if ($flipper["id"] == 2) {
+            $account = $flipper['secondZoneSpec' . $value] ? $this->deposite : $this->active;
+            $summa = $flipper['secondZoneCost' . $value];
+            $duration = $flipper['secondZoneDuration' . $value];
+        } elseif ($flipper["id"] == 3) {
+            $account = $flipper['firstZoneSpec' . $value] ? $this->deposite : $this->active;
+            $summa = $flipper['firstZoneCost' . $value];
+            $duration = $flipper['firstZoneDuration' . $value];
+        }
+        return array(
+            "account" => $account,
+            "summa" => $summa,
+            "duration" => $duration
         );
     }
 

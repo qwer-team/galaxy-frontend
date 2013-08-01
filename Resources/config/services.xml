@@ -65,6 +65,7 @@
         <parameter key="game.inc_flipper.url">%galaurl%/increases/{id}/flippers/{flipperId}.json</parameter>
         <parameter key="game.user_info.reset_radar.url">%galaurl%/radars/{id}/reset.json</parameter>
         <parameter key="game.user_info.start_radar.url">%galaurl%/radars/{id}/starts/{type}.json</parameter>
+        <parameter key="game.user_info.zone_buy.url">%galaurl%/buys/{id}/zones/{jumps}.json</parameter>
         <!-- -->
     </parameters>
 
@@ -173,6 +174,10 @@
             <call method="setStartRadarUrl">
                 <argument type="string">%game.user_info.start_radar.url%</argument>
             </call>
+            <call method="setZoneBuyUrl">
+                <argument type="string">%game.user_info.zone_buy.url%</argument>
+            </call>
+          
         </service>
         
         <service id="storage" class="Galaxy\FrontendBundle\Service\StorageService">

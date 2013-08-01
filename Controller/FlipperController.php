@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Galaxy\FrontendBundle\Form\JumpRequestType;
 use Galaxy\FrontendBundle\Entity\JumpRequest;
 use Qwer\Curl\Curl;
+use Galaxy\FrontendBundle\Entity\Zone;
 
 class FlipperController extends Controller
 {
@@ -42,21 +43,34 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function radarAction(Request $request)
+    public function deleteZoneAction()
     {
+        $response = new Response();
         $user = $this->getUser();
         $gameInfo = $user->getGameInfo();
-        $userInfoService = $this->container->get("galaxy.user_info.service");
+        $gameService = $this->container->get("game.service");
+        $responseRadar['result'] = 'fail';
+        if ($gameService->resetUserInfoRadar($gameInfo->id)) {
+            $responseRadar['result'] = 'success';
+        }
+        $responseRadar['user'] = $this->updateFunds();
+        $response->setContent(json_encode($responseRadar));
+        return $response;
+    }
+
+    public function radarAction(Request $request)
+    {
+        $response = new Response();
+        $user = $this->getUser();
+        $gameInfo = $user->getGameInfo();
         $gameService = $this->container->get("game.service");
         $pointType = $request->get('pointType');
         $responseDebit = $this->radarDebitFunds($user->getId(), $gameInfo->flipper);
         if ($responseDebit) {
             $gameService->resetUserInfoRadar($gameInfo->id);
-            $responseRadar = $gameService->radarStart($gameInfo->id, $pointType);
-            echo $responseRadar;
+            $responseRadar = (array)$gameService->radarStart($gameInfo->id, $pointType);
         }
         $responseRadar['user'] = $this->updateFunds();
-        $response = new Response();
         $response->setContent(json_encode($responseRadar));
         return $response;
     }
@@ -64,18 +78,18 @@ class FlipperController extends Controller
     private function radarDebitFunds($userId, $flipper)
     {
         $documentsService = $this->container->get("documents.service");
-        $userFunds = (array)$documentsService->getFunds($userId);
+        $userFunds = (array) $documentsService->getFunds($userId);
         $cost = $flipper->radarCost;
         $accountId = $flipper->radarSpec ? 3 : 1;
         $accountTitle = $this->accounts[$accountId];
         $response = false;
-        if($userFunds[$accountTitle] > $cost){
-        $data = array(
-            'OA1' => $userId,
-            'summa1' => $cost,
-            'account' => $accountId
-        );
-        $response = $documentsService->debitFunds($data);
+        if ($userFunds[$accountTitle] > $cost) {
+            $data = array(
+                'OA1' => $userId,
+                'summa1' => $cost,
+                'account' => $accountId
+            );
+            $response = $documentsService->debitFunds($data);
         }
         return $response;
     }
