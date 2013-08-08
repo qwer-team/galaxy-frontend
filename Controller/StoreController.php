@@ -21,6 +21,11 @@ class StoreController extends Controller
     private $safe = 2;
     private $transSafe = 5;
     private $transActive = 4;
+    private $accounts = array(
+        "1" => "active",
+        "2" => "safe",
+        "3" => "deposite"
+    );
 
     /**
      * @Template()
@@ -28,9 +33,61 @@ class StoreController extends Controller
     public function indexAction()
     {
         $pointService = $this->get("point.service");
+        $gameService = $this->get("game.service");
+        $fliperList = $gameService->getFlippersList();
         $messageType = $pointService->getMessageType();
+
         return array(
+            "flippers" => $fliperList,
             "messageType" => $messageType,
+        );
+    }
+
+    public function buyZoneAction(Request $request)
+    {
+        $response = new Response();
+        $userInfoService = $this->get("galaxy.user_info.service");
+        $documentsService = $this->get("documents.service");
+        $gameService = $this->get("game.service");
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $value = $request->get('value');
+        $fundsInfo = (array) $userInfoService->getFundsInfo($userId);
+        $gameInfo = $userInfoService->getGameInfo($userId);
+        $flipper = (array) $gameInfo->flipper;
+        $parameters = $this->getFlipperParameters($flipper, $value);
+        $nameAccount = $this->accounts[$parameters['account']];
+        $result = array("result" => 'fail');
+        if ($fundsInfo[$nameAccount] > $parameters['summa']) {
+            $data = array(
+                'OA1' => $userId,
+                'summa1' => $parameters['summa'],
+                'account' => $parameters['account'],
+            );
+            $documentsService->debitFunds($data);
+            $gameService->zoneBuy($gameInfo->id, $parameters['duration']);
+            $result['result'] = 'success';
+        }
+        $result['user'] = $this->updateFunds();
+        $response->setContent(json_encode($result));
+        return $response;
+    }
+
+    private function getFlipperParameters($flipper, $value)
+    {
+        if ($flipper["id"] == 2) {
+            $account = $flipper['secondZoneSpec' . $value] ? $this->deposite : $this->active;
+            $summa = $flipper['secondZoneCost' . $value];
+            $duration = $flipper['secondZoneDuration' . $value];
+        } elseif ($flipper["id"] == 3) {
+            $account = $flipper['firstZoneSpec' . $value] ? $this->deposite : $this->active;
+            $summa = $flipper['firstZoneCost' . $value];
+            $duration = $flipper['firstZoneDuration' . $value];
+        }
+        return array(
+            "account" => $account,
+            "summa" => $summa,
+            "duration" => $duration
         );
     }
 
@@ -100,6 +157,22 @@ class StoreController extends Controller
             $response->setContent(json_encode($responseFunds));
             return $response;
         }
+    }
+
+    public function buyFlipperAction(Request $request)
+    {
+        $response = new Response();
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $buyFlipper = $request->get('flipperId');
+        $responseFlipper = $this->buyFlipper($userId, $buyFlipper);
+        $responseFunds['result'] = "fail";
+        if ($responseFlipper) {
+            $responseFunds['user'] = $this->updateFunds();
+            $responseFunds['result'] = "success";
+        }
+        $response->setContent(json_encode($responseFunds));
+        return $response;
     }
 
     public function activeToSafeAction(Request $request)
@@ -215,6 +288,32 @@ class StoreController extends Controller
         $fundsInfo = $user->getFundsInfo();
         $transferValue = $value * 0.76;
         return $transferValue;
+    }
+
+    private function buyFlipper($userId, $flipperId)
+    {
+        $userInfoService = $this->get("galaxy.user_info.service");
+        $gameService = $this->get("game.service");
+        $documentsService = $this->get("documents.service");
+        $buyFlipper = $gameService->getFlipper($flipperId);
+        $fundsInfo = $userInfoService->getFundsInfo($userId);
+        $gameInfo = $userInfoService->getGameInfo($userId);
+        $currentFlipperId = $gameInfo->flipper->id;
+        if ($flipperId > 2
+                && $buyFlipper->countRentMess > $gameInfo->countMessages
+                || $flipperId - $currentFlipperId != 1
+                || $fundsInfo->active < $buyFlipper->rentCost) {
+            return false;
+        } else {
+            $data = array(
+                'OA1' => $userId,
+                'summa1' => $buyFlipper->rentCost,
+                'account' => 1
+            );
+            $documentsService->debitFunds($data);
+            $userInfoService->increaseFlipper($gameInfo->id, $flipperId);
+            return true;
+        }
     }
 
 }

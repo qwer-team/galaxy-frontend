@@ -73,4 +73,16 @@
     <route id="store_active_to_safe" pattern="/store/active_to_safe" methods="post">
         <default key="_controller">GalaxyFrontendBundle:Store:activeToSafe</default>
     </route>
+    <route id="store_buy_flipper" pattern="/store/buy_flipper" methods="post">
+        <default key="_controller">GalaxyFrontendBundle:Store:buyFlipper</default>
+    </route>
+    <route id="store_buy_zone" pattern="/store/buy_zone" methods="post">
+        <default key="_controller">GalaxyFrontendBundle:Store:buyZone</default>
+    </route>
+    <route id="flipper_radar" pattern="/flipper/radar" methods="post">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:radar</default>
+    </route>
+    <route id="flipper_delete_zone" pattern="/flipper/delete_zone">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:deleteZone</default>
+    </route>
 </routes>

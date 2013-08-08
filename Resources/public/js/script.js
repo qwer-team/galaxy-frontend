@@ -3,9 +3,12 @@ var galaxy = angular.module("galaxy", ['uiSlider']);
 function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipMessage = "empty";
     $scope.tooltipStyle = {};
+    $scope.pointType = 1;
     $scope.pointImagePath = "";
     $scope.pointImage = false;
     $scope.userLog = false;
+    $scope.zoneShow = false;
+    $scope.zoneShow2 = false;
     $scope.capturedPrize = false;
     $scope.lightAmount = '';
     $scope.unlightAmount = function(){
@@ -79,7 +82,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     }
     $scope.getUser = function(){
         $http.get('/user').success($scope.updateUserInfo)
-                          .error($scope.userError);
+        .error($scope.userError);
     };
     $scope.updateQuestionTime = function(){
         if($scope.question.seconds > 0){
@@ -219,6 +222,68 @@ function FlipperCtrl($scope, $http, $timeout) {
         };
         $http.post('/jump', data).success($scope.jumpCallback);
     }
+    $scope.radar = function(){
+        var data = {
+            pointType: $scope.pointType
+        };
+        $http.post('/flipper/radar', data).success($scope.radarCallback);
+    }
+    $scope.radarCallback = function(data){
+        console.log(data.radar);
+        if(data.result == 'success'){
+            alert("radar success");
+            if(data.user.gameInfo.flipper.id == 2)
+            {
+                $scope.zoneShow = true;
+            } else {
+                $scope.zoneShow2 = true;
+            }
+            $scope.updateUserInfo(data.user);
+        }else {
+            alert("FAIL");
+        }
+    }
+    
+    $scope.buyFlipper = function(id){
+        var data = {
+            flipperId: parseInt(id) 
+        };
+        $http.post('/store/buy_flipper', data).success($scope.flipperCallback);
+    }
+    $scope.flipperCallback = function(data){
+        console.log(data);
+        if(data.result == 'success'){
+            alert("флипер куплен");
+            $scope.updateUserInfo(data.user);
+        }else {
+            alert("FAIL");
+        }
+    }
+    
+    $scope.buyZone = function(value){
+        if($scope.zoneShow || $scope.zoneShow2){
+            var data = {
+                value: parseInt(value) 
+            };
+            $http.post('/store/buy_zone', data).success($scope.zoneCallback);
+        }
+    }
+    $scope.zoneCallback = function(data){
+        console.log(data);
+        if(data.result == 'success'){
+            alert("Success zone");
+            $scope.zoneShow = false;
+            $scope.zoneShow2 = false;
+            $scope.updateUserInfo(data.user);
+        }else {
+            alert("FAIL");
+        }
+    }
+    
+    $scope.deleteZone = function(){
+        $http.get('/flipper/delete_zone').success($scope.zoneCallback);
+    }
+     
     
     $scope.activeToSafe = function(){
         var data = {
@@ -252,8 +317,8 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.transferCallback = function(data){
         console.log(data);
         if(data.result == 'success'){
-           alert("transfer ok");
-           $scope.updateUserInfo(data.user);
+            alert("transfer ok");
+            $scope.updateUserInfo(data.user);
         }
     }
     $scope.jumpCallback = function(data, status){

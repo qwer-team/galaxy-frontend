@@ -273,7 +273,7 @@
        <br />
        <button type="submit" ng-click="safeToActive()" class="btn btn-primary">С безопасного на активный</button>
      </ul>
-     <ul style="height: 200px">
+     <ul style="height: 100px">
         <p>Active: {{user.fundsInfo.active + costDeposite * user.fundsInfo.rates.3}}</p>
         <p>Deposite: {{user.fundsInfo.deposite - costDeposite}}</p> 
         <input disabled="true" type="text" 
@@ -287,6 +287,15 @@
        <br />
        <button type="submit" ng-click="depositeToActive()" class="btn btn-primary">С депозитного на активный</button>
      </ul>
+
 {% endverbatim %}
+{% for flipper in flippers %}
+Название: {{ flipper.title }}
+<br>Длительность аренды: {{ flipper.rentDuration }}
+<br>Дальность: {{ flipper.maxJump }}
+<br>Стоимость перемещения: {{ flipper.costJump }}
+<br>Стоимость аренды: {{ flipper.rentCost }}<br>
+<button type="submit" ng-click="buyFlipper({{flipper.id}})" class="btn btn-primary">Купить {{ flipper.title }} </button><br>
+{% endfor %}
         </body>
     </html>

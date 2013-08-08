@@ -21,7 +21,7 @@ class UserInfoService extends ContainerAware
         $url = str_replace("{userId}", $userId, $rawUrl);
         return $response = json_decode($this->makeRequest($url));
     }
-
+   
     public function getLogsInfo($userId, $page, $length)
     {
         $rawUrl = $this->container->getParameter("user_providers.log_info.url");
@@ -90,6 +90,18 @@ class UserInfoService extends ContainerAware
 
         $response = $this->makeRequest($url);
         return json_decode($response);
+    }
+
+    public function increaseFlipper($id, $flipperId)
+    {
+        $rawUrl = $this->container->getParameter("game.inc_flipper.url");
+        $find = array("{id}", "{flipperId}");
+        $replace = array($id, $flipperId);
+
+        $url = str_replace($find, $replace, $rawUrl);
+        
+        $response = json_decode($this->makeRequest($url));
+        return $response;
     }
 
     private function makeRequest($url, $data = null)

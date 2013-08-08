@@ -48,7 +48,7 @@
                     </label>
                 </li>
             </ul>
-            
+
             <input ng-click="answer()" type="submit" value="pli">
         </div>
         <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
@@ -277,6 +277,33 @@
                     </div><!-- .select-coordinats -->
                 </div>
             </div><!-- .fliper -->
+            <div  style="height: 100px">
+                <select size="1" ng-model="pointType">
+                    <option value="1">+%</option>
+                    <option value="2">+ Период для элементов</option>
+                    <option value="3">+ Период принадлежности приза</option>
+                    <option value="4">+ Элемент приза</option>
+                </select>
+                <button type="button" ng-click="radar()" >Радар</button>
+                <button type="button" ng-click="deleteZone()" >Удалить зону</button>
+            </div>
+            <div ng-show="zoneShow">
+            Zona 2:
+            Duration: {{ user.gameInfo.flipper.secondZoneDuration1}} Cost: {{ user.gameInfo.flipper.secondZoneCost1}} <button type="submit" ng-click="buyZone(1)" class="btn btn-primary">Купить</button>
+            Duration: {{ user.gameInfo.flipper.secondZoneDuration2}} Cost: {{ user.gameInfo.flipper.secondZoneCost2}} <button type="submit" ng-click="buyZone(2)" class="btn btn-primary">Купить</button>
+            Duration: {{ user.gameInfo.flipper.secondZoneDuration3}} Cost: {{ user.gameInfo.flipper.secondZoneCost3}} <button type="submit" ng-click="buyZone(3)" class="btn btn-primary">Купить</button>
+            Duration: {{ user.gameInfo.flipper.secondZoneDuration4}} Cost: {{ user.gameInfo.flipper.secondZoneCost4}} <button type="submit" ng-click="buyZone(4)" class="btn btn-primary">Купить</button>
+            </div>
+            <div ng-show="zoneShow2">
+            Zona 1:
+            Duration: {{ user.gameInfo.flipper.firstZoneDuration1}} Cost: {{ user.gameInfo.flipper.firstZoneCost1}} <button type="submit" ng-click="buyZone(1)" class="btn btn-primary">Купить</button>
+            Duration: {{ user.gameInfo.flipper.firstZoneDuration2}} Cost: {{ user.gameInfo.flipper.firstZoneCost2}} <button type="submit" ng-click="buyZone(2)" class="btn btn-primary">Купить</button>
+            Duration: {{ user.gameInfo.flipper.firstZoneDuration3}} Cost: {{ user.gameInfo.flipper.firstZoneCost3}} <button type="submit" ng-click="buyZone(3)" class="btn btn-primary">Купить</button>
+            Duration: {{ user.gameInfo.flipper.firstZoneDuration4}} Cost: {{ user.gameInfo.flipper.firstZoneCost4}} <button type="submit" ng-click="buyZone(4)" class="btn btn-primary">Купить</button>
+            </div>
+            
+                </div>
+            <br>
         </body>
 {% endverbatim %}
     </html>
