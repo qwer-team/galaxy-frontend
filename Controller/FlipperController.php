@@ -214,7 +214,7 @@ class FlipperController extends Controller
                 "superjump" => (int) $superJump,
                 "userId" => $userId,
             );
-
+            
             $response = json_decode($this->makeRequest($jumpUrl, $data));
             $result = array("result" => "success", "req" => $response);
             if ($response->result == "success") {
