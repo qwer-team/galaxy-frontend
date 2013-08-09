@@ -141,8 +141,16 @@ function FlipperCtrl($scope, $http, $timeout) {
         var dz = $scope.user.gameInfo.z - $scope.z;
         
         var dist1 = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
-        var dist2 = Math.sqrt(Math.pow(1000 - Math.abs(dx), 2) + Math.pow(1000 - Math.abs(dy), 2) + Math.pow(1000 - Math.abs(dz), 2));
-        var dist  = Math.min(dist1,dist2);
+        
+        var dist2 = Math.sqrt(Math.pow(999 - Math.abs(dx), 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
+        var dist3 = Math.sqrt(Math.pow(dx, 2) + Math.pow(999 - Math.abs(dy), 2) + Math.pow(dz, 2));
+        var dist4 = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(999 - Math.abs(dz), 2));
+        
+        var dist5 = Math.sqrt(Math.pow(999 - Math.abs(dx), 2) + Math.pow(999 - Math.abs(dy), 2) + Math.pow(dz, 2));
+        var dist6 = Math.sqrt(Math.pow(999 - Math.abs(dx), 2) + Math.pow(dy, 2) + Math.pow(999 - Math.abs(dz), 2));
+        var dist7 = Math.sqrt(Math.pow(dx, 2) + Math.pow(999 - Math.abs(dy), 2) + Math.pow(999 - Math.abs(dz), 2));
+        var dist8 = Math.sqrt(Math.pow(999 - Math.abs(dx), 2) + Math.pow(999 - Math.abs(dy), 2) + Math.pow(999 - Math.abs(dz), 2));
+        var dist  = Math.min(dist1,dist2,dist3,dist4,dist5,dist6,dist7,dist8);
         
         if(dist > $scope.user.gameInfo.flipper.maxJump){
             var message = 'Превышена допустимая дальность прыжка.';
