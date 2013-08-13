@@ -1,4 +1,4 @@
-<table width="100%" border="1">
+{#<table width="100%" border="1">
 
     <thead>
         <tr>
@@ -31,5 +31,624 @@
         {% endfor %}
             </tbody>
 
-        </table>
+        </table>#}
+
+<!doctype html>
+<html lang="en" ng-app="galaxy">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fliper 1</title>
+    {% block javascript %}
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-1.9.1.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/script.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.colorbox.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/colorBoxScript.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular-slider.js' )  }}"></script>
+    {% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/angular-slider.css' ) }}"/>
+    {% endblock %}
+    </head>
+{% verbatim %}
+    <body ng-controller="FlipperCtrl">
+
+        <div class="fliper"><!-- fliper -->
+            <header><!-- header -->
+                <div class="header-content">
+                    <a href="#" class="logo"></a>
+                    <a href="#" class="logout"></a>
+                    <div class="user-name">
+					{{ user.username}}: <span>{{user.id}}</span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </header><!-- .header -->
+
+                <section class="info-panel"><!-- info-panel -->
+
+                    <div class="lives-count-container"><!-- lives-count-container -->
+                        <i class="live-icon active"></i>
+                        <i class="live-icon"></i>
+                        <i class="live-icon"></i>
+                        <i class="live-icon"></i>
+                        <i class="live-icon"></i>
+                        <div class="glass"></div>
+                        <div class="counters">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"><i></i></div>
+                            <i class="distance-icon">
+                                <span>200</span>
+                            </i>
+                            <i class="price-icon">
+                                <span>567</span>
+                            </i>
+                        </div>
+                    </div><!-- .lives-count-container -->
+
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-1"><i></i></i>
+                        <span>{{ user.gameInfo.totalJumps }}</span>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-2"><i></i></i>
+                        <span>{{ user.gameInfo.countMessages }}</span>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-3 active">
+                            <span>7</span>
+                            <i></i>
+                        </i>
+                        <span>{{user.fundsInfo.active}}</span>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-4"><i></i></i>
+                        <span>{{user.fundsInfo.safe}}</span>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-5"><i></i></i>
+                        <span>{{user.fundsInfo.deposite}}</span>
+                    </div><!-- .mark -->
+                    <!-- <div class="mark-line">
+                            <div class="mark">
+                                    <i class="mark-6">
+                                            <span>256</span>
+                                    </i>
+                            </div>
+                            <div class="mark">
+                                    <i class="mark-7">
+                                            <span>11</span>
+                                    </i>
+                            </div>
+                            <div class="mark">
+                                    <i class="mark-8">
+                                            <span>10</span>
+                                    </i>
+                            </div>
+                            <div class="mark">
+                                    <i class="mark-9">
+                                            <span>20</span>
+                                    </i>
+                            </div>
+                            <div class="mark">
+                                    <i class="mark-10">
+                                            <span>3</span>
+                                    </i>
+                            </div>
+                    </div> -->
+                </section><!-- .info-panel -->
+                <section class="prizes-carusel"><!-- prizes-carusel -->
+                    {% endverbatim %}
+                    <div class="row">
+                            {% for item in items %}
+                            <div class="hex">
+                                <img src="http://gala.my{{ item.img2 }}" alt="">
+                                <a href="#tab-{{item.id}}"></a>
+                                <div class="hx"></div>
+                                <span>{{ item.name }}|| {{ item | length }}</span>
+                            </div>
+                        {% endfor %}
+                                {% if items | length < 6 %}
+                                    {% for node in range(1,5 - (items | length)) %}
+                            <div class="hex">
+                                <img src="" alt="">
+                                <a href="#tab-0"></a>
+                                <div class="hx"></div>
+                                <span></span>
+                            </div>
+                                    {% endfor %}
+                                {% endif %}
+                          
+                            <div class="clear"></div>
+                        </div>
+                        {% if items | length > 5 %}
+                            <a href="#" class="left-arrow"></a>
+                            <a href="#" class="right-arrow"></a>
+                        {% endif %}
+
+                       
+
+                                {% for item in items %}
+                                <div class="tab" id="tab-{{ item.id }}">
+                                     <div class="row">
+                                    {% for element in item.elements %}
+                                                <div class="hex sub-active">
+                                                        <span class="count-1">567</span>
+                                                        <span class="count-2">{{element.price}}</span>
+                                                        <img src="content/d1.png" alt="">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                             {% if loop.index == 4 or  loop.index == 7 or loop.index == 9 %}
+                                               <div class="clear"></div>
+                                        </div>
+                                        <div class="row">
+                                             {% endif %}
+                                        
+                                        {% endfor %}
+                                                 <div class="clear"></div>
+                                        </div>
+                                </div>
+                            {% endfor %}
+                                <!-- <div class="tab" id="tab-2">
+                                        <div class="row">
+                                                <div class="hex sub-active">
+                                                        <span class="count-1">567</span>
+                                                        <span class="count-2">1 567</span>
+                                                        <img src="content/d1.png" alt="">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="hex sub-active">
+                                                        <span class="count-1">567</span>
+                                                        <span class="count-2">1 567</span>
+                                                        <img src="content/d2.png" alt="">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="hex sub-active">
+                                                        <span class="count-1">567</span>
+                                                        <span class="count-2">1 567</span>
+                                                        <img src="content/d3.png" alt="">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="clear"></div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="clear"></div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="clear"></div>
+                                        </div><
+                                        <div class="row">
+                                                <div class="hex">
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                                <div class="clear"></div>
+                                        </div>
+                                </div> -->
+                                <div class="tab" id="tab-3">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                                <div class="tab" id="tab-4">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                                <div class="tab" id="tab-5">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                                <div class="tab" id="tab-6">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                                <div class="tab" id="tab-7">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                                <div class="tab" id="tab-8">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                                <div class="tab" id="tab-empty">
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                    <div class="row"><!-- row -->
+                                        <div class="hex">
+                                            <a href="#"></a>
+                                            <div class="hx"></div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div><!-- .row -->
+                                </div>
+                            </section><!-- .prizes-carusel -->
+                            <section class="full-panel">
+                                <a href="#" class="c-icon-1 c-icon"></a>
+                                <a href="#" class="c-icon-2 c-icon"></a>
+                                <a href="#" class="c-icon-3 c-icon"></a>
+                                <a href="#" class="c-icon-4 c-icon"></a>
+                                <a href="#" class="c-icon-5 c-icon"></a>
+                                <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
+                                <a href="#" class="c-icon-7 c-icon"></a>
+                                <a href="#" class="c-icon-8 c-icon"></a>
+                                <a href="/user_logs" class="c-icon-9 c-icon iframe cboxElement"></a>
+                                <a href="#" class="c-icon-10 c-icon"></a>
+                                <a href="#" class="c-icon-11 c-icon"></a>
+                            </section>
+                        </div><!-- .fliper -->
+                    </body>
+                
+                </html>
 

@@ -140,15 +140,14 @@ class FlipperController extends Controller
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $prizeService = $this->container->get("galaxy.prize.service");
         $basket = $user->getGameInfo()->basket;
+        
         $fundsInfo = $user->getFundsInfo();
         $gameInfo = $user->getGameInfo();
         $prizeList = $userInfoService->getPrizesFromSpace();
         $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket, $fundsInfo);
+        
         $data = array(
             "items" => $buyElementsPrize,
-            "user" => $user,
-            "fundsInfo" => $fundsInfo, // счета
-            "gameInfo" => $gameInfo //флиппер и тд
         );
 
         return $data;
@@ -217,7 +216,7 @@ class FlipperController extends Controller
                 "superjump" => (int) $superJump,
                 "userId" => $userId,
             );
-            
+            //echo $this->makeRequest($jumpUrl, $data);
             $response = json_decode($this->makeRequest($jumpUrl, $data));
             $result = array("result" => "success", "req" => $response);
             if ($response->result == "success") {
