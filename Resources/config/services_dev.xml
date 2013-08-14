@@ -11,7 +11,7 @@
     <parameters>
         <!-- User -->
         <parameter key="usersurl">gala.user.my/users</parameter>
-        <parameter key="docsurl">gala.my/documents</parameter>
+        <parameter key="docsurl">http://demo10.qwer.com.ua/documents</parameter>
         <parameter key="gameurl">gala.my/games</parameter>
         <parameter key="jump.url">gala.my/jump</parameter>
         <parameter key="questions.url">gala.my/api/questions</parameter>
