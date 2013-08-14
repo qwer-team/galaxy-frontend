@@ -23,9 +23,6 @@ class FlipperController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        $userInfoService = $this->get("galaxy.user_info.service");
-        $fundsInfo = $userInfoService->getFundsInfo(1);
-        $gameInfo = $userInfoService->getGameInfo(1);
         return array();
     }
     
