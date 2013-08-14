@@ -12,6 +12,7 @@ class UserInfoService extends ContainerAware
     {
         $rawUrl = $this->container->getParameter("user_providers.game_info.url");
         $url = str_replace("{userId}", $userId, $rawUrl);
+        echo $this->makeRequest($url);
         return $response = json_decode($this->makeRequest($url));
     }
 
