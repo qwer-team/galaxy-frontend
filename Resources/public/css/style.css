@@ -2,648 +2,6 @@
 	padding: 0;
 	margin: 0;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-}
-html {
-    height: 100%;
-}
-.clear{
-	clear: both;
-}
-body {
-    height: 100%;
-    width: 100%;
-    font: 11px Arial, Helvetica, sans-serif;
-}
-.fliper{
-	min-width: 900px;
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-	background: #000 url(../images/space_1.png) no-repeat;
-	background-size: cover;
-	position: relative;
-}
-.fliper header{
-	height: 54px;
-	background: #001d2f url(../images/header.png) top center no-repeat;
-}
-.fliper header .header-content{
-	height: 54px;
-	background: url(../images/header-border.png) bottom center no-repeat;
-}
-.fliper header a.logo{
-	display: block;
-	height: 54px;
-	width: 176px;
-	background: url(../images/logo.png);
-	float: left;
-}
-.fliper header .user-name{
-	float: right;
-	background: url(../images/user-name-bg.png);
-	border: 1px #1e485a solid;
-	border-radius: 7px;
-	padding: 5px 10px;
-	color: #94fdfe;
-	font-size: 14px;
-	text-shadow: 0px 0px 7px #66f6fb;
-	text-transform: uppercase;
-	margin: 13px 15px 0 0;
-}
-.fliper header .user-name span{
-	color: #00aeef;
-	text-shadow: 0px 0px 17px #66f6fb;
-}
-.fliper .left-sidebar{
-	width: 200px;
-	padding: 15px 0 0 15px;
-}
-.fliper .lives-count{
-	float: left;
-	border: 1px #1d3337 solid;
-	border-radius: 7px;
-	background: rgba(11, 25, 30, 0.7);
-	padding: 3px 0;	
-}
-.fliper .lives-count .live-item{
-	position: relative;
-	width: 20px;
-	height: 15px;
-	float: left;
-	margin: 2px 3px;
-}
-.fliper .lives-count .icon{
-	width: 20px;
-	height: 15px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: url(../images/level.png) top right;
-	z-index: 3;
-}
-.fliper .lives-count .live-item .light,
-.fliper .statistic .stat-item .stat-icon .light{
-	position: absolute;
-	z-index: 2;
-	left: 50%;
-	top: 50%;
-	width: 1px;
-	height: 1px;
-    box-shadow:  0 0 20px 4px #00F9FF;
-    -webkit-box-shadow:  0 0 25px 4px #00F9FF;
-}
-.fliper .lives-count .live-item.active .light{
-	box-shadow:  0 0 18px 6px #00F9FF;
-    -webkit-box-shadow:  0 0 25px 6px #00F9FF;
-}
-.fliper .lives-count .active .icon{
-	background-position: 0 0;
-}
-.fliper .statistic {
-	margin-top: 20px;
-	padding-left: 30px;
-}
-.fliper .statistic .stat-item{
-	margin-bottom: 10px;
-}
-.fliper .statistic .stat-item .stat-icon{
-	width: 33px;
-	position: relative;
-	height: 21px;
-	float: left;
-}
-.fliper .statistic .stat-item .stat-icon .light{
-	left: 11px;
-	box-shadow:  0 -2px 15px 8px #00F9FF;
-    -webkit-box-shadow:  0 -2px 20px 8px #00F9FF;
-    background: rgba(0, 249, 255, 0.7);
-}
-.fliper .statistic .stat-item .stat-icon .icon{
-	position: absolute;
-	z-index: 3;
-	top:0;
-	left: 0;
-	width: 22px;
-	height: 21px;
-	background: url(../images/statistic-icons.png);
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-1{
-	background-position: 0 0;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-2{
-	background-position: 0 -31px;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-3{
-	background-position: 0 -58px;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-4{
-	background-position: 0 -86px;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-5{
-	background-position: 0 -114px;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-6{
-	background-position: 0 -140px;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-7{
-	background-position: 0 -164px;
-}
-.fliper .statistic .stat-item .stat-icon .icon.icon-8{
-	background-position: 0 -192px;
-}
-.fliper .statistic .stat-item span{
-	font-size: 16px;
-	color: #00aeef;
-	text-shadow: 0px 0px 17px #66f6fb;
-}
-.fliper .statistic .stat-coord{
-	padding: 25px 0;
-}
-.fliper .statistic .stat-coord .stat-item span:first-child{
-	color: #8dd539;
-	display: inline-block;
-	padding: 0 15px 0 5px;
-}
-
-.fliper .control-panel{
-	position: absolute;
-	width: 1268px;
-	height: 156px;
-	background: url(../images/control-panel.png);
-	bottom: 0;
-	left: 50%;
-	margin-left: -634px;
-}
-.fliper .control-panel a.control{
-	position: absolute;
-	background: url(../images/controls-icon.png) no-repeat;
-	width: 51px;
-	height: 46px;
-}
-.fliper .control-panel a.control.control-1{
-	background-position: -372px -14px;
-    left: 300px;
-    top: 28px;
-}
-.fliper .control-panel a.control.control-2{
-	background-position: -418px -14px;
-    left: 342px;
-    top: 22px;
-}
-.fliper .control-panel a.control.control-3{
-	background-position: -465px -14px;
-    left: 584px;
-    top: 2px;
-}
-.fliper .control-panel a.control.control-4{
-	background-position: -513px -14px;
-    left: 631px;
-    top: 1px;
-}
-.fliper .control-panel a.control.control-5{
-	background-position: -559px -14px;
-    left: 677px;
-    top: 1px;
-}
-.fliper .control-panel a.control.control-6{
-	background-position: -604px -14px;
-    left: 1084px;
-    top: 60px;
-}
-
-.fliper .control-panel a.control.control-1:hover,
-.fliper .control-panel a.control.control-1:active{
-	background-position: -372px -63px;
-}
-.fliper .control-panel a.control.control-2:hover,
-.fliper .control-panel a.control.control-2:active{
-	background-position: -418px -63px;
-}
-.fliper .control-panel a.control.control-3:hover,
-.fliper .control-panel a.control.control-3:active{
-	background-position: -465px -63px;
-}
-.fliper .control-panel a.control.control-4:hover,
-.fliper .control-panel a.control.control-4:active{
-	background-position: -513px -63px;
-}
-.fliper .control-panel a.control.control-5:hover,
-.fliper .control-panel a.control.control-5:active{
-	background-position: -559px -63px;
-}
-.fliper .control-panel a.control.control-6:hover,
-.fliper .control-panel a.control.control-6:active{
-	background-position: -604px -63px;
-}
-
-.fliper .control-panel a.control.control-7{
-	background-position: 0 -3px;
-    left: 204px;
-    top: 80px;
-    width: 79px;
-    height: 61px;
-}
-.fliper .control-panel a.control.control-8{
-	background-position: -118px 0;
-    left: 862px;
-    top: 66px;
-    width: 70px;
-    height: 71px;
-}
-.fliper .control-panel a.control.control-9{
-	background-position: -226px -3px;
-    left: 995px;
-    top: 80px;
-    width: 79px;
-    height: 61px;
-}
-
-.fliper .control-panel a.control.control-7:hover,
-.fliper .control-panel a.control.control-7:active{
-	background-position: 0 -76px;
-}
-.fliper .control-panel a.control.control-8:hover,
-.fliper .control-panel a.control.control-8:active{
-	background-position: -118px -73px;
-}
-.fliper .control-panel a.control.control-9:hover,
-.fliper .control-panel a.control.control-9:active{
-	background-position: -226px -76px;
-}
-.fliper .control-panel .select-coordinats{
-	width: 471px;
-	height: 86px;
-	position: absolute;
-	top: 57px;
-	left: 387px;
-}
-.fliper .control-panel .coordinata-x-bg,
-.fliper .control-panel .coordinata-y-bg,
-.fliper .control-panel .coordinata-z-bg{
-	width: 148px;
-	height: 82px;
-	background: url(../images/controls-icon.png) 0 -225px;
-	position: absolute;
-	z-index: 9;
-	top: -1px;
-	left: -8px;
-}
-.fliper .control-panel .coordinata-y-bg{
-	left: 122px;
-    top: 1px;
-}
-.fliper .control-panel .coordinata-z-bg{
-	left: 249px;
-    top: 3px;
-}
-.fliper .control-panel .coordinata-total-bg{
-	width: 95px;
-	height: 82px;
-	background: url(../images/controls-icon.png) -148px -225px;
-	position: absolute;
-	z-index: 9;
-	top: 2px;
-	left: 375px;
-}
-.fliper .control-panel .coordinata-total-bg.active{
-	background-position: -148px -306px;
-}
-.fliper .control-panel .coordinata-x-bg.active,
-.fliper .control-panel .coordinata-y-bg.active,
-.fliper .control-panel .coordinata-z-bg.active{
-	background-position: 0 -307px;
-}
-.fliper .select-coordinats .c-line-1,
-.fliper .select-coordinats .c-line-2,
-.fliper .select-coordinats .c-line-3{
-	height: 1px;
-	width: 16px;
-	position: absolute;
-	z-index: 5;
-	background: #50bece;
-	top: 40px;
-	left: 123px;
-}
-.fliper .select-coordinats .c-line-2{
-	left: 252px;
-    top: 42px;
-}
-.fliper .select-coordinats .c-line-3{
-	left: 378px;
-    top: 44px;
-}
-.fliper .select-coordinats .coordinata-x,
-.fliper .select-coordinats .coordinata-y,
-.fliper .select-coordinats .coordinata-z,
-.fliper .select-coordinats .coordinata-total{
-	font-size: 16px;
-	color: #b5e61d;
-	position: absolute;
-	width: 114px;
-	text-align: center;
-	z-index: 10;
-}
-.fliper .select-coordinats div span{
-	color: #18a5e8;
-	padding-left: 3px;
-}
-.fliper .select-coordinats div input[type="text"],
-.fliper .select-coordinats div input[type="number"]{
-	color: #18a5e8;
-	font-size: 16px;
-	display: inline-block;
-	width: 35px;
-	border: 0;
-	margin-left: 3px;
-	background: transparent;
-}
-.fliper .select-coordinats div.coordinata-x{
-	left: 7px;
-    top: 29px;
-}
-.fliper .select-coordinats div.coordinata-y{
-	left: 138px;
-	top: 31px;
-}
-.fliper .select-coordinats div.coordinata-z{
-	left: 266px;
-	top: 33px;
-}
-.fliper .select-coordinats div.coordinata-total{
-	left: 366px;
-	top: 33px;
-}
-.fliper .select-coordinats div.coordinata-x .bt-plus,
-.fliper .select-coordinats div.coordinata-x .bt-minus,
-.fliper .select-coordinats div.coordinata-y .bt-plus,
-.fliper .select-coordinats div.coordinata-y .bt-minus,
-.fliper .select-coordinats div.coordinata-z .bt-plus,
-.fliper .select-coordinats div.coordinata-z .bt-minus{
-	width: 40px;
-	height: 26px;
-	display: block;
-	background: url(../images/controls-icon.png) -318px 0;
-	position: absolute;
-	right: -6px;
-    top: -15px;   
-}
-.fliper .select-coordinats div.coordinata-x .bt-minus,
-.fliper .select-coordinats div.coordinata-y .bt-minus,
-.fliper .select-coordinats div.coordinata-z .bt-minus{
-	background-position: -318px -26px;
-	right: 75px;
-    top: 11px;
-}
-.fliper .select-coordinats div.coordinata-y .bt-plus{
-	right: -4px;
-    top: -15px;
-}
-.fliper .select-coordinats div.coordinata-z .bt-plus{
-	right: -4px;
-    top: -15px;
-}
-.fliper .select-coordinats div.coordinata-y .bt-minus,
-.fliper .select-coordinats div.coordinata-z .bt-minus{
-    top: 12px;
-}
-.fliper .select-coordinats div.coordinata-x .bt-plus:hover,
-.fliper .select-coordinats div.coordinata-y .bt-plus:hover,
-.fliper .select-coordinats div.coordinata-z .bt-plus:hover{
-	background-position: -317px -60px;
-}
-.fliper .select-coordinats div.coordinata-x .bt-minus:hover,
-.fliper .select-coordinats div.coordinata-y .bt-minus:hover,
-.fliper .select-coordinats div.coordinata-z .bt-minus:hover{
-	background-position: -318px -87px;
-}
-.tooltip{
-	position: absolute;
-	height: 73px;
-	z-index: 50;
-}
-.select-coordinats .tooltip{
-	bottom: 94px;
-    right: -440px;
-}
-.select-coordinats .tooltip.tooltip-pos-left{
-	bottom: 128px;
-    right: 216px;
-}
-.tooltip.last-ms{
-	left: 289px;
-    top: -8px;
-}
-.tooltip .tooltip-center{
-	height: 73px;
-	background: url(../images/tooltip-center.png) top left repeat-x;
-	white-space: nowrap;
-}
-.tooltip .tooltip-left,
-.tooltip .tooltip-right{
-	background: url(../images/tooltip-corner.png);
-	width: 65px;
-	height: 73px;
-	position: absolute;
-	top: 0;
-}
-.tooltip .tooltip-left{
-	left: -65px;
-}
-.tooltip .tooltip-right{
-	right: -65px;
-	background-position: top right;
-}
-.tooltip .tooltip-center .tooltip-text{
-	padding-top: 29px;
-	font-size: 11px;
-	text-transform: uppercase;
-	color: #00f9ff;
-	text-shadow: 0px 0px 7px #66f6fb;
-	font-weight: bold;
-}
-.tooltip .tooltip-line{
-	width: 66px;
-	height: 1px;
-	background: #46a4dc;
-	position: absolute;
-	top: 35px;
-	left: -114px;
-}
-.tooltip.tooltip-pos-left .tooltip-line{
-	left: auto;
-	right: -114px;
-	top: 36px;
-}
-.tooltip .tooltip-line .line-45{
-	width: 1px;
-	height: 75px;
-	background: #46a4dc;
-	position: absolute;
-	top: 0;
-	left: -38px;
-	-webkit-transform: skew(-45deg);
-       -moz-transform: skew(-45deg);
-         -o-transform: skew(-45deg);
-}
-.tooltip.tooltip-pos-left .tooltip-line .line-45{
-	width: 1px;
-	height: 109px;
-	background: #46a4dc;
-	position: absolute;
-	top: 0;
-	left: 102px;
-	-webkit-transform: skew(34deg);
-       -moz-transform: skew(34deg);
-         -o-transform: skew(34deg);
-}
-.tooltip.tooltip-pos-left .tooltip-line .light-dot{
-	left: 127px;
-	top: 94px;
-}
-.tooltip .tooltip-line .light-dot{
-	background: url(../images/tooltip-dot.png);
-	width: 26px;
-	height: 26px;
-	position: absolute;
-	left: -87px;
-	top: 61px;
-}
-.tooltip .tooltip-line .dot{
-	position: absolute;
-	top:-1px;
-	left: -1px;
-	width: 3px;
-	height: 3px;
-	background: #00f9ff;
-	border-radius: 1px;
-}
-aside .tooltip{
-	display: none;
-}
-.stat-item{
-	float: left;
-	cursor: pointer;
-}
-.stat-item span i{
-	
-}
-@media only screen and (max-width: 1420px) {
-	.select-coordinats .tooltip{
-		bottom: 128px;
-	    right: 216px;
-	}
-	.select-coordinats .tooltip .tooltip-line{
-		left: auto;
-		right: -114px;
-		top: 36px;
-	}
-	.select-coordinats .tooltip .tooltip-line .line-45{
-		width: 1px;
-		height: 109px;
-		background: #46a4dc;
-		position: absolute;
-		top: 0;
-		left: 102px;
-		-webkit-transform: skew(34deg);
-	       -moz-transform: skew(34deg);
-	         -o-transform: skew(34deg);
-	}
-	.select-coordinats .tooltip .tooltip-line .light-dot{
-		left: 127px;
-		top: 94px;
-	}
-}
-
-/*
-    Colorbox Core Style:
-    The following CSS is consistent between example themes and should not be altered.
-*/
-#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
-#cboxOverlay{position:fixed; width:100%; height:100%;}
-#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
-#cboxContent{position:relative;}
-#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
-#cboxTitle{margin:0;}
-#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
-#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
-.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
-.cboxIframe{width:100%; height:100%; display:block; border:0;}
-#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
-
-/* 
-    User Style:
-    Change the following styles to modify the appearance of Colorbox.  They are
-    ordered & tabbed in a way that represents the nesting of the generated HTML.
-*/
-/*#cboxOverlay{background:url(images/overlay.png) repeat 0 0;}
-#colorbox{outline:0;}
-    #cboxTopLeft{width:21px; height:21px; background:url(images/controls.png) no-repeat -101px 0;}
-    #cboxTopRight{width:21px; height:21px; background:url(images/controls.png) no-repeat -130px 0;}
-    #cboxBottomLeft{width:21px; height:21px; background:url(images/controls.png) no-repeat -101px -29px;}
-    #cboxBottomRight{width:21px; height:21px; background:url(images/controls.png) no-repeat -130px -29px;}
-    #cboxMiddleLeft{width:21px; background:url(images/controls.png) left top repeat-y;}
-    #cboxMiddleRight{width:21px; background:url(images/controls.png) right top repeat-y;}
-    #cboxTopCenter{height:21px; background:url(images/border.png) 0 0 repeat-x;}
-    #cboxBottomCenter{height:21px; background:url(images/border.png) 0 -29px repeat-x;}*/
-    #cboxContent{background:#fff; overflow:hidden;}
-        .cboxIframe{background:#fff;}
-        #cboxError{padding:50px; border:1px solid #ccc;}
-        #cboxLoadedContent{margin-bottom:28px;}
-        #cboxTitle{position:absolute; bottom:4px; left:0; text-align:center; width:100%; color:#949494;}
-        #cboxCurrent{position:absolute; bottom:4px; left:58px; color:#949494;}
-        /*#cboxLoadingOverlay{background:url(images/loading_background.png) no-repeat center center;}
-        #cboxLoadingGraphic{background:url(images/loading.gif) no-repeat center center;}*/
-
-        /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
-        #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
-        
-        /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
-        #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
-
-       /* #cboxSlideshow{position:absolute; bottom:4px; right:30px; color:#0092ef;}
-        #cboxPrevious{position:absolute; bottom:0; left:0; background:url(images/controls.png) no-repeat -75px 0; width:25px; height:25px; text-indent:-9999px;}
-        #cboxPrevious:hover{background-position:-75px -25px;}
-        #cboxNext{position:absolute; bottom:0; left:27px; background:url(images/controls.png) no-repeat -50px 0; width:25px; height:25px; text-indent:-9999px;}
-        #cboxNext:hover{background-position:-50px -25px;}
-        #cboxClose{position:absolute; bottom:0; right:0; background:url(images/controls.png) no-repeat -25px 0; width:25px; height:25px; text-indent:-9999px;}
-        #cboxClose:hover{background-position:-25px -25px;}*/
-
-/*
-  The following fixes a problem where IE7 and IE8 replace a PNG's alpha transparency with a black fill
-  when an alpha filter (opacity change) is set on the element or ancestor element.  This style is not applied to or needed in IE9.
-  See: http://jacklmoore.com/notes/ie-transparency-problems/
-*/
-.cboxIE #cboxTopLeft,
-.cboxIE #cboxTopCenter,
-.cboxIE #cboxTopRight,
-.cboxIE #cboxBottomLeft,
-.cboxIE #cboxBottomCenter,
-.cboxIE #cboxBottomRight,
-.cboxIE #cboxMiddleLeft,
-.cboxIE #cboxMiddleRight {
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);
-}
-
-.lightAmount{
-    color: red !important;
-}
-
-
-
-
-
-
-
-
-*{
-	padding: 0;
-	margin: 0;
-}
 html {
     height: 100%;
 }
@@ -1050,7 +408,8 @@ header .logout:active{
 	background-position: -1304px -227px;
 }
 
-section.prizes-carusel{
+section.prizes-carusel,
+section.flipper-sec{
 	width: 877px;
 	margin: 132px auto 0;
 	padding-bottom: 195px;
@@ -1378,4 +737,231 @@ section.prizes-carusel{
 }
 .helps-on .mark > i.mark-10{
 	background-position: -2743px -562px;
+}
+
+/* new */
+.mark{
+	position: relative;
+}
+.mark.price.active span{
+	color: #66ff66;
+}
+.mark.bank .transfer-count{
+	font-size: 16px;
+	color: #66ff66;
+	font-weight: bold;
+	position: absolute;
+	left: 50px;
+	top: 29px;
+	display: none;
+}
+.current-coordinats{
+	width: 52px;
+	height: 69px;
+	padding: 13px 16px;
+	background: url(../images/sprite.png) -1852px -156px;
+	position: absolute;
+	z-index: 200;
+	bottom: 100px;
+	left: 100px;
+	cursor: move;
+	text-align: right;
+	color: #0099ff;
+	font-size: 16px;
+	font-weight: bold;
+}
+.current-coordinats:hover{
+	background-position: -1852px -255px;
+}
+.current-coordinats div sup{
+	font-size: 14px;
+	color: #b5e61d;
+	line-height: 14px;
+}
+.coordinats-selection{
+	height: 72px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: -90px;
+}
+.coordinats-selection .coordinat{
+	position: absolute;
+	left: 50%;
+	top: 10px;
+	width: 97px;
+	height: 54px;
+	font-weight: bold;
+	background: url(../images/sprite.png) -1723px -156px;
+}
+.coordinats-selection .coordinat.coordinat-x{
+	margin-left: -201px;
+}
+.coordinats-selection .coordinat.coordinat-y{
+	margin-left: -91px;
+}
+.coordinats-selection .coordinat.coordinat-z{
+	margin-left: 19px;
+}
+.coordinats-selection .coordinat.focus,
+.coordinats-selection.active .coordinat{
+	background-position: -1723px -219px;
+}
+.coordinats-selection .coordinat-submit{
+	width: 99px;
+	height: 72px;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: 131px;
+	background-position: -1718px -295px;
+}
+.coordinats-selection.active .coordinat-submit{
+	background-position: -1718px -444px;
+}
+.coordinats-selection .line{
+	position: absolute;
+	width: 15px;
+	background: url(../images/line-2.png) 0 0 repeat-x;
+	height: 2px;
+	top: 50%;
+	left: 50%;
+	margin-top: -1px;
+}
+.coordinats-selection.active .line{
+	background-position: 0 -2px;
+}
+.coordinats-selection .line .dot{
+	background: url(../images/dot-2.png);
+	width: 7px;
+	height: 7px;
+	position: absolute;
+	top: -3px;
+}
+.coordinats-selection.active .dot{
+	background-position: -7px 0;
+}
+.coordinats-selection .line.line-1{
+	margin-left: -224px;
+	width: 24px;
+}
+.coordinats-selection .line.line-1 .dot{
+	left: -7px;
+}
+.coordinats-selection .line.line-2{
+	margin-left: -105px;
+}
+.coordinats-selection .line.line-3{
+	margin-left: 5px;
+}
+.coordinats-selection .line.line-4{
+	margin-left: 114px;
+	width: 11px;
+}
+.coordinats-selection .line.line-4 .dot{
+	right: -7px;
+}
+.coordinats-selection.active .line.line-4{
+	width: 17px;
+}
+.coordinats-selection .coordinat span{
+	position: absolute;
+	top: 11px;
+	right: 17px; 
+	color: #b5e61d;
+	font-size: 14px;
+}
+.coordinats-selection .coordinat input{
+	position: absolute;
+	left: 17px;
+	top: 8px;
+	font-size: 18px;
+	color: #00f6ff;
+	font-weight: bold;
+	text-align: center;
+	border: 0;
+	width: 62px;
+	padding: 7px 0;
+	background: transparent;
+	outline: 0;
+}
+.price-slider{
+	position: absolute;
+	width: 153px;
+	height: 9px;
+	top: 35px;
+	left: 50px;
+	display: none;
+}
+.ui-slider-horizontal{
+	height: 2px;
+}
+.ui-widget-content{
+	border: 0;
+	background: url(../images/line-2.png) 0 0;
+}
+.ui-state-default, 
+.ui-widget-content .ui-state-default, 
+.ui-widget-header .ui-state-default{
+	background: url(../images/slider-dot.png);
+	border: 0!important;
+	outline: 0;
+}
+.ui-slider .ui-slider-handle{
+	width: 8px;
+	height: 8px;
+}
+.ui-slider-horizontal .ui-slider-handle{
+	top: -4px;
+	margin-left: -4px;
+}
+.prize-state{
+	position: absolute;
+	right: 30px;
+	top: 80px;
+}
+.prize-state .hex{
+	float: none;
+	margin-bottom: 38px;
+	margin-top: 38px;
+}
+.prize-state .hex span{
+	position: absolute;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 12px;
+	color: #00f9ff;
+	font-weight: bold;
+	bottom: -28px;
+}
+.prize-state .hex.prize-two span.count-1{
+	top: -22px;
+	width: 100%;
+	text-align: center;
+	left: 0;
+}
+.prize-state .hex.prize-two span.count-2{
+	bottom: -7px;
+	left: 88px;
+	width: auto;
+}
+.prize-state .hex.prize-two .hx{
+	background-position: -3207px -212px;
+}
+.prize-state .hex.prize-two .hx:after{
+	background-position: -3207px -278px;
+}
+.prize-state .hex.prize-two .hx:before{
+	background-position: -3207px -171px;
+}
+.v-line{
+	width: 14px;
+	margin: 0 auto;
+	height: 15px;
+	background: url(../images/v-line.png) 3px 0 repeat-y;
+}
+
+.lightAmount{
+    color: red !important;
 }

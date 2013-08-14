@@ -11,8 +11,7 @@ use Galaxy\FrontendBundle\Entity\JumpRequest;
 use Qwer\Curl\Curl;
 use Galaxy\FrontendBundle\Entity\Zone;
 
-class FlipperController extends Controller
-{
+class FlipperController extends Controller {
 
     private $accounts = array(
         "1" => "active",
@@ -23,13 +22,16 @@ class FlipperController extends Controller
     /**
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         return array();
     }
+    
+   
+    public function mainAction() {
+        return $this->redirect($this->generateUrl('flipper'));
+    }
 
-    public function getUserAction()
-    {
+    public function getUserAction() {
         $user = $this->getUser();
         $content = array("result" => "fail");
         $status = 401;
@@ -43,8 +45,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function deleteZoneAction()
-    {
+    public function deleteZoneAction() {
         $response = new Response();
         $user = $this->getUser();
         $gameInfo = $user->getGameInfo();
@@ -58,8 +59,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function radarAction(Request $request)
-    {
+    public function radarAction(Request $request) {
         $response = new Response();
         $user = $this->getUser();
         $gameInfo = $user->getGameInfo();
@@ -68,15 +68,14 @@ class FlipperController extends Controller
         $responseDebit = $this->radarDebitFunds($user->getId(), $gameInfo->flipper);
         if ($responseDebit) {
             $gameService->resetUserInfoRadar($gameInfo->id);
-            $responseRadar = (array)$gameService->radarStart($gameInfo->id, $pointType);
+            $responseRadar = (array) $gameService->radarStart($gameInfo->id, $pointType);
         }
         $responseRadar['user'] = $this->updateFunds();
         $response->setContent(json_encode($responseRadar));
         return $response;
     }
 
-    private function radarDebitFunds($userId, $flipper)
-    {
+    private function radarDebitFunds($userId, $flipper) {
         $documentsService = $this->container->get("documents.service");
         $userFunds = (array) $documentsService->getFunds($userId);
         $cost = $flipper->radarCost;
@@ -94,8 +93,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function getPrizesInfoAction()
-    {
+    public function getPrizesInfoAction() {
         $session = $this->getRequest()->getSession();
         if ($session->has('prize_elements')) {
             $prizesElements = $session->get('prize_elements');
@@ -104,7 +102,11 @@ class FlipperController extends Controller
             $prizesElements = $service->getPrizeInfo();
             $session->set('prize_elements', $prizesElements);
         }
-
+        $callback = function($item) {
+                    return $item["prizeName"];
+                };
+        $result = array_count_values(array_map($callback, $prizesElements));
+        $prizesElements["count"] = $result;
         $response = new Response();
         $response->setContent(json_encode($prizesElements));
         return $response;
@@ -113,8 +115,7 @@ class FlipperController extends Controller
     /**
      * @Template("GalaxyFrontendBundle:Flipper:logs.html.twig")
      */
-    public function getUserLogsAction($page, $length)
-    {
+    public function getUserLogsAction($page, $length) {
         $user = $this->getUser();
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $userId = $user->getId();
@@ -134,18 +135,17 @@ class FlipperController extends Controller
     /**
      * @Template("GalaxyFrontendBundle:Flipper:basket.html.twig")
      */
-    public function getUserBasketAction()
-    {
+    public function getUserBasketAction() {
         $user = $this->getUser();
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $prizeService = $this->container->get("galaxy.prize.service");
         $basket = $user->getGameInfo()->basket;
-        
+
         $fundsInfo = $user->getFundsInfo();
         $gameInfo = $user->getGameInfo();
         $prizeList = $userInfoService->getPrizesFromSpace();
         $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket, $fundsInfo);
-        
+
         $data = array(
             "items" => $buyElementsPrize,
         );
@@ -156,8 +156,7 @@ class FlipperController extends Controller
     /**
      * @Template("GalaxyFrontendBundle:Flipper:basketSell.html.twig")
      */
-    public function getUserBasketSellAction()
-    {
+    public function getUserBasketSellAction() {
         $user = $this->getUser();
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $prizeService = $this->container->get("galaxy.prize.service");
@@ -175,8 +174,7 @@ class FlipperController extends Controller
         return $data;
     }
 
-    private function checkMoneyForJump($user)
-    {
+    private function checkMoneyForJump($user) {
         $flipper = $user->getGameInfo()->flipper;
         $funds = $user->getFundsInfo();
 
@@ -192,8 +190,7 @@ class FlipperController extends Controller
         return true;
     }
 
-    public function jumpAction(Request $request)
-    {
+    public function jumpAction(Request $request) {
         $jumpRequest = new JumpRequest();
         $form = $this->createForm(new JumpRequestType(), $jumpRequest);
 
@@ -245,15 +242,14 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function buyElementAction()
-    {
+    public function buyElementAction() {
         $rawUrl = $this->get("service_container")->getParameter("buy_element.url");
         $token = $this->container->get('security.context')->getToken();
         $user = $token->getUser();
 
         $url = str_replace("{userId}", $user->getId(), $rawUrl);
         $json = json_decode($this->makeRequest($url));
-        
+
         $result = array('result' => 'fail');
         if ($json->result == 'success') {
             $userId = $user->getId();
@@ -281,8 +277,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function getQuestionAction()
-    {
+    public function getQuestionAction() {
         $token = $this->container->get('security.context')->getToken();
         $user = $token->getUser();
         $game = $user->getGameInfo();
@@ -324,8 +319,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    public function answerQuestionAction($questionId, $answer)
-    {
+    public function answerQuestionAction($questionId, $answer) {
         $token = $this->container->get('security.context')->getToken();
         $user = $token->getUser();
         $game = $user->getGameInfo();
@@ -372,8 +366,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    private function sendMessage($prize, $email)
-    {
+    private function sendMessage($prize, $email) {
         $message = \Swift_Message::newInstance()
                 ->setSubject('prize')
                 ->setFrom('gala@gala.com')
@@ -383,8 +376,7 @@ class FlipperController extends Controller
         $this->get('mailer')->send($message);
     }
 
-    private function checkAllPrize($info, $basket, $elementId)
-    {
+    private function checkAllPrize($info, $basket, $elementId) {
         $prizeCur = null;
         foreach ($info as $prize) {
             foreach ($prize->elements as $element) {
@@ -419,13 +411,11 @@ class FlipperController extends Controller
         return null;
     }
 
-    private function makeRequest($url, $data = null)
-    {
+    private function makeRequest($url, $data = null) {
         return Curl::makeRequest($url, $data);
     }
 
-    public function checkQuestionAction($questionId)
-    {
+    public function checkQuestionAction($questionId) {
         $token = $this->container->get('security.context')->getToken();
         $user = $token->getUser();
         $game = $user->getGameInfo();
@@ -474,8 +464,7 @@ class FlipperController extends Controller
         return $response;
     }
 
-    private function updateFunds()
-    {
+    private function updateFunds() {
         $user = $this->getUser();
         $userId = $user->getId();
         $userInfoService = $this->get("galaxy.user_info.service");

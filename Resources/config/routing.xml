@@ -8,6 +8,9 @@
     <route id="flipper" pattern="/flipper">
         <default key="_controller">GalaxyFrontendBundle:Flipper:index</default>
     </route>
+    <route id="main" pattern="/">
+        <default key="_controller">GalaxyFrontendBundle:Flipper:main</default>
+    </route>
     <route id="user_json" pattern="/user">
         <default key="_controller">GalaxyFrontendBundle:Flipper:getUser</default>
         <default key="_format">json</default>
