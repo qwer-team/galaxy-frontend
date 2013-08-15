@@ -214,7 +214,6 @@ function FlipperCtrl($scope, $http, $timeout) {
         var gameInfo = $scope.user.gameInfo;
         var superjumps = gameInfo.superJumps;
         var superjump = false;
-        alert(1);
         if (dist > gameInfo.flipper.maxJump && gameInfo.flipper.rentDuration > 0) {
             if (superjumps == 0) {
                 return;

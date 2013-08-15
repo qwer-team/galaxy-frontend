@@ -25,8 +25,7 @@ class FlipperController extends Controller {
     public function indexAction() {
         return array();
     }
-    
-   
+
     public function mainAction() {
         return $this->redirect($this->generateUrl('flipper'));
     }
@@ -140,12 +139,9 @@ class FlipperController extends Controller {
         $userInfoService = $this->container->get("galaxy.user_info.service");
         $prizeService = $this->container->get("galaxy.prize.service");
         $basket = $user->getGameInfo()->basket;
-
         $fundsInfo = $user->getFundsInfo();
-        $gameInfo = $user->getGameInfo();
         $prizeList = $userInfoService->getPrizesFromSpace();
         $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket, $fundsInfo);
-
         $data = array(
             "items" => $buyElementsPrize,
         );
@@ -163,7 +159,6 @@ class FlipperController extends Controller {
         $basket = $user->getGameInfo()->basket;
         $prizeList = $userInfoService->getPrizesFromSpace();
         $buyElementsPrize = $prizeService->getElementsPrize($prizeList, $basket, $user->getFundsInfo());
-
         $moneyYok = !$this->checkMoneyForJump($user);
 
         $data = array(

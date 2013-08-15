@@ -59,13 +59,13 @@
         <!-- -->
         <!-- Game -->
         <parameter key="game.remote_service.class">Galaxy\FrontendBundle\Service\GameRemoteService</parameter>
-        <parameter key="game.user_info.increase_message.url">%galaurl%/increases/{id}/messages.json</parameter>
-        <parameter key="game.get_flipper.url">%galaurl%/flippers/{id}.json</parameter>
-        <parameter key="game.get_flippers_list.url">%galaurl%/flipper/list.json</parameter>
-        <parameter key="game.inc_flipper.url">%galaurl%/increases/{id}/flippers/{flipperId}.json</parameter>
-        <parameter key="game.user_info.reset_radar.url">%galaurl%/radars/{id}/reset.json</parameter>
-        <parameter key="game.user_info.start_radar.url">%galaurl%/radars/{id}/starts/{type}.json</parameter>
-        <parameter key="game.user_info.zone_buy.url">%galaurl%/buys/{id}/zones/{jumps}.json</parameter>
+        <parameter key="game.user_info.increase_message.url">%gala.url%/increases/{id}/messages.json</parameter>
+        <parameter key="game.get_flipper.url">%gala.url%/flippers/{id}.json</parameter>
+        <parameter key="game.get_flippers_list.url">%gala.url%/flipper/list.json</parameter>
+        <parameter key="game.inc_flipper.url">%gala.url%/increases/{id}/flippers/{flipperId}.json</parameter>
+        <parameter key="game.user_info.reset_radar.url">%gala.url%/radars/{id}/reset.json</parameter>
+        <parameter key="game.user_info.start_radar.url">%gala.url%/radars/{id}/starts/{type}.json</parameter>
+        <parameter key="game.user_info.zone_buy.url">%gala.url%/buys/{id}/zones/{jumps}.json</parameter>
         <!-- -->
     </parameters>
 
