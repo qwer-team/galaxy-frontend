@@ -126,8 +126,8 @@
                     <span>{{ user.gameInfo.countMessages }}</span>
                 </div><!-- .mark -->
                 <div class="mark price"><!-- mark -->
-                    <i class="mark-3 active">
-                        <span>7</span>
+                    <i class="mark-3">
+                        <span></span>
                         <i></i>
                     </i>
                     <span ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
@@ -144,7 +144,7 @@
                     <i class="mark-5"><i></i></i>
                     <span >{{ user.fundsInfo.deposite }}</span>
                 </div><!-- .mark -->
-                <div class="mark-line"><!-- mark-line -->
+                <div class="mark-line" style="display: none"><!-- mark-line -->
                     <div class="mark"><!-- mark -->
                         <i class="mark-6">
                             <span>256</span>
@@ -216,9 +216,9 @@
                     </div>
                     <a href="#" class="coordinat-submit" ng-click="jump()"></a>
                 </div>
-                <a href="#" class="c-icon-5 c-icon"></a>
+                <a href="/store" class="c-icon-5 c-icon"></a>
                 <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
-                <a href="#" class="c-icon-7 c-icon"></a>
+                <a href="/user_basket" class="c-icon-7 c-icon"></a>
             </section>
         </div><!-- .fliper -->
         <div id="draggable" class="current-coordinats" style="position: absolute;">
@@ -228,6 +228,7 @@
         </div>
         
     </body>
+    <div style="display: none">
     <div  style="height: 100px">
                 <select size="1" ng-model="pointType">
                     <option value="1">+%</option>
@@ -253,7 +254,8 @@
             Duration: {{ user.gameInfo.flipper.firstZoneDuration4}} Cost: {{ user.gameInfo.flipper.firstZoneCost4}} <button type="submit" ng-click="buyZone(4)" class="btn btn-primary">Купить</button>
             </div>
             
-                </div>
+</div>
             <br>
+           
 {% endverbatim %}
 </html>
