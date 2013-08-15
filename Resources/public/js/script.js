@@ -16,9 +16,9 @@ function FlipperCtrl($scope, $http, $timeout) {
         $scope.lightAmount = '';
     }
     $scope.updateUserInfo = function(data, status) {
-        if (status == 401) {
-            $scope.logout();
-        }
+       /* if (status == 401) {
+            //$scope.logout();
+        }*/
         if ($scope.user) {
             console.log($scope.user.fundsInfo.active + ' != ' + data.fundsInfo.active);
             if ($scope.user.fundsInfo.active != data.fundsInfo.active) {
