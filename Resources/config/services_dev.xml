@@ -16,7 +16,15 @@
         <parameter key="jump.url">gala.my/jump</parameter>
         <parameter key="questions.url">gala.my/api/questions</parameter>
         <parameter key="gala.url">gala.my</parameter>
-        <!-- -->
+        
+        <!-- 
+        <parameter key="gala.url">http://demo11.qwer.com.ua</parameter>
+        <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
+        <parameter key="docsurl">http://demo11.qwer.com.ua/documents</parameter>
+        <parameter key="gameurl">http://demo11.qwer.com.ua/games</parameter>
+        <parameter key="jump.url">http://demo11.qwer.com.ua/jump</parameter>
+        <parameter key="space.url">http://localhost:8080/gala</parameter>
+        <parameter key="questions.url">>http://demo11.qwer.com.ua/api/questions</parameter>-->
     </parameters>
     
 </container>

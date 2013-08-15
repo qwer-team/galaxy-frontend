@@ -11,33 +11,40 @@
         <parameter key="image.resize.width">100</parameter>
         <parameter key="image.resize.min.width">30</parameter>
         <parameter key="image.resize.min.height">30</parameter>
+       
+        <parameter key="gala.url">http://demo11.qwer.com.ua</parameter>
+        <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
+        <parameter key="docsurl">http://demo11.qwer.com.ua/documents</parameter>
+        <parameter key="gameurl">http://demo11.qwer.com.ua/games</parameter>
+        <parameter key="jump.url">http://demo11.qwer.com.ua/jump</parameter>
+        <parameter key="space.url">http://localhost:8080/gala</parameter>
+        <parameter key="questions.url">>http://demo11.qwer.com.ua/api/questions</parameter>
         <!-- User -->
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
         <parameter key="user_info.service.class">Galaxy\FrontendBundle\Service\UserInfoService</parameter>
         <parameter key="space.point_service.class">Galaxy\FrontendBundle\Service\PointService</parameter>
         <parameter key="user.service.class">Galaxy\FrontendBundle\Service\UserService</parameter>
         <parameter key="prize.service.class">Galaxy\FrontendBundle\Service\PrizeService</parameter>
-        <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
+        
         <parameter key="user_providers.user_login.url">%usersurl%/{login}.json</parameter>
-        <parameter key="docsurl">http://demo10.qwer.com.ua/documents</parameter>
+        
         <parameter key="user_providers.funds_info.url">%docsurl%/{userId}/funds.json</parameter>
-        <parameter key="gameurl">http://demo10.qwer.com.ua/games</parameter>
+        
         <parameter key="user_providers.game_info.url">%gameurl%/{userId}/user/info.json</parameter>
         <parameter key="user_providers.log_info.url">%gameurl%/{userId}/users/{page}/logs/{length}.json</parameter>
         <parameter key="user_providers.log_info_count.url">%gameurl%/{userId}/log/count.json</parameter>
-        <parameter key="jump.url">http://demo10.qwer.com.ua/jump</parameter>
+        
         <parameter key="image.folder">/bundles/galaxyfrontend/images/point/{tag}.png</parameter>
-        <parameter key="space.url">http://localhost:8080/gala</parameter>
+        
         <parameter key="space.prizes_info.url">%space.url%/prize/list</parameter>
         <parameter key="space.get_message_type.url">%space.url%/type/show/message</parameter>
         <parameter key="elements.url">gala.my</parameter>
         <parameter key="buy_element.url">%elements.url%/elements/{userId}/buy.json</parameter>
         <parameter key="game.get_question.url">%questions.url%/{userId}.json</parameter>
-        <parameter key="questions.url">>http://demo10.qwer.com.ua/api/questions</parameter>
+        
         <parameter key="game.answer_question.url">%questions.url%/{questionId}/answers/{answer}.json</parameter>
         <parameter key="question.memcache.key">quest</parameter>
         <!-- Info -->
-        <parameter key="gala.url">gala.my</parameter>
         <parameter key="ingo.message_service.class">Galaxy\FrontendBundle\Service\InfoService</parameter>
         <parameter key="info.messages_list.url">%gala.url%/api/messages/{page}/lengths/{length}.json</parameter>
         <parameter key="info.messages_count.url">%gala.url%/api/message/count.json</parameter>
