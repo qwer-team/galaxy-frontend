@@ -13,7 +13,7 @@
         <parameter key="image.resize.min.height">30</parameter>
        
         <parameter key="gala.url">http://demo11.qwer.com.ua</parameter>
-        <parameter key="usersurl">http://demo11.qwer.com.ua/users</parameter>
+        <parameter key="usersurl">http://demo10.qwer.com.ua/users</parameter>
         <parameter key="docsurl">http://demo11.qwer.com.ua/documents</parameter>
         <parameter key="gameurl">http://demo11.qwer.com.ua/games</parameter>
         <parameter key="jump.url">http://demo11.qwer.com.ua/jump</parameter>
