@@ -38,8 +38,7 @@
         
         <parameter key="space.prizes_info.url">%space.url%/prize/list</parameter>
         <parameter key="space.get_message_type.url">%space.url%/type/show/message</parameter>
-        <parameter key="elements.url">gala.my</parameter>
-        <parameter key="buy_element.url">%elements.url%/elements/{userId}/buy.json</parameter>
+        <parameter key="buy_element.url">%gala.url%/elements/{userId}/buy.json</parameter>
         <parameter key="game.get_question.url">%questions.url%/{userId}.json</parameter>
         
         <parameter key="game.answer_question.url">%questions.url%/{questionId}/answers/{answer}.json</parameter>
