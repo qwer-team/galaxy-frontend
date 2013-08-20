@@ -10,100 +10,30 @@
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.colorbox.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/colorBoxScript.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular-slider.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-ui-1.10.3.custom.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/js_script.js' )  }}"></script>
     {% endblock %}
     {% block css %}
-        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/angular-slider.css' ) }}"/>
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/jquery-ui-1.10.3.custom.css' ) }}"/>
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
     {% endblock %}
     </head>
-{% verbatim %}
-    <body ng-controller="FlipperCtrl">
-        <div style="position: absolute; left:850px; top: 400px; width: 120px; height: 120px; z-index: 1000;display: none;" ng-show="pointImage">
-            <img border="0" ng-src="{{ pointImagePath }}" alt="Point">
-        </div>
-        <div style="position: absolute; left:650px; top: 100px; width: 650px; height: 150px; z-index: 1000;background-color: white; display: none;"
-             ng-show="capturedPrize || user.gameInfo.message">
-            <div ng-show="capturedPrize">
-                Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].name}},
-                Картинка: {{elements[capturedPrize.elementId].img1}}, Кол прыжков: {{elements[capturedPrize.elementId].available}}
-                <br />
-                <button ng-show="hasMonyeForPrize()" ng-click="buyElement()">Купить</button>
-                <br>
-            </div>
-            <div ng-show="user.gameInfo.message">
-                <h1>Сообщение</h1>
-                <div>
-                    картинка {{user.gameInfo.message.image}}<br />
-                    текст {{user.gameInfo.message.text}}<br />
-                </div>
-            </div>
-        </div>
-        <div style="position: absolute; left:650px; top: 250px; width: 650px; height: 120px; z-index: 1000;background-color: white; display: none;"
-             ng-show="user.gameInfo.questions">
-            {{question.text}}__time {{question.seconds}}
-            <ul >
-                <li >
-                    <label ng-repeat="answer in question.answers">
-                        <input  type="radio" ng-model="$parent.rightAnswer" name="answer" value="{{$index}}">{{ answer }}
-                    </label>
-                </li>
-            </ul>
-            
-            <input ng-click="answer()" type="submit" value="pli">
-        </div>
-        <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
-
-            <table width="100%" border="1">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>UserId</th>
-                        <th>Text</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in userLogs">
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.userId }}</td>
-                        <td>{{ item.text }}</td>
-                        <td>{{ item.date }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="fliper"><!-- fliper -->
-            <header><!-- header -->
-                <div class="header-content">
-                    <a href="#" class="logo"></a>
-                    <div class="tooltip last-ms">
-                        <div class="tooltip-line">
-                            <div class="dot"></div>
-                        </div>
-                        <div class="tooltip-left"></div>
-                        <div class="tooltip-center">
-                            <div class="tooltip-text">привет {{ user.username}}. Прошло 5 дней со дня твоего последнего визита</div>
-                        </div>
-                        <div class="tooltip-right"></div>
-                    </div>
-                    <div class="user-name">
+    {% verbatim %}
+<body class="" ng-controller="FlipperCtrl">
+	<div class="fliper"><!-- fliper -->
+		<header><!-- header -->
+			<div class="header-content">
+				<a href="#" class="logo"></a>
+				<a href="#" class="logout"></a>
+				<div class="user-name">
 					{{ user.username}}: <span>{{user.id}}</span>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </header><!-- .header -->
-                <aside class="left-sidebar"><!-- left-sidebar -->
-                    <div class="tooltip" ng-style="tooltipStyle">
-                        <div class="tooltip-line">
-                            <div class="dot"></div>
-                        </div>
-                        <div class="tooltip-left"></div>
-                        <div class="tooltip-center">
-                            <div class="tooltip-text">{{ tooltipMessage}}</div>
-                        </div>
-                        <div class="tooltip-right"></div>
-                    </div>
-                    <div class="lives-count" ><!-- lives-count -->
+				</div>
+				<div class="clear"></div>
+			</div>
+		</header><!-- .header -->
+		<section class="info-panel"><!-- info-panel -->
+                 <div class="lives-count" ><!-- lives-count -->
                         <div ng-repeat="i in [] | range:5" class="live-item"
                              ng-class="i <= user.gameInfo.flipper.id && 'active' || ''">
                             <div class="light"></div>
@@ -111,137 +41,249 @@
                         </div>
                         <div class="clear"></div>
                     </div><!-- .lives-count -->
-                    <div class="clear"></div>
-                    <div class="statistic"><!-- statistic -->
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств 1">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-1"></div>
-                            </div>
-                            <span ng-model="maxJump">{{user.gameInfo.flipper.maxJump}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств 2">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-2"></div>
-                            </div>
-                            <span>0</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств 3">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-3"></div>
-                            </div>
-                            <span>{{user.gameInfo.flipper.costJump}} <i></i></span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-4"></div>
-                            </div>
-                            <span>{{user.sessionJump}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-7"></div>
-                            </div>
-                            <span>{{user.gameInfo.totalJumps}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-coord">
-                            <div class="stat-item">
-                                <span>X:</span>
-                                <span>{{ user.gameInfo.x}}</span>
-                            </div><div class="clear"></div>
-                            <div class="stat-item">
-                                <span>Y:</span>
-                                <span>{{ user.gameInfo.y}}</span>
-                            </div><div class="clear"></div>
-                            <div class="stat-item">
-                                <span>Z:</span>
-                                <span>{{ user.gameInfo.z}}</span>
-                            </div><div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-6"></div>
-                            </div>
-                            <span>{{user.fundsInfo.active}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-5"></div>
-                            </div>
-                            <span>{{user.fundsInfo.safe}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-8"></div>
-                            </div>
-                            <span>{{user.fundsInfo.deposite}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="транз активный">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-8"></div>
-                            </div>
-                            <span>{{user.fundsInfo.transActive}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="транз депозитный">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-8"></div>
-                            </div>
-                            <span>{{user.fundsInfo.transSafe}}</span>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="stat-item" data-left-tooltip="Кол-во сообщений">
-                            <div class="stat-icon">
-                                <div class="light"></div>
-                                <div class="icon icon-8"></div>
-                            </div>
-                            <span>{{user.gameInfo.countMessages}}</span>
-                            <div class="clear"></div>
-                        </div>
-                    </div><!-- .statistic -->
-                </aside><!-- .left-sidebar -->
-                <!-- content -->
-               
-                
-            </div><!-- .fliper -->
-        </body>
-{% endverbatim %}
-        {# if messageType.messActive #}<a href="{{ path("store_new_message") }}">Оставить Сообщение</a>{# endif #}
-        <body >
-            <div style="background-color: #00FFFFFF">
-                   
-            <br />
-            <button type="submit" ng-click="buyMessageCount()" class="btn btn-primary" {# if not messageType.messCountDepActive #}<!-- disabled="true" -->{# endif #}>Купить сообщение</button>
-    
-</div>{% verbatim %}
+                <div class="lives-count-container"><!-- lives-count-container -->
+                    <i ng-repeat="i in [] | range:5" class="live-icon"
+                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''"></i>
+                    <div class="glass"></div>
+                    <div class="counters">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"><i></i></div>
+                        <i class="distance-icon">
+                            <span ng-model="maxJump">{{ user.gameInfo.flipper.maxJump }}</span>
+                        </i>
+                        <i class="price-icon">
+                            <span>{{ user.gameInfo.flipper.rentCost}}</span>
+                        </i>
+                    </div>
+                </div><!-- .lives-count-container -->
+
+                <div class="mark"><!-- mark -->
+                    <i class="mark-1"><i></i></i>
+                    <span>{{ user.gameInfo.superJumps }}</span>
+                </div><!-- .mark -->
+                <div class="mark"><!-- mark -->
+                    <i class="mark-2"><i></i></i>
+                    <span>{{ user.gameInfo.countMessages }}</span>
+                </div><!-- .mark -->
+                <div class="mark price"><!-- mark -->
+                    <i class="mark-3">
+                        <span></span>
+                        <i></i>
+                    </i>
+                    <span id="active" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
+                    <div class="price-slider">
+                        <div id="slider"></div>
+                    </div>
+                </div><!-- .mark -->
+                <div class="mark bank"><!-- mark -->
+                    <i class="mark-4"><i></i></i>
+                    <span >{{ user.fundsInfo.safe }}</span>
+                    <span class="transfer-count">+0</span>
+                </div><!-- .mark -->
+                <div class="mark"><!-- mark -->
+                    <i class="mark-5"><i></i></i>
+                    <span >{{ user.fundsInfo.deposite }}</span>
+                </div><!-- .mark -->
+                <div class="mark-line" style="display: none"><!-- mark-line -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-6">
+                            <span>256</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-7">
+                            <span>{{ user.gameInfo.countRentJumps }}</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-8">
+                            <span>10</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-9">
+                            <span>20</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-10">
+                            <span>3</span>
+                        </i>
+                    </div><!-- .mark -->
+                </div><!-- .mark-line -->
+            </section><!-- .info-panel -->
+		<section class="prizes-carusel"><!-- prizes-carusel -->
+			<div class="shop-block-1">
+                             {% endverbatim %}
+                             {% for flipper in flippers %}
+				<div class="shop-item"><!-- shop-item -->
+					<div class="lives-count-container"><!-- lives-count-container -->
+						<i ng-repeat="i in [] | range:5" class="live-icon"
+                             ng-class="i <= {{ flipper.id }} && 'active' || ''"></i>
+						<div class="glass">
+							<span>{{ flipper.rentDuration }}</span>
+						</div>
+						<div class="counters">
+							<div class="line"></div>
+							<div class="line"></div>
+							<div class="line"></div>
+							<i class="distance-icon">
+								<span>{{ flipper.maxJump }}</span>
+							</i>
+							<i class="price-icon">
+								<span>{{ flipper.costJump }}</span>
+							</i>
+						</div>
+					</div><!-- .lives-count-container -->
+					<div class="num-fl">
+						<span>{{ flipper.rentCost }}</span>
+					</div>
+					<input type="submit"  ng-click="buyFlipper({{flipper.id}})" value="">
+				</div>
+                                {% endfor %}
+                                
+				
+				<div class="shop-item shop-item-r shop-item-c-top">
+					<i class="icon-p1"><i class="line"></i></i>
+					<div class="num-fl">
+						<span>20</span>
+					</div>
+                                            <input type="submit" class="star" value="">
+				</div>
+				<div class="shop-item shop-item-r">
+					<i class="icon-p2"><i class="line"></i></i>
+					<div class="num-fl">
+						<span>{{ messageType.messCountCost }}</span>
+					</div>
+					<input type="submit" ng-click="buyMessageCount()" class="star" value="">
+				</div>
+				<div class="shop-item shop-item-r">
+					<i class="icon-p2"><i class="line"></i></i>
+					<div class="num-fl">
+						<span>{{ messageType.messCost }}</span>
+					</div>
+                                            <input onclick="window.location='/store/new_message'" type="submit" value="">
+				</div>
+				<div class="clear"></div>
+			</div>
+                        {% verbatim %}
+			<div class="shop-block-2">
+				<div class="shop-item">
+					<div class="mark"><!-- mark -->
+						<i class="mark-11"><span>20</span></i>
+						<i class="line"></i>
+					</div><!-- .mark -->
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>20</span>
+					</div>
+					<input type="submit" value="">
+				</div>
+				<div class="shop-item">
+					<div class="mark"><!-- mark -->
+						<i class="mark-6"><span>20</span></i>
+						<i class="line"></i>
+					</div><!-- .mark -->
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>20</span>
+					</div>
+					<input type="submit" value="">
+				</div>
+				<div class="shop-item">
+					<div class="mark"><!-- mark -->
+						<i class="mark-7"><span>20</span></i>
+						<i class="line"></i>
+					</div><!-- .mark -->
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>5</span>
+					</div>
+					<input type="submit" value="">
+				</div>
+				<div class="shop-item">
+					<div class="mark"><!-- mark -->
+						<i class="mark-8"><span>20</span></i>
+						<i class="line"></i>
+					</div><!-- .mark -->
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>20</span>
+					</div>
+					<input type="submit" value="">
+				</div>
+				<div class="shop-item">
+					<div class="mark"><!-- mark -->
+						<i class="mark-9"><span>20</span></i>
+						<i class="line"></i>
+					</div><!-- .mark -->
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>5</span>
+					</div>
+					<input type="submit" value="">
+				</div>
+				<div class="shop-item">
+					<div class="mark"><!-- mark -->
+						<i class="mark-10"><span>20</span></i>
+						<i class="line"></i>
+					</div><!-- .mark -->
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>20</span>
+					</div>
+					<input type="submit" value="">
+				</div>
+				<div class="shop-item total-f">
+					<div class="total">
+						<span>{{(costDeposite /  user.fundsInfo.rates.3).toFixed(2)}}</span>
+						<i class="line"></i>
+					</div>
+					<i class="icon-price"><i class="line"></i></i>
+					<div class="num-fl">
+						<span ng-model="costDeposite">{{costDeposite}}</span>
+					</div>
+					<input type="submit" ng-click="depositeToActive()" value="">
+				</div>
+				<div class="shop-item">
+					<div class="total">
+						<span>50 000</span>
+						<i class="line"></i>
+					</div>
+					<i class="icon-star"><i class="line"></i></i>
+					<div class="num-fl">
+						<a href="#" class="count-min"></a>
+						<a href="#" class="counter-plus"></a>
+						<span>2 000</span>
+					</div>
+					<input type="submit" value="" class="rub">
+				</div>
+			</div>
+			<div class="clear"></div>
+		</section><!-- .prizes-carusel -->
+		<section class="full-panel">
+			<a href="#" class="c-icon-1 c-icon"></a>
+			<a href="#" class="c-icon-2 c-icon"></a>
+			<a href="#" class="c-icon-3 c-icon"></a>
+			<a href="#" class="c-icon-4 c-icon"></a>
+			<a href="#" class="c-icon-5 c-icon"></a>
+			<a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
+			<a href="#" class="c-icon-7 c-icon"></a>
+			<a href="#" class="c-icon-8 c-icon"></a>
+			<a href="#" class="c-icon-9 c-icon"></a>
+			<a href="#" class="c-icon-10 c-icon"></a>
+			<a href="#" class="c-icon-11 c-icon"></a>
+		</section>
+	</div><!-- .fliper -->
+</body>     
+<div style="display: none">
 <br>
       <ul style="height: 200px">
         <p>Active: {{user.fundsInfo.active - costActive}}</p>
@@ -273,29 +315,8 @@
        <br />
        <button type="submit" ng-click="safeToActive()" class="btn btn-primary">С безопасного на активный</button>
      </ul>
-     <ul style="height: 100px">
-        <p>Active: {{user.fundsInfo.active + costDeposite * user.fundsInfo.rates.3}}</p>
-        <p>Deposite: {{user.fundsInfo.deposite - costDeposite}}</p> 
-        <input disabled="true" type="text" 
-               ng-model="costDeposite" 
-               ng-change="toDeposite({{costDeposite}}, {{user.fundsInfo.deposite}})"
-               type="number" name="" id=""
-               min="{{0}}"
-               max="{{user.fundsInfo.deposite}}"
-               data-integer-input=""
-                                          />
-       <br />
-       <button type="submit" ng-click="depositeToActive()" class="btn btn-primary">С депозитного на активный</button>
-     </ul>
-
+</div>
 {% endverbatim %}
-{% for flipper in flippers %}
-Название: {{ flipper.title }}
-<br>Длительность аренды: {{ flipper.rentDuration }}
-<br>Дальность: {{ flipper.maxJump }}
-<br>Стоимость перемещения: {{ flipper.costJump }}
-<br>Стоимость аренды: {{ flipper.rentCost }}<br>
-<button type="submit" ng-click="buyFlipper({{flipper.id}})" class="btn btn-primary">Купить {{ flipper.title }} </button><br>
-{% endfor %}
+
         </body>
-    </html>
+</html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" ng-app="galaxy">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fliper 1</title>
+    {% block javascript %}
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-1.9.1.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/script.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.colorbox.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/colorBoxScript.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular-slider.js' )  }}"></script>
+    {% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/angular-slider.css' ) }}"/>
+    {% endblock %}
+    </head>
+{% verbatim %}
+    <body ng-controller="FlipperCtrl">
+        <div style="position: absolute; left:850px; top: 400px; width: 120px; height: 120px; z-index: 1000;display: none;" ng-show="pointImage">
+            <img border="0" ng-src="{{ pointImagePath }}" alt="Point">
+        </div>
+        <div style="position: absolute; left:650px; top: 100px; width: 650px; height: 150px; z-index: 1000;background-color: white; display: none;"
+             ng-show="capturedPrize || user.gameInfo.message">
+            <div ng-show="capturedPrize">
+                Приз: {{elements[capturedPrize.elementId].prizeName}}, Элемент: {{elements[capturedPrize.elementId].name}},
+                Картинка: {{elements[capturedPrize.elementId].img1}}, Кол прыжков: {{elements[capturedPrize.elementId].available}}
+                <br />
+                <button ng-show="hasMonyeForPrize()" ng-click="buyElement()">Купить</button>
+                <br>
+            </div>
+            <div ng-show="user.gameInfo.message">
+                <h1>Сообщение</h1>
+                <div>
+                    картинка {{user.gameInfo.message.image}}<br />
+                    текст {{user.gameInfo.message.text}}<br />
+                </div>
+            </div>
+        </div>
+        <div style="position: absolute; left:650px; top: 250px; width: 650px; height: 120px; z-index: 1000;background-color: white; display: none;"
+             ng-show="user.gameInfo.questions">
+            {{question.text}}__time {{question.seconds}}
+            <ul >
+                <li >
+                    <label ng-repeat="answer in question.answers">
+                        <input  type="radio" ng-model="$parent.rightAnswer" name="answer" value="{{$index}}">{{ answer }}
+                    </label>
+                </li>
+            </ul>
+            
+            <input ng-click="answer()" type="submit" value="pli">
+        </div>
+        <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
+
+            <table width="100%" border="1">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>UserId</th>
+                        <th>Text</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in userLogs">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.userId }}</td>
+                        <td>{{ item.text }}</td>
+                        <td>{{ item.date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="fliper"><!-- fliper -->
+            <header><!-- header -->
+                <div class="header-content">
+                    <a href="#" class="logo"></a>
+                    <div class="tooltip last-ms">
+                        <div class="tooltip-line">
+                            <div class="dot"></div>
+                        </div>
+                        <div class="tooltip-left"></div>
+                        <div class="tooltip-center">
+                            <div class="tooltip-text">привет {{ user.username}}. Прошло 5 дней со дня твоего последнего визита</div>
+                        </div>
+                        <div class="tooltip-right"></div>
+                    </div>
+                    <div class="user-name">
+					{{ user.username}}: <span>{{user.id}}</span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </header><!-- .header -->
+                <aside class="left-sidebar"><!-- left-sidebar -->
+                    <div class="tooltip" ng-style="tooltipStyle">
+                        <div class="tooltip-line">
+                            <div class="dot"></div>
+                        </div>
+                        <div class="tooltip-left"></div>
+                        <div class="tooltip-center">
+                            <div class="tooltip-text">{{ tooltipMessage}}</div>
+                        </div>
+                        <div class="tooltip-right"></div>
+                    </div>
+                    <div class="lives-count" ><!-- lives-count -->
+                        <div ng-repeat="i in [] | range:5" class="live-item"
+                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''">
+                            <div class="light"></div>
+                            <div class="icon"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div><!-- .lives-count -->
+                    <div class="clear"></div>
+                    <div class="statistic"><!-- statistic -->
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств 1">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-1"></div>
+                            </div>
+                            <span ng-model="maxJump">{{user.gameInfo.flipper.maxJump}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств 2">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-2"></div>
+                            </div>
+                            <span>0</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств 3">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-3"></div>
+                            </div>
+                            <span>{{user.gameInfo.flipper.costJump}} <i></i></span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-4"></div>
+                            </div>
+                            <span>{{user.sessionJump}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-7"></div>
+                            </div>
+                            <span>{{user.gameInfo.totalJumps}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-coord">
+                            <div class="stat-item">
+                                <span>X:</span>
+                                <span>{{ user.gameInfo.x}}</span>
+                            </div><div class="clear"></div>
+                            <div class="stat-item">
+                                <span>Y:</span>
+                                <span>{{ user.gameInfo.y}}</span>
+                            </div><div class="clear"></div>
+                            <div class="stat-item">
+                                <span>Z:</span>
+                                <span>{{ user.gameInfo.z}}</span>
+                            </div><div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-6"></div>
+                            </div>
+                            <span>{{user.fundsInfo.active}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-5"></div>
+                            </div>
+                            <span>{{user.fundsInfo.safe}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="на вашем счету недостаточно средств">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-8"></div>
+                            </div>
+                            <span>{{user.fundsInfo.deposite}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="транз активный">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-8"></div>
+                            </div>
+                            <span>{{user.fundsInfo.transActive}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="транз депозитный">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-8"></div>
+                            </div>
+                            <span>{{user.fundsInfo.transSafe}}</span>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="stat-item" data-left-tooltip="Кол-во сообщений">
+                            <div class="stat-icon">
+                                <div class="light"></div>
+                                <div class="icon icon-8"></div>
+                            </div>
+                            <span>{{user.gameInfo.countMessages}}</span>
+                            <div class="clear"></div>
+                        </div>
+                    </div><!-- .statistic -->
+                </aside><!-- .left-sidebar -->
+                <!-- content -->
+               
+                
+            </div><!-- .fliper -->
+        </body>
+{% endverbatim %}
+        {# if messageType.messActive #}<a href="{{ path("store_new_message") }}">Оставить Сообщение</a>{# endif #}
+        <body >
+            <div style="background-color: #00FFFFFF">
+                   
+            <br />
+            <button type="submit" ng-click="buyMessageCount()" class="btn btn-primary" {# if not messageType.messCountDepActive #}<!-- disabled="true" -->{# endif #}>Купить сообщение</button>
+    
+</div>{% verbatim %}
+<br>
+      <ul style="height: 200px">
+        <p>Active: {{user.fundsInfo.active - costActive}}</p>
+        <p>Safe: {{user.fundsInfo.safe + costActive * 1}}</p> 
+        <slider floor="{{ floor }}" style="width: 30%" ceiling="{{user.fundsInfo.active}}" step="{{1}}" precision="2" ng-model="costActive"   class="ng-isolate-scope ng-scope ng-pristine ng-valid"></slider>
+        <input type="text" 
+               ng-model="costActive" 
+               ng-change="toDeposite({{costActive}}, {{user.fundsInfo.active}})"
+               type="number" name="" id=""
+               min="{{0}}"
+               max="{{user.fundsInfo.active}}"
+               data-integer-input=""
+                                          />
+       <br />
+       <button type="submit" ng-click="activeToSafe()" class="btn btn-primary">С Активного на безопасный</button>
+     </ul>
+     <ul style="height: 200px">
+        <p>Safe: {{user.fundsInfo.safe - costSafe}}</p>
+        <p>Active: {{user.fundsInfo.active + costSafe * 1}}</p> 
+        <slider floor="{{ floor }}" style="width: 30%" ceiling="{{user.fundsInfo.safe}}" step="{{1}}" precision="2" ng-model="costSafe"   class="ng-isolate-scope ng-scope ng-pristine ng-valid"></slider>
+        <input type="text" 
+               ng-model="costSafe" 
+               ng-change="toDeposite({{costSafe}}, {{user.fundsInfo.safe}})"
+               type="number" name="" id=""
+               min="{{0}}"
+               max="{{user.fundsInfo.safe}}"
+               data-integer-input=""
+                                          />
+       <br />
+       <button type="submit" ng-click="safeToActive()" class="btn btn-primary">С безопасного на активный</button>
+     </ul>
+     <ul style="height: 100px">
+        <p>Active: {{user.fundsInfo.active + costDeposite * user.fundsInfo.rates.3}}</p>
+        <p>Deposite: {{user.fundsInfo.deposite - costDeposite}}</p> 
+        <input disabled="true" type="text" 
+               ng-model="costDeposite" 
+               ng-change="toDeposite({{costDeposite}}, {{user.fundsInfo.deposite}})"
+               type="number" name="" id=""
+               min="{{0}}"
+               max="{{user.fundsInfo.deposite}}"
+               data-integer-input=""
+                                          />
+       <br />
+       <button type="submit" ng-click="depositeToActive()" class="btn btn-primary">С депозитного на активный</button>
+     </ul>
+
+{% endverbatim %}
+{% for flipper in flippers %}
+Название: {{ flipper.title }}
+<br>Длительность аренды: {{ flipper.rentDuration }}
+<br>Дальность: {{ flipper.maxJump }}
+<br>Стоимость перемещения: {{ flipper.costJump }}
+<br>Стоимость аренды: {{ flipper.rentCost }}<br>
+<button type="submit" ng-click="buyFlipper({{flipper.id}})" class="btn btn-primary">Купить {{ flipper.title }} </button><br>
+{% endfor %}
+        </body>
+    </html>

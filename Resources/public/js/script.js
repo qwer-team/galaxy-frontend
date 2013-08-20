@@ -370,27 +370,33 @@ function FlipperCtrl($scope, $http, $timeout) {
 
     $scope.activeToSafe = function() {
         var data = {
-            value: parseInt($scope.costActive)
+            value: parseInt($scope.costActive),
+            from: 1,
+            to: 5
         };
         if (parseInt($scope.costActive) > 0) {
-            $http.post('/store/active_to_safe', data).success($scope.transferCallback);
+            $http.post('/store/transfer_funds', data).success($scope.transferCallback);
         } else
             alert("Значение должно быть > 0");
     }
     $scope.safeToActive = function() {
         var data = {
-            value: parseInt($scope.costSafe)
+            value: parseInt($scope.costSafe),
+            from: 2,
+            to: 4
         };
         if (parseInt($scope.costSafe) > 0) {
-            $http.post('/store/safe_to_active', data).success($scope.transferCallback);
+            $http.post('/store/transfer_funds', data).success($scope.transferCallback);
         } else
             alert("Значение должно быть > 0");
     }
     $scope.depositeToActive = function() {
         var data = {
-            value: parseInt($scope.costDeposite)
+            value: parseInt($scope.costDeposite),
+            from: 3,
+            to: 1
         };
-        $http.post('/store/deposite_to_active', data).success($scope.transferCallback);
+        $http.post('/store/transfer_funds', data).success($scope.transferCallback);
     }
 
     $scope.buyMessageCount = function() {

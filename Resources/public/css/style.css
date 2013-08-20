@@ -962,6 +962,241 @@ section.flipper-sec{
 	background: url(../images/v-line.png) 3px 0 repeat-y;
 }
 
+
+
+/* shop */
+.shop-item{
+	position: relative;
+	margin-bottom: 34px;
+}
+.shop-item .num-fl{
+	position: absolute;
+	width: 165px;
+	height: 52px;
+	background: url(../images/sprite.png) -2013px -346px;
+	left: 297px;
+	top: -10px;
+}
+.shop-item input[type="submit"]{
+	width: 52px;
+	height: 56px;
+	border: 0;
+	background: url(../images/sprite.png) -2138px -185px;
+	position: absolute;
+	left: 462px;
+	top: -11px;
+	cursor: pointer;
+}
+.shop-item input[type="submit"]:hover{
+	background-position: -2138px -269px;
+}
+.shop-item input[type="submit"]:active{
+	background-position: -2138px -267px;
+}
+.num-fl.active{
+	background-position: -2013px -407px;
+}
+.num-fl span{
+	font-size: 16px;
+	color: #0099ff;
+	font-weight: bold;
+	display: inline-block;
+	width: 111px;
+	text-align: center;
+	right: 16px;
+	top: 50%;
+	margin-top: -9px;
+	position: absolute;
+}
+.shop-item .glass span{
+	position: absolute;
+	font-size: 12px;
+	color: #00f9ff;
+	font-weight: bold;
+	top: -6px;
+	right: -22px;
+}
+.shop-block-1 {
+	float: left;
+	margin-right: 80px;
+	width: 500px;
+}
+.shop-block-2 {
+	float: left;
+
+}
+.shop-block-2 .shop-item{
+	position: relative;
+	top: -10px;
+	margin-bottom: 11px;
+}
+.shop-block-2 .shop-item i.line,
+.shop-block-1 .shop-item-r i.icon-p1 i.line,
+.shop-block-1 .shop-item-r i.icon-p2 i.line{
+	height: 2px;
+	width: 18px;
+	background: url(../images/line-2.png);
+	position: absolute;
+	left: 51px;
+	top: 29px;
+}
+.shop-block-2 .shop-item .num-fl{
+	left: 71px;
+	top: 3px;
+}
+.shop-block-2 .shop-item input[type="submit"]{
+	left: 236px;
+	top: 2px;
+	background-position: -2016px -185px;
+}
+.shop-block-2 .shop-item input[type="submit"]:hover{
+	background-position: -2016px -269px;
+}
+.shop-block-2 .shop-item input[type="submit"]:active{
+	background-position: -2016px -267px;
+}
+
+.shop-block-2 .shop-item input[type="submit"].rub{
+	left: 236px;
+	top: 2px;
+	background-position: -2265px -185px
+}
+.shop-block-2 .shop-item input[type="submit"].rub:hover{
+	background-position: -2265px -269px;
+}
+.shop-block-2 .shop-item input[type="submit"].rub:active{
+	background-position: -2265px -267px;
+}
+
+.shop-block-1 .shop-item input[type="submit"].star{
+	background-position: -2016px -185px;
+}
+.shop-block-1 .shop-item input[type="submit"].star:hover{
+	background-position: -2016px -269px;
+}
+.shop-block-1 .shop-item input[type="submit"].star:active{
+	background-position: -2016px -267px;
+}
+
+.mark > i.mark-11 {
+	background: url(../images/sprite.png) -2593px -162px;
+}
+.num-fl .count-min,
+.num-fl .counter-plus{
+	width: 12px;
+	height: 16px;
+	position: absolute;
+	top: 20px;
+	background: url(../images/sprite.png) 0 0;
+	z-index: 2;
+}
+.num-fl .count-min{
+	background-position: -2406px -205px;
+	left: 50px;
+}
+.num-fl .counter-plus{
+	background-position: -2460px -205px;
+	right: 27px;
+}
+.num-fl .count-min:hover{
+	background-position: -2406px -290px;
+}
+.num-fl .counter-plus:hover{
+	background-position: -2460px -290px;
+}
+.num-fl .count-min:active{
+	background-position: -2406px -288px;
+}
+.num-fl .counter-plus:active{
+	background-position: -2460px -288px;
+}
+i.icon-price, i.icon-star, i.icon-p1, i.icon-p2{
+	position: relative;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	background: url(../images/sprite.png) -2102px -112px;
+}
+i.icon-star{
+	background-position: -2168px -113px;
+}
+.shop-block-2 i.icon-price i.line,
+.shop-block-2 i.icon-star i.line,
+.shop-block-1 .shop-item-r i.icon-p1 i.line,
+.shop-block-1 .shop-item-r i.icon-p2 i.line{
+	left: 30px;
+	top: 14px;
+}
+.shop-block-2 i.icon-price,
+.shop-block-2 i.icon-star {
+	margin: 15px 0 0 26px;
+}
+.shop-item .total{
+	left: -102px;
+	top: 14px;
+	position: absolute;
+	width: 110px;
+	height: 32px;
+	text-align: center;
+	color: #18a5e8;
+	font-size: 16px;
+	line-height: 32px;
+	font-weight: bold;
+	background: url(../images/sprite.png) -1850px -375px;
+}
+.shop-item .total i.line{
+	left: 110px;
+	top: 15px;
+}
+.shop-item.total-f{
+	margin-top: 70px;
+	margin-bottom: 18px;
+}
+.shop-item-r i.icon-p1{
+	background-position: -2265px -59px;
+	margin: 2px 0 0 140px;
+}
+.shop-item-r i.icon-p2{
+	background-position: -2347px -60px;
+	margin: 2px 0 0 140px;
+}
+.shop-item.shop-item-r .num-fl{
+	left: 185px;
+}
+.shop-item.shop-item-r {
+	margin-bottom: 31px;
+}
+.shop-item.shop-item-r input[type="submit"]{
+	left: 350px;
+}
+.shop-item.shop-item-r.shop-item-c-top {
+	margin-top: 98px;
+	margin-bottom: 89px;
+}
+.full-panel.flipper-panel a.c-icon-5{
+	background-position: -516px -106px;
+}
+.full-panel.flipper-panel a.c-icon-5:hover{
+	background-position: -516px -275px;
+}
+.helps-on .full-panel.flipper-panel a.c-icon-7, 
+.helps-on .full-panel.flipper-panel a.c-icon-7:hover{
+	background-position: -745px -498px;
+}
+.helps-on .full-panel.flipper-panel a.c-icon-7:active{
+	background-position: -745px -496px;
+}
+.helps-on .full-panel.flipper-panel a.c-icon-5, 
+.helps-on .full-panel.flipper-panel a.c-icon-5:hover{
+	background-position: -516px -498px;
+}
+.helps-on .full-panel.flipper-panel a.c-icon-5:active{
+	background-position: -516px -496px;
+}
+.full-panel.flipper-panel a.c-icon-5:active{
+	background-position: -516px -273px;
+}
+
 .lightAmount{
     color: red !important;
 }

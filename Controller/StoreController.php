@@ -13,8 +13,7 @@ use Galaxy\FrontendBundle\Form\MessageType;
  *
  * @author root
  */
-class StoreController extends Controller
-{
+class StoreController extends Controller {
 
     private $active = 1;
     private $deposite = 3;
@@ -30,8 +29,7 @@ class StoreController extends Controller
     /**
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $pointService = $this->get("point.service");
         $gameService = $this->get("game.service");
         $fliperList = $gameService->getFlippersList();
@@ -43,8 +41,7 @@ class StoreController extends Controller
         );
     }
 
-    public function buyZoneAction(Request $request)
-    {
+    public function buyZoneAction(Request $request) {
         $response = new Response();
         $userInfoService = $this->get("galaxy.user_info.service");
         $documentsService = $this->get("documents.service");
@@ -73,8 +70,7 @@ class StoreController extends Controller
         return $response;
     }
 
-    private function getFlipperParameters($flipper, $value)
-    {
+    private function getFlipperParameters($flipper, $value) {
         if ($flipper["id"] == 2) {
             $account = $flipper['secondZoneSpec' . $value] ? $this->deposite : $this->active;
             $summa = $flipper['secondZoneCost' . $value];
@@ -94,8 +90,7 @@ class StoreController extends Controller
     /**
      * @Template()
      */
-    public function newMessageAction()
-    {
+    public function newMessageAction() {
         $user = $this->getUser();
         $form = $this->getMessageForm();
         return array(
@@ -107,8 +102,7 @@ class StoreController extends Controller
     /**
      * @Template("GalaxyFrontendBundle:Store:newMessage.html.twig")
      */
-    public function createMessageAction(Request $request)
-    {
+    public function createMessageAction(Request $request) {
         $user = $this->getUser();
         $userId = $user->getId();
         $infoService = $this->get("info.service");
@@ -142,8 +136,7 @@ class StoreController extends Controller
         );
     }
 
-    public function buyMessageAction()
-    {
+    public function buyMessageAction() {
         $response = new Response();
         $user = $this->getUser();
         $userId = $user->getId();
@@ -159,8 +152,7 @@ class StoreController extends Controller
         }
     }
 
-    public function buyFlipperAction(Request $request)
-    {
+    public function buyFlipperAction(Request $request) {
         $response = new Response();
         $user = $this->getUser();
         $userId = $user->getId();
@@ -175,44 +167,25 @@ class StoreController extends Controller
         return $response;
     }
 
-    public function activeToSafeAction(Request $request)
-    {
-        $value = $request->get('value');
+    public function transferAction(Request $request) {
         $response = new Response();
+        $value = $request->get('value');
+        $from = $request->get('from');
+        $to = $request->get('to');
+        $deposite = 0;
+        if ($from == 3) {
+            $deposite = $value;
+            $value = $this->depositeToActiveRates($value);
+        }
         $user = $this->getUser();
         $userId = $user->getId();
-        $responseFunds = $this->transferFunds($userId, $value, $this->active, $this->transSafe);
+        $responseFunds = $this->transferFunds($userId, $value, $from, $to, $deposite);
         $responseFunds['user'] = $this->updateFunds();
         $response->setContent(json_encode($responseFunds));
         return $response;
     }
 
-    public function depositeToActiveAction(Request $request)
-    {
-        $response = new Response();
-        $value = $request->get('value');
-        $user = $this->getUser();
-        $userId = $user->getId();
-        $responseFunds = $this->transferFunds($userId, $this->depositeToActiveRates($value), $this->active, $this->deposite);
-        $responseFunds['user'] = $this->updateFunds();
-        $response->setContent(json_encode($responseFunds));
-        return $response;
-    }
-
-    public function safeToActiveAction(Request $request)
-    {
-        $response = new Response();
-        $value = $request->get('value');
-        $user = $this->getUser();
-        $userId = $user->getId();
-        $responseFunds = $this->transferFunds($userId, $value, $this->safe, $this->transActive);
-        $responseFunds['user'] = $this->updateFunds();
-        $response->setContent(json_encode($responseFunds));
-        return $response;
-    }
-
-    private function updateFunds()
-    {
+    private function updateFunds() {
         $user = $this->getUser();
         $userId = $user->getId();
         $userInfoService = $this->get("galaxy.user_info.service");
@@ -223,8 +196,7 @@ class StoreController extends Controller
         return $user->jsonSerialize();
     }
 
-    private function getMessageForm($message = null, $template = array())
-    {
+    private function getMessageForm($message = null, $template = array()) {
         $infoService = $this->get("info.service");
         $form = new MessageType();
 
@@ -242,12 +214,11 @@ class StoreController extends Controller
         return $this->createForm($form, $message === null ? $data : $message);
     }
 
-    private function messageCountDebitFunds($userId, $account)
-    {
+    private function messageCountDebitFunds($userId, $account) {
         $pointService = $this->get("point.service");
         $documentsService = $this->get("documents.service");
         $messageType = $pointService->getMessageType();
-        $cost = $messageType->messCost;
+        $cost = $messageType->messCountCost;
         $data = array(
             'OA1' => $userId,
             'summa1' => $cost,
@@ -257,15 +228,14 @@ class StoreController extends Controller
         return $response;
     }
 
-    private function transferFunds($userId, $value, $from, $to)
-    {
+    private function transferFunds($userId, $value, $from, $to, $deposite) {
         $documentsService = $this->get("documents.service");
-        $userFunds = $documentsService->getFunds($userId);
+        $userFunds = (array) $documentsService->getFunds($userId);
         $response = array("result" => "fail");
-        if ($userFunds->active >= $value) {
+        if ($userFunds[$this->accounts["$from"]] >= $value || ($userFunds[$this->accounts["$from"]] >= $deposite && $from == 3)) {
             $data = array(
                 'OA1' => $userId,
-                'summa1' => $value,
+                'summa1' => $deposite == 0 ? $value : $deposite,
                 'account' => $from
             );
             $debitResponse = $documentsService->debitFunds($data);
@@ -282,16 +252,14 @@ class StoreController extends Controller
         return $response;
     }
 
-    private function depositeToActiveRates($value)
-    {
+    private function depositeToActiveRates($value) {
         $user = $this->getUser();
         $fundsInfo = $user->getFundsInfo();
-        $transferValue = $value * 0.76;
+        $transferValue = $value / 0.76;
         return $transferValue;
     }
 
-    private function buyFlipper($userId, $flipperId)
-    {
+    private function buyFlipper($userId, $flipperId) {
         $userInfoService = $this->get("galaxy.user_info.service");
         $gameService = $this->get("game.service");
         $documentsService = $this->get("documents.service");
@@ -299,10 +267,7 @@ class StoreController extends Controller
         $fundsInfo = $userInfoService->getFundsInfo($userId);
         $gameInfo = $userInfoService->getGameInfo($userId);
         $currentFlipperId = $gameInfo->flipper->id;
-        if ($flipperId > 2
-                && $buyFlipper->countRentMess > $gameInfo->countMessages
-                || $flipperId - $currentFlipperId != 1
-                || $fundsInfo->active < $buyFlipper->rentCost) {
+        if ($flipperId != 1 && $buyFlipper->countRentMess > $gameInfo->countMessages || $flipperId - $currentFlipperId != 1 || $fundsInfo->active < $buyFlipper->rentCost) {
             return false;
         } else {
             $data = array(
