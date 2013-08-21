@@ -62,6 +62,7 @@ class GameRemoteService
 
     public function getFlippersList()
     {
+        echo $this->makeRequest($this->flippersListUrl);
         $response = json_decode($this->makeRequest($this->flippersListUrl));
         return $response;
     }
