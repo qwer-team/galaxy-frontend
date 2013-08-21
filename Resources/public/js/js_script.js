@@ -80,20 +80,25 @@ $(document).ready(function() {
         return false;
     });
     $('#slider').slider({
-        change: function(event, ui) {
+        /*change: function(event, ui) {
             var c_val = $('#slider').slider("value");
-            $('.mark.bank .transfer-count').html('+' + c_val);
-            $('.mark.bank .transfer-count').attr("value", c_val);
-        },
+            var transSafe = $('.mark.bank .transfer-count').attr("transSafe");
+            var newTrans = parseInt(transSafe) + parseInt(c_val);
+            $('.mark.bank .transfer-count').html('+' + newTrans);
+            $('.mark.bank .transfer-count').attr("transValue", c_val);
+        },*/
         slide: function(event, ui) {
             var c_val = $('#slider').slider("value");
-            $('.mark.bank .transfer-count').html('+' + c_val);
-            $('.mark.bank .transfer-count').attr("value", c_val);
+            var transSafe = $('.mark.bank .transfer-count').attr("transSafe");
+            var newTrans = parseInt(transSafe) + parseInt(c_val);
+            $('.mark.bank .transfer-count').html('+' + newTrans);
+            $('.mark.bank .transfer-count').attr("transValue", c_val);
         }
     });
     $('.mark.price span').on('click', function() {
+        $('.mark.bank .transfer-count:hidden').fadeToggle(300);
+        $('#slider').slider("value", 0);
         if (!$(this).parent().hasClass("active")) {
-            $('#slider').slider( "value", 0 );
             var offs_left = $(this).offset().left;
             $('.price-slider').css('left', $(this).width() + 10 + offs_left);
             $('#slider').slider("option", "min", 0);
@@ -102,13 +107,15 @@ $(document).ready(function() {
             $('.mark.bank .transfer-count').css('left', $('.mark.bank span').offset().left + $('.mark.bank span').width() + 18);
         } else {
             $(this).parent().removeClass('active');
-            var value = $('.mark.bank .transfer-count').attr("value");
+            var transValue = $('.mark.bank .transfer-count').attr("transValue");
+            var transSafe =  $('.mark.bank .transfer-count').attr("transSafe");
+            var newTrans = parseInt(transSafe) + parseInt(transValue);
             var data = {
-                value: parseInt(value),
+                value: parseInt(transValue),
                 from: 1,
                 to: 5
             };
-            if (parseInt(value) > 0) {
+            if (parseInt(transValue) > 0) {
                 $.ajax({
                     type: "POST",
                     url: "/store/transfer_funds",
@@ -116,15 +123,14 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         $("#active").html(data.user.fundsInfo.active);
-                        $('.mark.bank .transfer-count').html('+' + value);
-                        $('.mark.bank .transfer-count').fadeToggle(300).delay(500).fadeToggle(300);
+                        $('.mark.bank .transfer-count').html('+' + newTrans);
+                        $('.mark.bank .transfer-count').attr("transValue", "0");
                     }
                 });
             } else
                 alert("Значение должно быть > 0");
         }
         $('.price-slider').fadeToggle(300);
-        $('.mark.bank .transfer-count').fadeToggle(300);
         return false;
     });
 
