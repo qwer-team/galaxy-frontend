@@ -34,7 +34,7 @@ class StoreController extends Controller {
         $gameService = $this->get("game.service");
         $fliperList = $gameService->getFlippersList();
         $messageType = $pointService->getMessageType();
-        print_r($fliperList);
+        //print_r($fliperList);
         return array(
             "flippers" => $fliperList,
             "messageType" => $messageType,
