@@ -33,14 +33,7 @@
 			</div>
 		</header><!-- .header -->
 		<section class="info-panel"><!-- info-panel -->
-                 <div class="lives-count" ><!-- lives-count -->
-                        <div ng-repeat="i in [] | range:5" class="live-item"
-                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''">
-                            <div class="light"></div>
-                            <div class="icon"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div><!-- .lives-count -->
+                    
                 <div class="lives-count-container"><!-- lives-count-container -->
                     <i ng-repeat="i in [] | range:5" class="live-icon"
                              ng-class="i <= user.gameInfo.flipper.id && 'active' || ''"></i>
@@ -57,7 +50,6 @@
                         </i>
                     </div>
                 </div><!-- .lives-count-container -->
-
                 <div class="mark"><!-- mark -->
                     <i class="mark-1"><i></i></i>
                     <span>{{ user.gameInfo.superJumps }}</span>
@@ -71,15 +63,19 @@
                         <span></span>
                         <i></i>
                     </i>
-                    <span id="active" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
-                    <div class="price-slider">
-                        <div id="slider"></div>
+                    <span id="active" active="{{ user.fundsInfo.active }}" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
+                    <div class="price-slider" id="price-slider">
+                        <div id="sliderActive"></div>
                     </div>
-                </div><!-- .mark -->
+                    <span class="transfer-count" id="transActive" style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}" transValue="0">+{{ user.fundsInfo.transActive }}</span>
+                 </div><!-- .mark -->
                 <div class="mark bank"><!-- mark -->
                     <i class="mark-4"><i></i></i>
-                    <span >{{ user.fundsInfo.safe }}</span>
-                    <span class="transfer-count" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
+                    <span id="safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
+                     <div class="price-slider" id="bank-slider">
+                        <div id="sliderSafe"></div>
+                    </div>
+                    <span class="transfer-count" id="transSafe" style="{{0 < user.fundsInfo.transSafe ? 'display: inline; left: 131px;' : ''}}" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
                 </div><!-- .mark -->
                 <div class="mark"><!-- mark -->
                     <i class="mark-5"><i></i></i>
@@ -120,7 +116,7 @@
 				<div class="shop-item"><!-- shop-item -->
 					<div class="lives-count-container"><!-- lives-count-container -->
 						<i ng-repeat="i in [] | range:5" class="live-icon"
-                             ng-class="i <= {{ flipper.id }} && 'active' || ''"></i>
+                                 ng-class="i <= {{ flipper.id }} && 'active' || ''"></i>
 						<div class="glass">
 							<span>{{ flipper.rentDuration }}</span>
 						</div>

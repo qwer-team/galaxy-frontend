@@ -102,7 +102,7 @@ header .logout:active{
 .lives-count-container i.live-icon{
 	background: url(../images/sprite.png) -1767px -101px;
 	display: inline-block;
-	width: 19px;
+	width: 22px;
 	height: 16px;
 	margin: 8px 0 0 4px;
 }
@@ -747,6 +747,18 @@ section.flipper-sec{
 	color: #66ff66;
 }
 .mark.bank .transfer-count{
+	font-size: 16px;
+	color: #66ff66;
+	font-weight: bold;
+	position: absolute;
+	left: 50px;
+	top: 29px;
+	display: none;
+}
+.mark.bank.active span{
+	color: #66ff66;
+}
+.mark.price .transfer-count{
 	font-size: 16px;
 	color: #66ff66;
 	font-weight: bold;

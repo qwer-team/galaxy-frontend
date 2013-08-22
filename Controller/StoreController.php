@@ -267,7 +267,7 @@ class StoreController extends Controller {
         $fundsInfo = $userInfoService->getFundsInfo($userId);
         $gameInfo = $userInfoService->getGameInfo($userId);
         $currentFlipperId = $gameInfo->flipper->id;
-        if ($buyFlipper->countRentMess <= $gameInfo->countMessages && ($flipperId - $currentFlipperId == 1 || $flipperId == 1) && $fundsInfo->active >= $buyFlipper->rentCost) {
+        if ($buyFlipper->countRentMess <= $gameInfo->countMessages && ($flipperId - $currentFlipperId == 1 || $flipperId != 1) && $fundsInfo->active >= $buyFlipper->rentCost) {
             $data = array(
                 'OA1' => $userId,
                 'summa1' => $buyFlipper->rentCost,
