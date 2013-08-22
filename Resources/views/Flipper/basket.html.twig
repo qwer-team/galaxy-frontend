@@ -70,78 +70,86 @@
                 </header><!-- .header -->
 
                 <section class="info-panel"><!-- info-panel -->
-
-                    <div class="lives-count-container"><!-- lives-count-container -->
-                        <i class="live-icon active"></i>
-                        <i class="live-icon"></i>
-                        <i class="live-icon"></i>
-                        <i class="live-icon"></i>
-                        <i class="live-icon"></i>
-                        <div class="glass"></div>
-                        <div class="counters">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"><i></i></div>
-                            <i class="distance-icon">
-                                <span>200</span>
-                            </i>
-                            <i class="price-icon">
-                                <span>567</span>
-                            </i>
+                 <div class="lives-count" ><!-- lives-count -->
+                        <div ng-repeat="i in [] | range:5" class="live-item"
+                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''">
+                            <div class="light"></div>
+                            <div class="icon"></div>
                         </div>
-                    </div><!-- .lives-count-container -->
-
-                    <div class="mark"><!-- mark -->
-                        <i class="mark-1"><i></i></i>
-                        <span>{{ user.gameInfo.totalJumps }}</span>
-                    </div><!-- .mark -->
-                    <div class="mark"><!-- mark -->
-                        <i class="mark-2"><i></i></i>
-                        <span>{{ user.gameInfo.countMessages }}</span>
-                    </div><!-- .mark -->
-                    <div class="mark"><!-- mark -->
-                        <i class="mark-3">
-                            <span></span>
-                            <i></i>
+                        <div class="clear"></div>
+                    </div><!-- .lives-count -->
+                <div class="lives-count-container"><!-- lives-count-container -->
+                    <i ng-repeat="i in [] | range:5" class="live-icon"
+                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''"></i>
+                    <div class="glass"></div>
+                    <div class="counters">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"><i></i></div>
+                        <i class="distance-icon">
+                            <span ng-model="maxJump">{{ user.gameInfo.flipper.maxJump }}</span>
                         </i>
-                        <span>{{user.fundsInfo.active}}</span>
+                        <i class="price-icon">
+                            <span>{{ user.gameInfo.flipper.rentCost}}</span>
+                        </i>
+                    </div>
+                </div><!-- .lives-count-container -->
+
+                <div class="mark"><!-- mark -->
+                    <i class="mark-1"><i></i></i>
+                    <span>{{ user.gameInfo.superJumps }}</span>
+                </div><!-- .mark -->
+                <div class="mark"><!-- mark -->
+                    <i class="mark-2"><i></i></i>
+                    <span>{{ user.gameInfo.countMessages }}</span>
+                </div><!-- .mark -->
+                <div class="mark price"><!-- mark -->
+                    <i class="mark-3">
+                        <span></span>
+                        <i></i>
+                    </i>
+                    <span id="active" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
+                    <div class="price-slider">
+                        <div id="slider"></div>
+                    </div>
+                </div><!-- .mark -->
+                <div class="mark bank"><!-- mark -->
+                    <i class="mark-4"><i></i></i>
+                    <span >{{ user.fundsInfo.safe }}</span>
+                    <span class="transfer-count" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
+                </div><!-- .mark -->
+                <div class="mark"><!-- mark -->
+                    <i class="mark-5"><i></i></i>
+                    <span >{{ user.fundsInfo.deposite }}</span>
+                </div><!-- .mark -->
+                <div class="mark-line" style="display: none"><!-- mark-line -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-6">
+                            <span>256</span>
+                        </i>
                     </div><!-- .mark -->
                     <div class="mark"><!-- mark -->
-                        <i class="mark-4"><i></i></i>
-                        <span>{{user.fundsInfo.safe}}</span>
+                        <i class="mark-7">
+                            <span>{{ user.gameInfo.countRentJumps }}</span>
+                        </i>
                     </div><!-- .mark -->
                     <div class="mark"><!-- mark -->
-                        <i class="mark-5"><i></i></i>
-                        <span>{{user.fundsInfo.deposite}}</span>
+                        <i class="mark-8">
+                            <span>10</span>
+                        </i>
                     </div><!-- .mark -->
-                    <!-- <div class="mark-line">
-                            <div class="mark">
-                                    <i class="mark-6">
-                                            <span>256</span>
-                                    </i>
-                            </div>
-                            <div class="mark">
-                                    <i class="mark-7">
-                                            <span>11</span>
-                                    </i>
-                            </div>
-                            <div class="mark">
-                                    <i class="mark-8">
-                                            <span>10</span>
-                                    </i>
-                            </div>
-                            <div class="mark">
-                                    <i class="mark-9">
-                                            <span>20</span>
-                                    </i>
-                            </div>
-                            <div class="mark">
-                                    <i class="mark-10">
-                                            <span>3</span>
-                                    </i>
-                            </div>
-                    </div> -->
-                </section><!-- .info-panel -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-9">
+                            <span>20</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-10">
+                            <span>3</span>
+                        </i>
+                    </div><!-- .mark -->
+                </div><!-- .mark-line -->
+            </section><!-- .info-panel -->
                 <section class="prizes-carusel"><!-- prizes-carusel -->
                     {% endverbatim %}
                         <div class="row">

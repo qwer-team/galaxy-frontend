@@ -112,7 +112,7 @@
                             <span ng-model="maxJump">{{ user.gameInfo.flipper.maxJump }}</span>
                         </i>
                         <i class="price-icon">
-                            <span>{{ user.gameInfo.flipper.rentCost }}</span>
+                            <span>{{ user.gameInfo.flipper.rentCost}}</span>
                         </i>
                     </div>
                 </div><!-- .lives-count-container -->
@@ -130,7 +130,7 @@
                         <span></span>
                         <i></i>
                     </i>
-                    <span ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
+                    <span id="active" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
                     <div class="price-slider">
                         <div id="slider"></div>
                     </div>
@@ -138,7 +138,7 @@
                 <div class="mark bank"><!-- mark -->
                     <i class="mark-4"><i></i></i>
                     <span >{{ user.fundsInfo.safe }}</span>
-                    <span class="transfer-count">+0</span>
+                    <span class="transfer-count" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
                 </div><!-- .mark -->
                 <div class="mark"><!-- mark -->
                     <i class="mark-5"><i></i></i>
