@@ -376,8 +376,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         };
         if (parseInt($scope.costActive) > 0) {
             $http.post('/store/transfer_funds', data).success($scope.transferCallback);
-        } else
-            alert("Значение должно быть > 0");
+        } 
     }
     $scope.safeToActive = function() {
         var data = {
@@ -387,8 +386,8 @@ function FlipperCtrl($scope, $http, $timeout) {
         };
         if (parseInt($scope.costSafe) > 0) {
             $http.post('/store/transfer_funds', data).success($scope.transferCallback);
-        } else
-            alert("Значение должно быть > 0");
+        }
+            
     }
     $scope.depositeToActive = function() {
         var data = {
