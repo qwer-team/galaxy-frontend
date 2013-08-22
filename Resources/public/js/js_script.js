@@ -127,8 +127,7 @@ $(document).ready(function() {
                         $('.mark.bank .transfer-count').attr("transValue", "0");
                     }
                 });
-            } else
-                alert("Значение должно быть > 0");
+            } 
         }
         $('.price-slider').fadeToggle(300);
         return false;
