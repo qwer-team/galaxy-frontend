@@ -128,7 +128,7 @@ $(document).ready(function() {
                         $('.mark.price .transfer-count').html('+' + newTrans);
                         $('.mark.price .transfer-count').attr("transValue", "0");
                         $('.mark.price .transfer-count').attr("transActive", data.user.fundsInfo.transActive);
-                        if ($('.mark.price .transfer-count').attr("transActive") > 0) {
+                        if ($('.mark.price .transfer-count').attr("transActive") > 0 && !$('.mark.price span').parent().hasClass("active")) {
                             $('.mark.price .transfer-count:hidden').fadeToggle(300);
                         }
                     }
@@ -162,7 +162,7 @@ $(document).ready(function() {
         }
     });
     $('.mark.price span').on('click', function(event) {
-        if (!$(this).parent().hasClass("active") && $('.mark.price span').parent().hasClass("active"))
+        if (!$(this).parent().hasClass("active") && $('.mark.bank span').parent().hasClass("active"))
         {
             return event.stopPropagation();
         }
@@ -197,7 +197,7 @@ $(document).ready(function() {
                         $('.mark.bank .transfer-count').html('+' + newTrans);
                         $('.mark.bank .transfer-count').attr("transValue", "0");
                         $('.mark.bank .transfer-count').attr("transSafe", data.user.fundsInfo.transSafe);
-                        if ($('.mark.bank .transfer-count').attr("transSafe") > 0) {
+                        if ($('.mark.bank .transfer-count').attr("transSafe") > 0  && !$('.mark.bank span').parent().hasClass("active")) {
                             $('.mark.bank .transfer-count:hidden').fadeToggle(300);
                         }
                     }

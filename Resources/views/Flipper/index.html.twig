@@ -121,23 +121,23 @@
                         <span></span>
                         <i></i>
                     </i>
-                    <span id="active" active="{{ user.fundsInfo.active }}" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
+                    <span ng-click id="active" ng-model="user.fundsInfo.active" active="{{ user.fundsInfo.active }}" ng-class="lightAmount">{{ user.fundsInfo.active }}</span>
                     <div class="price-slider" id="price-slider">
                         <div id="sliderActive"></div>
                     </div>
-                    <span class="transfer-count" id="transActive" style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}" transValue="0">+{{ user.fundsInfo.transActive }}</span>
+                    <span class="transfer-count" id="transActive"  style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}"  transValue="0">+{{ user.fundsInfo.transActive }}</span>
                  </div><!-- .mark -->
                 <div class="mark bank"><!-- mark -->
                     <i class="mark-4"><i></i></i>
-                    <span id="safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
+                    <span id="safe" ng-model="user.fundsInfo.safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
                      <div class="price-slider" id="bank-slider">
                         <div id="sliderSafe"></div>
                     </div>
-                    <span class="transfer-count" id="transSafe" style="{{0 < user.fundsInfo.transSafe ? 'display: inline; left: 131px;' : ''}}" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
+                    <span class="transfer-count" id="transSafe" style="{{0 < user.fundsInfo.transSafe ? 'display: inline; left: 131px;' : ''}}" transSafe="{{ user.fundsInfo.transSafe }}"  transValue="0">+{{ user.fundsInfo.transSafe }}</span>
                 </div><!-- .mark -->
                 <div class="mark"><!-- mark -->
                     <i class="mark-5"><i></i></i>
-                    <span >{{ user.fundsInfo.deposite }}</span>
+                    <span id="deposite">{{ user.fundsInfo.deposite }}</span>
                 </div><!-- .mark -->
                 <div class="mark-line" style="display: none"><!-- mark-line -->
                     <div class="mark"><!-- mark -->

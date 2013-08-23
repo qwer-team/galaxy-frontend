@@ -15,10 +15,25 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
+    $scope.updateFundsJs = function(data) {
+        $('#active').html(data.fundsInfo.active);
+        $('#safe').html(data.fundsInfo.safe);
+        $('#deposite').html(data.fundsInfo.deposite);
+        $('.mark.bank .transfer-count').html('+' + data.fundsInfo.transSafe);
+        $('.mark.price .transfer-count').html('+' + data.fundsInfo.transActive);
+        $('.mark.bank .transfer-count').attr('transSafe', data.fundsInfo.transSafe);
+        $('.mark.price .transfer-count').attr('transActive', data.fundsInfo.transActive);
+        if (data.fundsInfo.transSafe == 0) {
+            $('.mark.bank .transfer-count:visible').fadeToggle(300);
+        }
+        if (data.fundsInfo.transSafe == 0) {
+            $('.mark.price .transfer-count:visible').fadeToggle(300);
+        }
+    }
     $scope.updateUserInfo = function(data, status) {
-       /* if (status == 401) {
-            //$scope.logout();
-        }*/
+        /* if (status == 401) {
+         //$scope.logout();
+         }*/
         if ($scope.user) {
             console.log($scope.user.fundsInfo.active + ' != ' + data.fundsInfo.active);
             if ($scope.user.fundsInfo.active != data.fundsInfo.active) {
@@ -36,6 +51,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         $scope.y = data.gameInfo.y;
         $scope.z = data.gameInfo.z;
         $scope.capturedPrize = false;
+        $scope.updateFundsJs(data);
         angular.forEach(data.gameInfo.basket, function(value) {
             console.log(value);
             if (value.bought == false) {
@@ -228,6 +244,7 @@ function FlipperCtrl($scope, $http, $timeout) {
             superjump: superjump
         };
         $scope.jumpActive = "active";
+
         $http.post('/jump', data).success($scope.jumpCallback);
     }
 
@@ -376,7 +393,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         };
         if (parseInt($scope.costActive) > 0) {
             $http.post('/store/transfer_funds', data).success($scope.transferCallback);
-        } 
+        }
     }
     $scope.safeToActive = function() {
         var data = {
@@ -387,7 +404,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         if (parseInt($scope.costSafe) > 0) {
             $http.post('/store/transfer_funds', data).success($scope.transferCallback);
         }
-            
+
     }
     $scope.depositeToActive = function() {
         var data = {
