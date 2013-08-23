@@ -10,8 +10,8 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.zoneShow = false;
     $scope.zoneShow2 = false;
     $scope.capturedPrize = false;
-    $scope.jumpActive = "";
     $scope.lightAmount = '';
+    $scope.jumpActive = false;
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
@@ -237,13 +237,14 @@ function FlipperCtrl($scope, $http, $timeout) {
                 superjump = true;
             }
         }
+        $scope.jumpActive = true;
         var data = {
             x: parseInt($scope.x),
             y: parseInt($scope.y),
             z: parseInt($scope.z),
             superjump: superjump
         };
-        $scope.jumpActive = "active";
+        
 
         $http.post('/jump', data).success($scope.jumpCallback);
     }
@@ -429,7 +430,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.jumpCallback = function(data, status) {
         alert(data.pointType);
         if (data.result == 'success') {
-            $scope.jumpActive = "";
+            $scope.jumpActive = false;
             $scope.updateUserInfo(data.user);
             $scope.updatePointImage(data);
             if (data.tag == "black") {

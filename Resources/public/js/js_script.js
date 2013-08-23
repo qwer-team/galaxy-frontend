@@ -75,10 +75,7 @@ $(document).ready(function() {
     $('.coordinat input').on('blur', function() {
         $(this).parent().removeClass('focus');
     });
-    $('.coordinat-submit').on('click', function() {
-        $(this).parent('.coordinats-selection').toggleClass('active');
-        return false;
-    });
+    
 
 
     $('#sliderSafe').slider({
