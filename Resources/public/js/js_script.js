@@ -99,7 +99,7 @@ $(document).ready(function() {
         $('#sliderSafe').slider("value", 0);
         if (!$(this).parent().hasClass("active")) {
             var offs_left = $(this).offset().left;
-            $('#bank-slider').css('left', $(this).width() + 10 + offs_left);
+            $('#bank-slider').css('left', $(this).width() + 28 + offs_left);
             $('#sliderSafe').slider("option", "min", 0);
             $('#sliderSafe').slider("option", "max", parseInt(del_spaces($("#safe").attr("safe"))));
             $(this).parent().addClass('active');
