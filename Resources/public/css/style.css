@@ -272,6 +272,10 @@ header .logout:active{
 	position: absolute;
 }
 .full-panel a.c-icon-5,
+.full-panel a.c-icon-12,
+.full-panel a.c-icon-13,
+.full-panel a.c-icon-14,
+.full-panel a.c-icon-15,
 .full-panel a.c-icon-7{
 	width: 77px;
 	height: 59px;
@@ -306,6 +310,11 @@ header .logout:active{
 	height: 59px;
 	margin: 0 0 0 -144px;
 }
+.full-panel a.c-icon-12{
+	background-position: -516px -106px;
+	height: 59px;
+	margin: 0 0 0 -144px;
+}
 .full-panel a.c-icon-6{
 	background-position: -651px -56px;
 	height: 39px;
@@ -313,7 +322,12 @@ header .logout:active{
 	margin: 10px 0 0 -9px;
 }
 .full-panel a.c-icon-7{
-	background-position: -746px -46px;
+	background-position: -747px -46px;
+	height: 59px;
+	margin: 0px 0 0 86px;
+}
+.full-panel a.c-icon-13{
+	background-position: -746px -106px;
 	height: 59px;
 	margin: 0px 0 0 86px;
 }
@@ -356,11 +370,17 @@ header .logout:active{
 .full-panel a.c-icon-5:hover{
 	background-position: -516px -215px;
 }
+.full-panel a.c-icon-12:hover{
+	background-position: -516px -275px;
+}
 .full-panel a.c-icon-6:hover{
 	background-position: -651px -225px;
 }
 .full-panel a.c-icon-7:hover{
-	background-position: -746px -215px;
+	background-position: -747px -215px;
+}
+.full-panel a.c-icon-13:hover{
+	background-position: -746px -275px;
 }
 .full-panel a.c-icon-8:hover{
 	background-position: -939px -234px;
@@ -389,11 +409,17 @@ header .logout:active{
 .full-panel a.c-icon-5:active{
 	background-position: -516px -213px;
 }
+.full-panel a.c-icon-12:active{
+	background-position: -516px -273px;
+}
 .full-panel a.c-icon-6:active{
 	background-position: -651px -223px;
 }
 .full-panel a.c-icon-7:active{
-	background-position: -746px -213px;
+	background-position: -747px -213px;
+}
+.full-panel a.c-icon-13:active{
+	background-position: -746px -273px;
 }
 .full-panel a.c-icon-8:active{
 	background-position: -939px -231px;
@@ -629,7 +655,11 @@ section.flipper-sec{
 }
 .helps-on .full-panel a.c-icon-5,
 .helps-on .full-panel a.c-icon-5:hover{
-	background-position: -515px -558px;
+	background-position: -514px -558px;
+}
+.helps-on .full-panel a.c-icon-12,
+.helps-on .full-panel a.c-icon-12:hover{
+	background-position: -514px -498px;
 }
 .helps-on .full-panel a.c-icon-6,
 .helps-on .full-panel a.c-icon-6:hover{
@@ -639,6 +669,11 @@ section.flipper-sec{
 .helps-on .full-panel a.c-icon-7,
 .helps-on .full-panel a.c-icon-7:hover{
 	background-position: -746px -560px;
+	/*margin: 0px 0 0 87px;*/
+}
+.helps-on .full-panel a.c-icon-13,
+.helps-on .full-panel a.c-icon-13:hover{
+	background-position: -745px -498px;
 	/*margin: 0px 0 0 87px;*/
 }
 .helps-on .full-panel a.c-icon-8,
@@ -680,13 +715,19 @@ section.flipper-sec{
 	background-position: -372px -570px;
 }
 .helps-on .full-panel a.c-icon-5:active{
-	background-position: -515px -556px;
+	background-position: -514px -556px;
+}
+.helps-on .full-panel a.c-icon-12:active{
+	background-position: -514px -496px;
 }
 .helps-on .full-panel a.c-icon-6:active{
 	background-position: -650px -567px;
 }
 .helps-on .full-panel a.c-icon-7:active{
 	background-position: -746px -558px;
+}
+.helps-on .full-panel a.c-icon-13:active{
+	background-position: -745px -496px;
 }
 .helps-on .full-panel a.c-icon-8:active{
 	background-position: -932px -570px;
