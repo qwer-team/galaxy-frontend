@@ -159,10 +159,10 @@
                         <div class="row">
                             {% for item in items %}
                                 <div class="hex">
-                                    <img src="http://gala.my{{ item.img2 }}" alt="">
+                                    <img src="{{ asset ( 'bundles/galaxyfrontend/images/d1.png' )  }}" alt="">
                                     <a href="#tab-{{item.id}}"></a>
                                     <div class="hx"></div>
-                                    <span>{{ item.name }}|| {{ item | length }}</span>
+                                    <span>{{ item.elements | length }}</span>
                                 </div>
                         {% endfor %}
                                 {% if items | length < 6 %}
@@ -192,9 +192,9 @@
                                              sub-active
                                                      {% endif %}
                                              ">
-                                                 <span class="count-1">567</span>
+                                                 <span class="count-1">1</span>
                                                  <span class="count-2">{{element.price}}</span>
-                                                 <img src="content/d1.png" alt="">
+                                                 <img src="{{ asset ( 'bundles/galaxyfrontend/images/d2.png' )  }}" alt="">
                                                  <a href="#"></a>
                                                  <div class="hx"></div>
                                              </div>
