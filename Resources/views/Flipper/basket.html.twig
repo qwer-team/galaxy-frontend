@@ -70,7 +70,7 @@
                 </header><!-- .header -->
 
                 <section class="info-panel"><!-- info-panel -->
-                 <div class="lives-count" ><!-- lives-count -->
+                    <div class="lives-count" ><!-- lives-count -->
                         <div ng-repeat="i in [] | range:5" class="live-item"
                              ng-class="i <= user.gameInfo.flipper.id && 'active' || ''">
                             <div class="light"></div>
@@ -78,82 +78,82 @@
                         </div>
                         <div class="clear"></div>
                     </div><!-- .lives-count -->
-                <div class="lives-count-container"><!-- lives-count-container -->
-                    <i ng-repeat="i in [] | range:5" class="live-icon"
-                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''"></i>
-                    <div class="glass"></div>
-                    <div class="counters">
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"><i></i></div>
-                        <i class="distance-icon">
-                            <span ng-model="maxJump">{{ user.gameInfo.flipper.maxJump }}</span>
-                        </i>
-                        <i class="price-icon">
-                            <span>{{ user.gameInfo.flipper.rentCost}}</span>
-                        </i>
-                    </div>
-                </div><!-- .lives-count-container -->
+                    <div class="lives-count-container"><!-- lives-count-container -->
+                        <i ng-repeat="i in [] | range:5" class="live-icon"
+                           ng-class="i <= user.gameInfo.flipper.id && 'active' || ''"></i>
+                        <div class="glass"></div>
+                        <div class="counters">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"><i></i></div>
+                            <i class="distance-icon">
+                                <span ng-model="maxJump">{{ user.gameInfo.flipper.maxJump }}</span>
+                            </i>
+                            <i class="price-icon">
+                                <span>{{ user.gameInfo.flipper.rentCost}}</span>
+                            </i>
+                        </div>
+                    </div><!-- .lives-count-container -->
 
-                <div class="mark"><!-- mark -->
-                    <i class="mark-1"><i></i></i>
-                    <span>{{ user.gameInfo.superJumps }}</span>
-                </div><!-- .mark -->
-                <div class="mark"><!-- mark -->
-                    <i class="mark-2"><i></i></i>
-                    <span>{{ user.gameInfo.countMessages }}</span>
-                </div><!-- .mark -->
-               <div class="mark price"><!-- mark -->
-                    <i class="mark-3">
-                        <span></span>
-                        <i></i>
-                    </i>
-                    <span id="active" active="{{ user.fundsInfo.active }}" >{{ user.fundsInfo.active }}</span>
-                    <div class="price-slider" id="price-slider">
-                        <div id="sliderActive"></div>
-                    </div>
-                    <span class="transfer-count" id="transActive" style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}" transValue="0">+{{ user.fundsInfo.transActive }}</span>
-                 </div><!-- .mark -->
-                <div class="mark bank"><!-- mark -->
-                    <i class="mark-4"><i></i></i>
-                    <span id="safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
-                     <div class="price-slider" id="bank-slider">
-                        <div id="sliderSafe"></div>
-                    </div>
-                    <span class="transfer-count" id="transSafe" style="{{0 < user.fundsInfo.transSafe ? 'display: inline; left: 131px;' : ''}}" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
-                </div><!-- .mark -->
-                <div class="mark"><!-- mark -->
-                    <i class="mark-5"><i></i></i>
-                    <span >{{ user.fundsInfo.deposite }}</span>
-                </div><!-- .mark -->
-                <div class="mark-line" style="display: none"><!-- mark-line -->
                     <div class="mark"><!-- mark -->
-                        <i class="mark-6">
-                            <span>256</span>
-                        </i>
+                        <i class="mark-1"><i></i></i>
+                        <span>{{ user.gameInfo.superJumps }}</span>
                     </div><!-- .mark -->
                     <div class="mark"><!-- mark -->
-                        <i class="mark-7">
-                            <span>{{ user.gameInfo.countRentJumps }}</span>
+                        <i class="mark-2"><i></i></i>
+                        <span>{{ user.gameInfo.countMessages }}</span>
+                    </div><!-- .mark -->
+                    <div class="mark price"><!-- mark -->
+                        <i class="mark-3">
+                            <span></span>
+                            <i></i>
                         </i>
+                        <span id="active" active="{{ user.fundsInfo.active }}" >{{ user.fundsInfo.active }}</span>
+                        <div class="price-slider" id="price-slider">
+                            <div id="sliderActive"></div>
+                        </div>
+                        <span class="transfer-count" id="transActive" style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}" transValue="0">+{{ user.fundsInfo.transActive }}</span>
+                    </div><!-- .mark -->
+                    <div class="mark bank"><!-- mark -->
+                        <i class="mark-4"><i></i></i>
+                        <span id="safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
+                        <div class="price-slider" id="bank-slider">
+                            <div id="sliderSafe"></div>
+                        </div>
+                        <span class="transfer-count" id="transSafe" style="{{0 < user.fundsInfo.transSafe ? 'display: inline; left: 131px;' : ''}}" transSafe="{{ user.fundsInfo.transSafe }}" transValue="0">+{{ user.fundsInfo.transSafe }}</span>
                     </div><!-- .mark -->
                     <div class="mark"><!-- mark -->
-                        <i class="mark-8">
-                            <span>10</span>
-                        </i>
+                        <i class="mark-5"><i></i></i>
+                        <span >{{ user.fundsInfo.deposite }}</span>
                     </div><!-- .mark -->
-                    <div class="mark"><!-- mark -->
-                        <i class="mark-9">
-                            <span>20</span>
-                        </i>
-                    </div><!-- .mark -->
-                    <div class="mark"><!-- mark -->
-                        <i class="mark-10">
-                            <span>3</span>
-                        </i>
-                    </div><!-- .mark -->
-                </div><!-- .mark-line -->
-            </section><!-- .info-panel -->
+                    <div class="mark-line" style="display: none"><!-- mark-line -->
+                        <div class="mark"><!-- mark -->
+                            <i class="mark-6">
+                                <span>256</span>
+                            </i>
+                        </div><!-- .mark -->
+                        <div class="mark"><!-- mark -->
+                            <i class="mark-7">
+                                <span>{{ user.gameInfo.countRentJumps }}</span>
+                            </i>
+                        </div><!-- .mark -->
+                        <div class="mark"><!-- mark -->
+                            <i class="mark-8">
+                                <span>10</span>
+                            </i>
+                        </div><!-- .mark -->
+                        <div class="mark"><!-- mark -->
+                            <i class="mark-9">
+                                <span>20</span>
+                            </i>
+                        </div><!-- .mark -->
+                        <div class="mark"><!-- mark -->
+                            <i class="mark-10">
+                                <span>3</span>
+                            </i>
+                        </div><!-- .mark -->
+                    </div><!-- .mark-line -->
+                </section><!-- .info-panel -->
                 <section class="prizes-carusel"><!-- prizes-carusel -->
                     {% endverbatim %}
                         <div class="row">
@@ -182,12 +182,10 @@
                             <a href="#" class="left-arrow"></a>
                             <a href="#" class="right-arrow"></a>
                         {% endif %}
-
-
-
-                                {% for item in items %}
+                        {% for item in items %}
                             <div class="tab" id="tab-{{ item.id }}">
                                 <div class="row">
+                                    {% set len = (item.elements | length) ? item.elements | length : 0 %}
                                     {% for element in item.elements %}
                                         <div class="hex 
                                                      {% if element.basket  %}
@@ -205,469 +203,57 @@
                                         </div>
                                         <div class="row">
                                              {% endif %}
-
-                                        {% endfor %}
+                                    {% endfor %}
+                                    {% for i in  range(1, 10 - len)%}
+                                                <div class="hex">
+                                                    <span class="count-1"></span>
+                                                    <span class="count-2"></span>
+                                                    <a href="#"></a>
+                                                    <div class="hx"></div>
+                                                </div>
+                                    {% if loop.index + len == 4 or  loop.index + len == 7 or loop.index  + len == 9 %}
                                                 <div class="clear"></div>
                                             </div>
-                                        </div>
-                            {% endfor %}
-                                        <!-- <div class="tab" id="tab-2">
-                                                <div class="row">
-                                                        <div class="hex sub-active">
-                                                                <span class="count-1">567</span>
-                                                                <span class="count-2">1 567</span>
-                                                                <img src="content/d1.png" alt="">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="hex sub-active">
-                                                                <span class="count-1">567</span>
-                                                                <span class="count-2">1 567</span>
-                                                                <img src="content/d2.png" alt="">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="hex sub-active">
-                                                                <span class="count-1">567</span>
-                                                                <span class="count-2">1 567</span>
-                                                                <img src="content/d3.png" alt="">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                </div><
-                                                <div class="row">
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                </div>
-                                        </div> -->
-                                        <div class="tab" id="tab-3">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                        <div class="tab" id="tab-4">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                        <div class="tab" id="tab-5">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                        <div class="tab" id="tab-6">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                        <div class="tab" id="tab-7">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                        <div class="tab" id="tab-8">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                        <div class="tab" id="tab-empty">
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                            <div class="row"><!-- row -->
-                                                <div class="hex">
-                                                    <a href="#"></a>
-                                                    <div class="hx"></div>
-                                                </div>
-                                                <div class="clear"></div>
-                                            </div><!-- .row -->
-                                        </div>
-                                    </section><!-- .prizes-carusel -->
-                                    <section class="full-panel">
-                                        <a href="#" class="c-icon-1 c-icon"></a>
-                                        <a href="#" class="c-icon-2 c-icon"></a>
-                                        <a href="#" class="c-icon-3 c-icon"></a>
-                                        <a href="#" class="c-icon-4 c-icon"></a>
-                                        <a href="/flipper" class="c-icon-5 c-icon"></a>
-                                        <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
-                                        <a href="/store" class="c-icon-13 c-icon"></a>
-                                        <a href="#" class="c-icon-8 c-icon"></a>
-                                        <a href="/user_logs" class="c-icon-9 c-icon iframe cboxElement"></a>
-                                        <a href="#" class="c-icon-10 c-icon"></a>
-                                        <a href="#" class="c-icon-11 c-icon"></a>
-                                    </section>
-                                </div><!-- .fliper -->
-                            </body>
+                                            <div class="row">
+                                    {% endif %}
+                                    {% endfor %}
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                    {% endfor %}
 
-                        </html>
+                                                <div class="tab" id="tab-0">
+                                                    <div class="row">
+                                            {% for i in range(1,10) %}
+                                                        <div class="hex">
+                                                            <a href="#"></a>
+                                                            <div class="hx"></div>
+                                                        </div>
+                                                {% if loop.index == 4 or  loop.index == 7 or loop.index == 9 %}
+                                                            <div class="clear"></div>
+                                                        </div>
+                                                    <div class="row">
+                                                {% endif %}
+                                   {% endfor %}
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                </div>
+                                                </section><!-- .prizes-carusel -->
+                                                <section class="full-panel">
+                                                    <a href="#" class="c-icon-1 c-icon"></a>
+                                                    <a href="#" class="c-icon-2 c-icon"></a>
+                                                    <a href="#" class="c-icon-3 c-icon"></a>
+                                                    <a href="#" class="c-icon-4 c-icon"></a>
+                                                    <a href="/flipper" class="c-icon-5 c-icon"></a>
+                                                    <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
+                                                    <a href="/store" class="c-icon-13 c-icon"></a>
+                                                    <a href="#" class="c-icon-8 c-icon"></a>
+                                                    <a href="/user_logs" class="c-icon-9 c-icon iframe cboxElement"></a>
+                                                    <a href="#" class="c-icon-10 c-icon"></a>
+                                                    <a href="#" class="c-icon-11 c-icon"></a>
+                                                </section>
+                                            </div><!-- .fliper -->
+                                        </body>
+
+                                    </html>
 
