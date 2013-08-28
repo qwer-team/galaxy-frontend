@@ -75,12 +75,12 @@ $(document).ready(function() {
     $('.coordinat input').on('blur', function() {
         $(this).parent().removeClass('focus');
     });
-    
+
 
 
     $('#sliderSafe').slider({
         slide: function(event, ui) {
-            var c_val = $('#sliderSafe').slider("value");
+            var c_val = ui.value;
             var transSafe = $('.mark.price .transfer-count').attr("transActive");
             var newTrans = parseInt(transSafe) + parseInt(c_val);
             var safe = parseInt($("#safe").attr("safe"));
@@ -109,6 +109,19 @@ $(document).ready(function() {
             var transValue = $('.mark.price .transfer-count').attr("transValue");
             var transSafe = $('.mark.price .transfer-count').attr("transActive");
             var newTrans = parseInt(transSafe) + parseInt(transValue);
+            $('.mark.price .transfer-count').html('+' + newTrans);
+            $('.mark.price .transfer-count').attr("transValue", "0");
+            $('.mark.price .transfer-count').attr("transActive", newTrans);
+            if ($('.mark.price .transfer-count').attr("transActive") > 0 && !$('.mark.price span').parent().hasClass("active")) {
+                $('.mark.price .transfer-count:hidden').fadeToggle(300);
+            }else {
+                $('.mark.price .transfer-count:visible').fadeToggle(300);
+            }
+            if ($('.mark.bank .transfer-count').attr("transSafe") > 0) {
+                $('.mark.bank .transfer-count:hidden').fadeToggle(300);
+            } else {
+                $('.mark.bank .transfer-count:visible').fadeToggle(300);
+            }
             var data = {
                 value: parseInt(transValue),
                 from: 2,
@@ -122,25 +135,9 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         $("#safe").html(data.user.fundsInfo.safe);
-                        $('.mark.price .transfer-count').html('+' + newTrans);
-                        $('.mark.price .transfer-count').attr("transValue", "0");
-                        $('.mark.price .transfer-count').attr("transActive", data.user.fundsInfo.transActive);
-                        if ($('.mark.price .transfer-count').attr("transActive") > 0 && !$('.mark.price span').parent().hasClass("active")) {
-                            $('.mark.price .transfer-count:hidden').fadeToggle(300);
-                        }
+                        $("#safe").attr("safe", data.user.fundsInfo.safe);
                     }
                 });
-            }
-
-
-            if ($('.mark.bank .transfer-count').attr("transSafe") > 0) {
-                $('.mark.bank .transfer-count:hidden').fadeToggle(300);
-            }
-            if ($('.mark.price .transfer-count').attr("transActive") == 0) {
-                $('.mark.price .transfer-count:visible').fadeToggle(300);
-            }
-            if ($('.mark.bank .transfer-count').attr("transSafe") == 0) {
-                $('.mark.bank .transfer-count:visible').fadeToggle(300);
             }
         }
         $('#bank-slider').fadeToggle(300);
@@ -149,7 +146,7 @@ $(document).ready(function() {
 
     $('#sliderActive').slider({
         slide: function(event, ui) {
-            var c_val = $('#sliderActive').slider("value");
+            var c_val = ui.value;
             var transSafe = $('.mark.bank .transfer-count').attr("transSafe");
             var newTrans = parseInt(transSafe) + parseInt(c_val);
             var active = parseInt($("#active").attr("active"));
@@ -178,6 +175,19 @@ $(document).ready(function() {
             var transValue = $('.mark.bank .transfer-count').attr("transValue");
             var transSafe = $('.mark.bank .transfer-count').attr("transSafe");
             var newTrans = parseInt(transSafe) + parseInt(transValue);
+            $('.mark.bank .transfer-count').html('+' + newTrans);
+            $('.mark.bank .transfer-count').attr("transValue", "0");
+            $('.mark.bank .transfer-count').attr("transSafe", newTrans);
+            if ($('.mark.bank .transfer-count').attr("transSafe") > 0 && !$('.mark.bank span').parent().hasClass("active")) {
+                $('.mark.bank .transfer-count:hidden').fadeToggle(300);
+            }else {
+                $('.mark.bank .transfer-count:visible').fadeToggle(300);
+            }
+             if ($('.mark.price .transfer-count').attr("transActive") > 0) {
+                $('.mark.price .transfer-count:hidden').fadeToggle(300);
+            } else {
+                $('.mark.price .transfer-count:visible').fadeToggle(300);
+            }
             var data = {
                 value: parseInt(transValue),
                 from: 1,
@@ -191,24 +201,9 @@ $(document).ready(function() {
                     dataType: "json",
                     success: function(data) {
                         $("#active").html(data.user.fundsInfo.active);
-                        $('.mark.bank .transfer-count').html('+' + newTrans);
-                        $('.mark.bank .transfer-count').attr("transValue", "0");
-                        $('.mark.bank .transfer-count').attr("transSafe", data.user.fundsInfo.transSafe);
-                        if ($('.mark.bank .transfer-count').attr("transSafe") > 0  && !$('.mark.bank span').parent().hasClass("active")) {
-                            $('.mark.bank .transfer-count:hidden').fadeToggle(300);
-                        }
+                        $("#active").attr("active", data.user.fundsInfo.active);
                     }
                 });
-            }
-            if ($('.mark.price .transfer-count').attr("transActive") > 0) {
-                $('.mark.price .transfer-count:hidden').fadeToggle(300);
-            }
-
-            if ($('.mark.price .transfer-count').attr("transActive") == 0) {
-                $('.mark.price .transfer-count:visible').fadeToggle(300);
-            }
-            if ($('.mark.bank .transfer-count').attr("transSafe") == 0) {
-                $('.mark.bank .transfer-count:visible').fadeToggle(300);
             }
         }
         $('#price-slider').fadeToggle(300);
