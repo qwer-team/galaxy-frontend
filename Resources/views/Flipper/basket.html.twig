@@ -158,102 +158,102 @@
                 {% endverbatim %}
                     <div class="row">
                     {% for item in items %}
-                                <div class="hex">
-                                    <img src="{{ asset ( 'bundles/galaxyfrontend/images/d1.png' )  }}" alt="">
-                                    <a href="#tab-{{item.id}}"></a>
-                                    <div class="hx"></div>
-                                    <span>{{ item.elements | length }}</span>
-                                </div>
+                        <div class="hex">
+                             <img src="{{ asset ( 'bundles/galaxyfrontend/images/d1.png' )  }}" alt="">
+                             <a href="#tab-{{item.id}}"></a>
+                             <div class="hx"></div>
+                             <span>{{ item.elements | length }}</span>
+                        </div>
                         {% endfor %}
-                                {% if items | length < 6 %}
-                                    {% for node in range(1,5 - (items | length)) %}
-                                <div class="hex">
-                                    <img src="" alt="">
-                                    <a href="#tab-0"></a>
-                                    <div class="hx"></div>
-                                    <span></span>
-                                </div>
-                                    {% endfor %}
-                                {% endif %}
-
-                                <div class="clear"></div>
-                            </div>
-                        {% if items | length > 5 %}
+                        {% if items | length < 6 %}
+                            {% for node in range(1,5 - (items | length)) %}
+                                  <div class="hex">
+                                      <img src="" alt="">
+                                      <a href="#tab-0"></a>
+                                      <div class="hx"></div>
+                                      <span></span>
+                                  </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="clear"></div>
+                     </div>
+                     {% if items | length > 5 %}
                             <a href="#" class="left-arrow"></a>
                             <a href="#" class="right-arrow"></a>
                         {% endif %}
                         {% for item in items %}
                             <div class="tab" id="tab-{{ item.id }}">
                                 <div class="row">
-                                    {% set len = (item.elements | length) ? item.elements | length : 0 %}
+                                {% set len = (item.elements | length) ? item.elements | length : 0 %}
                                     {% for element in item.elements %}
                                         <div class="hex 
-                                                     {% if element.basket  %}
+                                        {% if element.basket  %}
                                              sub-active
-                                                     {% endif %}
+                                        {% endif %}
                                              ">
-                                                 <span class="count-1">1</span>
-                                                 <span class="count-2">{{element.price}}</span>
-                                                 <img src="{{ asset ( 'bundles/galaxyfrontend/images/d2.png' )  }}" alt="">
-                                                 <a href="#"></a>
-                                                 <div class="hx"></div>
-                                             </div>
-                                             {% if loop.index == 4 or  loop.index == 7 or loop.index == 9 %}
-                                             <div class="clear"></div>
+                                        {% if element.basket  %}  
+                                              <span class="count-1">1</span>
+                                              <span class="count-2">{{element.price}}</span>
+                                        {% endif %}
+                                        <img src="{{ asset ( 'bundles/galaxyfrontend/images/d2.png' )  }}" alt="">
+                                        <a href="#"></a>
+                                        <div class="hx"></div>
                                         </div>
-                                        <div class="row">
-                                             {% endif %}
-                                    {% endfor %}
+                                        {% if loop.index == 4 or  loop.index == 7 or loop.index == 9 %}
+                                             <div class="clear"></div>
+                                             </div>
+                                             <div class="row">
+                                        {% endif %}
+                                    {% endfor %}           
                                     {% for i in  range(1, 10 - len)%}
                                                 <div class="hex">
                                                     <span class="count-1"></span>
                                                     <span class="count-2"></span>
                                                     <a href="#"></a>
                                                     <div class="hx"></div>
-                                                </div>
-                                    {% if loop.index + len == 4 or  loop.index + len == 7 or loop.index  + len == 9 %}
-                                                <div class="clear"></div>
-                                            </div>
-                                            <div class="row">
-                                    {% endif %}
-                                    {% endfor %}
+                                                    </div>
+                                        {% if loop.index + len == 4 or  loop.index + len == 7 or loop.index  + len == 9 %}
                                                     <div class="clear"></div>
                                                 </div>
-                                            </div>
+                                                <div class="row">
+                                        {% endif %}
                                     {% endfor %}
+                                    <div class="clear"></div>
+                                    </div>
+                                    </div>
+                         {% endfor %}
+                         <div class="tab" id="tab-0">
+                             <div class="row">
+                             {% for i in range(1,10) %}
+                                <div class="hex">
+                                <a href="#"></a>
+                                <div class="hx"></div>
+                                </div>
+                                {% if loop.index == 4 or  loop.index == 7 or loop.index == 9 %}
+                                      <div class="clear"></div>
+                                      </div>
+                                      <div class="row">
+                                {% endif %}
+                             {% endfor %}
+                             <div class="clear"></div>
+                             </div>
+                        </div>
+                   </section><!-- .prizes-carusel -->
+                   <section class="full-panel">
+                       <a href="#" class="c-icon-1 c-icon"></a>
+                       <a href="#" class="c-icon-2 c-icon"></a>
+                       <a href="#" class="c-icon-3 c-icon"></a>
+                       <a href="#" class="c-icon-4 c-icon"></a>
+                       <a href="/flipper" class="c-icon-5 c-icon"></a>
+                       <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
+                       <a href="/store" class="c-icon-13 c-icon"></a>
+                       <a href="#" class="c-icon-8 c-icon"></a>
+                       <a href="/user_logs" class="c-icon-9 c-icon iframe cboxElement"></a>
+                       <a href="#" class="c-icon-10 c-icon"></a>
+                       <a href="#" class="c-icon-11 c-icon"></a>
+                       </section>
+                  </div><!-- .fliper -->
+        </body>
 
-                                                <div class="tab" id="tab-0">
-                                                    <div class="row">
-                                            {% for i in range(1,10) %}
-                                                        <div class="hex">
-                                                            <a href="#"></a>
-                                                            <div class="hx"></div>
-                                                        </div>
-                                                {% if loop.index == 4 or  loop.index == 7 or loop.index == 9 %}
-                                                            <div class="clear"></div>
-                                                        </div>
-                                                    <div class="row">
-                                                {% endif %}
-                                   {% endfor %}
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                </div>
-                                                </section><!-- .prizes-carusel -->
-                                                <section class="full-panel">
-                                                    <a href="#" class="c-icon-1 c-icon"></a>
-                                                    <a href="#" class="c-icon-2 c-icon"></a>
-                                                    <a href="#" class="c-icon-3 c-icon"></a>
-                                                    <a href="#" class="c-icon-4 c-icon"></a>
-                                                    <a href="/flipper" class="c-icon-5 c-icon"></a>
-                                                    <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
-                                                    <a href="/store" class="c-icon-13 c-icon"></a>
-                                                    <a href="#" class="c-icon-8 c-icon"></a>
-                                                    <a href="/user_logs" class="c-icon-9 c-icon iframe cboxElement"></a>
-                                                    <a href="#" class="c-icon-10 c-icon"></a>
-                                                    <a href="#" class="c-icon-11 c-icon"></a>
-                                                </section>
-                                            </div><!-- .fliper -->
-                                        </body>
-
-                                    </html>
+</html>
 

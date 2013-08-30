@@ -122,6 +122,7 @@
                         <i></i>
                     </i>
                     <span ng-click id="active" ng-model="user.fundsInfo.active" active="{{ user.fundsInfo.active }}" >{{ user.fundsInfo.active }}</span>
+                    <span ng-show="showActive">{{ activeFunds }}</span>
                     <div class="price-slider" id="price-slider">
                         <div id="sliderActive"></div>
                     </div>
@@ -211,9 +212,9 @@
                     </div>
                     <a href="#" class="coordinat-submit" ng-click="jump()"></a>
                 </div>
-                <a href="/store" class="c-icon-12 c-icon"></a>
+                <a href="/user_basket" class="c-icon-12 c-icon"></a>
                 <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
-                <a href="/user_basket" class="c-icon-13 c-icon"></a>
+                <a href="/store" class="c-icon-13 c-icon"></a>
             </section>
         </div><!-- .fliper -->
         <div id="draggable" class="current-coordinats" style="position: absolute;">

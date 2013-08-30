@@ -12,6 +12,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.capturedPrize = false;
     $scope.lightAmount = '';
     $scope.jumpActive = false;
+    $scope.getActive = false;
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
@@ -19,6 +20,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         $('#active').html(data.fundsInfo.active);
         $('#safe').html(data.fundsInfo.safe);
         $('#deposite').html(data.fundsInfo.deposite);
+        $('#active').attr("active", data.fundsInfo.active);
         $('.mark.bank .transfer-count').html('+' + data.fundsInfo.transSafe);
         $('.mark.price .transfer-count').html('+' + data.fundsInfo.transActive);
         $('.mark.bank .transfer-count').attr('transSafe', data.fundsInfo.transSafe);
@@ -30,18 +32,48 @@ function FlipperCtrl($scope, $http, $timeout) {
             $('.mark.price .transfer-count:visible').fadeToggle(300);
         }
     }
+    decValue = function() {
+        $scope.active = $scope.active - 1;
+        $('#active').html($scope.active);
+        $scope.user.fundsInfo.active = $scope.active;
+    }
+
     $scope.updateUserInfo = function(data, status) {
         /* if (status == 401) {
          //$scope.logout();
          }*/
         if ($scope.user) {
-            console.log($scope.user.fundsInfo.active + ' != ' + data.fundsInfo.active);
             if ($scope.user.fundsInfo.active != data.fundsInfo.active) {
-                $scope.lightAmount = 'lightAmount';
-                console.log('lightAmount');
-                $timeout($scope.unlightAmount, 20000);
+                $scope.updateValue($('#active'));
+            }
+            if ($scope.user.fundsInfo.safe != data.fundsInfo.safe) {
+                $scope.updateValue($('#safe'));
+            }
+            if ($scope.user.fundsInfo.safe != data.fundsInfo.safe) {
+                $scope.updateValue($('#safe'));
             }
         }
+        $scope.updateValue = function(obj) {
+            obj.delay(500).fadeToggle(300).delay(500).fadeToggle(300).delay(500).fadeToggle(300).delay(500).fadeToggle(300).delay(500).fadeToggle(300).delay(500).fadeToggle(300);
+        }
+        /*$scope.ololo = data.fundsInfo.active;
+         if ($scope.user) {
+         $scope.active = $scope.user.fundsInfo.active;
+         var id = setInterval("decValue()", 1000);
+         var act = parseInt($('#active').attr("active"));
+         var unbindWatcher = $scope.$watch(
+         "user.fundsInfo.active",
+         function(newActive) {
+         console.log(act);
+         console.log($scope.active);
+         if (act == $scope.active) {
+         clearInterval(id);
+         unbindWatcher();
+         }
+         }
+         );
+         }*/
+        
         $scope.user = data;
         $scope.costActive = 0;
         $scope.costDeposite = 100;
@@ -112,7 +144,6 @@ function FlipperCtrl($scope, $http, $timeout) {
             return false;
         }
         var element = $scope.elements[$scope.capturedPrize.elementId];
-        console.log(element, $scope.capturedPrize.id);
         if (element.account == 1) {
             if (element.prize > $scope.user.gameInfo.active) {
                 alert("active " + $scope.user.gameInfo.active);
@@ -244,7 +275,7 @@ function FlipperCtrl($scope, $http, $timeout) {
             z: parseInt($scope.z),
             superjump: superjump
         };
-        
+
 
         $http.post('/jump', data).success($scope.jumpCallback);
     }
@@ -256,9 +287,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         if ($scope.user.gameInfo.minRadius != 0 && $scope.user.gameInfo.maxRadius != 0) {
             minR = $scope.user.gameInfo.minRadius;
             maxR = $scope.user.gameInfo.maxRadius;
-            alert(1)
         } else {
-            alert(2)
             minR = $scope.user.gameInfo.flipper.nextPointDistance;
             maxR = $scope.user.gameInfo.flipper.maxJump;
         }
@@ -332,7 +361,6 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.radarCallback = function(data) {
         console.log(data.radar);
         if (data.result == 'success') {
-            alert("radar success");
             if (data.user.gameInfo.flipper.id == 2)
             {
                 $scope.zoneShow = true;
@@ -354,10 +382,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.flipperCallback = function(data) {
         console.log(data);
         if (data.result == 'success') {
-            alert("флипер куплен");
             $scope.updateUserInfo(data.user);
-        } else {
-            alert("FAIL");
         }
     }
 
@@ -423,7 +448,6 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.transferCallback = function(data) {
         console.log(data);
         if (data.result == 'success') {
-            alert("transfer ok");
             $scope.updateUserInfo(data.user);
         }
     }
