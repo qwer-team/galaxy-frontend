@@ -49,8 +49,8 @@ function FlipperCtrl($scope, $http, $timeout) {
             if ($scope.user.fundsInfo.safe != data.fundsInfo.safe) {
                 $scope.updateValue($('#safe'));
             }
-            if ($scope.user.fundsInfo.safe != data.fundsInfo.safe) {
-                $scope.updateValue($('#safe'));
+            if ($scope.user.fundsInfo.deposite != data.fundsInfo.deposite) {
+                $scope.updateValue($('#deposite'));
             }
         }
         $scope.updateValue = function(obj) {
