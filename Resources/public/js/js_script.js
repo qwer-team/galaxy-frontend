@@ -98,6 +98,7 @@ $(document).ready(function() {
         $('.mark.price .transfer-count:hidden').fadeToggle(300);
         $('#sliderSafe').slider("value", 0);
         if (!$(this).parent().hasClass("active")) {
+            $("#disableActions").show();
             var offs_left = $(this).offset().left;
             $('#bank-slider').css('left', $(this).width() + 28 + offs_left);
             $('#sliderSafe').slider("option", "min", 0);
@@ -105,6 +106,7 @@ $(document).ready(function() {
             $(this).parent().addClass('active');
             $('.mark.price .transfer-count').css('left', $('.mark.price span').offset().left + $('.mark.price span').width() + 18 + 55);
         } else {
+            $("#disableActions").hide();
             $(this).parent().removeClass('active');
             var transValue = $('.mark.price .transfer-count').attr("transValue");
             var transSafe = $('.mark.price .transfer-count').attr("transActive");
@@ -164,6 +166,7 @@ $(document).ready(function() {
         $('.mark.bank .transfer-count:hidden').fadeToggle(300);
         $('#sliderActive').slider("value", 0);
         if (!$(this).parent().hasClass("active")) {
+            $("#disableActions").show();
             var offs_left = $(this).offset().left;
             $('#price-slider').css('left', $(this).width() + 28 + offs_left);
             $('#sliderActive').slider("option", "min", 0);
@@ -171,6 +174,7 @@ $(document).ready(function() {
             $(this).parent().addClass('active');
             $('.mark.bank .transfer-count').css('left', $('.mark.bank span').offset().left + $('.mark.bank span').width() + 18);
         } else {
+            $("#disableActions").hide();
             $(this).parent().removeClass('active');
             var transValue = $('.mark.bank .transfer-count').attr("transValue");
             var transSafe = $('.mark.bank .transfer-count').attr("transSafe");

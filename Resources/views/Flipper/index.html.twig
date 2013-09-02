@@ -21,6 +21,7 @@
     </head>
     {% verbatim %}
     <body class="" ng-controller="FlipperCtrl">
+        <div id="disableActions" style="position:absolute; width:100%; height:100%; z-index:3; display: none"> </div>
         <section>
             <div style="position: absolute;  left:850px; top: 400px; width: 120px; height: 120px; z-index: 1000;display: none;" ng-show="pointImage">
                 <img border="0" ng-src="{{ pointImagePath }}" alt="Point">
@@ -116,7 +117,7 @@
                     <i class="mark-2"><i></i></i>
                     <span>{{ user.gameInfo.countMessages }}</span>
                 </div><!-- .mark -->
-               <div class="mark price"><!-- mark -->
+               <div class="mark price" style="z-index:4;"><!-- mark -->
                     <i class="mark-3">
                         <span></span>
                         <i></i>
@@ -128,7 +129,7 @@
                     </div>
                     <span class="transfer-count" id="transActive"  style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}"  transValue="0">+{{ user.fundsInfo.transActive }}</span>
                  </div><!-- .mark -->
-                <div class="mark bank"><!-- mark -->
+                 <div class="mark bank" style="z-index:4;"><!-- mark -->
                     <i class="mark-4"><i></i></i>
                     <span id="safe" ng-model="user.fundsInfo.safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
                      <div class="price-slider" id="bank-slider">
