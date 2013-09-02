@@ -73,7 +73,7 @@ function FlipperCtrl($scope, $http, $timeout) {
          }
          );
          }*/
-        
+
         $scope.user = data;
         $scope.costActive = 0;
         $scope.costDeposite = 100;
@@ -158,8 +158,25 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        $scope.pointImagePath = data.pointImagePath;
-        $scope.pointImage = true;
+        if (data.tag == "black")
+        {
+            var flashvars = {
+            };
+            var params = {
+                menu: "false"
+            };
+            var attributes = {
+                id: "myContent",
+                name: "myContent",
+                style: "margin-left:25%"
+            };
+
+            swfobject.embedSWF("/bundles/galaxyfrontend/flash/black.swf", "myContent", "400", "400", "9.0.0",
+                    "expressInstall.swf", flashvars, params, attributes);
+        } else {
+            $scope.pointImagePath = data.pointImagePath;
+            $scope.pointImage = true;
+        }
     }
 
     $scope.getUser();

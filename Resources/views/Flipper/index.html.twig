@@ -12,6 +12,7 @@
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular-slider.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-ui-1.10.3.custom.min.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/js_script.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/swfobject.js' )  }}"></script>
     {% endblock %}
     {% block css %}
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/angular-slider.css' ) }}"/>
@@ -170,7 +171,10 @@
                 </div><!-- .mark-line -->
             </section><!-- .info-panel -->
             <section class="flipper-sec"><!-- flipper-sec -->
+                <div id="myContent" style="margin-left: 25%">
 
+      <p>Alternative content</p>
+    </div>
             </section><!-- .flipper-sec -->
             <section class="full-panel">
                 <div class="coordinats-selection" ng-class="jumpActive && 'active' || ''">
