@@ -240,7 +240,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     }
     $scope.coordChange = function(old, varName) {
         var coord = $scope[varName];
-        if (coord > 1000) {
+        if (coord > 1000 || coord < 1) {
             $scope[varName] = parseInt(old);
         }
     }
@@ -452,7 +452,6 @@ function FlipperCtrl($scope, $http, $timeout) {
         }
     }
     $scope.jumpCallback = function(data, status) {
-        alert(data.pointType);
         if (data.result == 'success') {
             $scope.jumpActive = false;
             $scope.updateUserInfo(data.user);
