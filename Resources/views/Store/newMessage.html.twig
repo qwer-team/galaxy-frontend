@@ -9,23 +9,190 @@
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/script.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.colorbox.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/colorBoxScript.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/angular-slider.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-ui-1.10.3.custom.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/js_script.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/swfobject.js' )  }}"></script>
     {% endblock %}
     {% block css %}
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/angular-slider.css' ) }}"/>
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/jquery-ui-1.10.3.custom.css' ) }}"/>
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
     {% endblock %}
     </head>
+ {% verbatim %}
+    <body class="" ng-controller="FlipperCtrl">
+        <div id="disableActions" style="position:absolute; width:100%; height:100%; z-index:3; display: none"> </div>
+	<div class="fliper"><!-- fliper -->
+		<header><!-- header -->
+			<div class="header-content">
+				<a href="#" class="logo"></a>
+				<a href="#" class="logout"></a>
+				<div class="user-name">
+					 {{ user.username}}: <span>{{user.id}}</span>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</header><!-- .header -->
+		<section class="info-panel"><!-- info-panel -->
+                <div class="lives-count-container"><!-- lives-count-container -->
+                    <i ng-repeat="i in [] | range:5" class="live-icon"
+                             ng-class="i <= user.gameInfo.flipper.id && 'active' || ''"></i>
+                    <div class="glass"></div>
+                    <div class="counters">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"><i></i></div>
+                        <i class="distance-icon">
+                            <span ng-model="maxJump">{{ user.gameInfo.flipper.maxJump }}</span>
+                        </i>
+                        <i class="price-icon">
+                            <span>{{ user.gameInfo.flipper.rentCost}}</span>
+                        </i>
+                    </div>
+                </div><!-- .lives-count-container -->
 
-    <body >
-            <div style="background-color: #00FFFFFF">
-                    <form action="{{ path('store_create_message') }}" method="post" {{ form_enctype(form) }} >
-            {{ form_row(form.imgfile) }}
-            {{ form_row(form.text) }}
-            {{ form_row(form.question) }}
-            {{ form_row(form.answers) }}
-            <br />
-            <button type="submit" class="btn btn-primary">Создать</button>
-    </form>
-</div>
-        </body>
-
-    </html>
+                <div class="mark"><!-- mark -->
+                    <i class="mark-1"><i></i></i>
+                    <span>{{ user.gameInfo.superJumps }}</span>
+                </div><!-- .mark -->
+                <div class="mark"><!-- mark -->
+                    <i class="mark-2"><i></i></i>
+                    <span>{{ user.gameInfo.countMessages }}</span>
+                </div><!-- .mark -->
+               <div class="mark price" style="z-index:4;"><!-- mark -->
+                    <i class="mark-3">
+                        <span></span>
+                        <i></i>
+                    </i>
+                    <span ng-click id="active" ng-model="user.fundsInfo.active" active="{{ user.fundsInfo.active }}" >{{ user.fundsInfo.active }}</span>
+                    <span ng-show="showActive">{{ activeFunds }}</span>
+                    <div class="price-slider" id="price-slider">
+                        <div id="sliderActive"></div>
+                    </div>
+                    <span class="transfer-count" id="transActive"  style="{{0 < user.fundsInfo.transActive ? 'display: inline; left: 131px;' : ''}}" transActive="{{ user.fundsInfo.transActive }}"  transValue="0">+{{ user.fundsInfo.transActive }}</span>
+                 </div><!-- .mark -->
+                 <div class="mark bank" style="z-index:4;"><!-- mark -->
+                    <i class="mark-4"><i></i></i>
+                    <span id="safe" ng-model="user.fundsInfo.safe" safe="{{ user.fundsInfo.safe }}">{{ user.fundsInfo.safe }}</span>
+                     <div class="price-slider" id="bank-slider">
+                        <div id="sliderSafe"></div>
+                    </div>
+                    <span class="transfer-count" id="transSafe" style="{{0 < user.fundsInfo.transSafe ? 'display: inline; left: 131px;' : ''}}" transSafe="{{ user.fundsInfo.transSafe }}"  transValue="0">+{{ user.fundsInfo.transSafe }}</span>
+                </div><!-- .mark -->
+                <div class="mark"><!-- mark -->
+                    <i class="mark-5"><i></i></i>
+                    <span id="deposite">{{ user.fundsInfo.deposite }}</span>
+                </div><!-- .mark -->
+                <div class="mark-line" style="display: none"><!-- mark-line -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-6">
+                            <span>256</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-7">
+                            <span>{{ user.gameInfo.countRentJumps }}</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-8">
+                            <span>10</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-9">
+                            <span>20</span>
+                        </i>
+                    </div><!-- .mark -->
+                    <div class="mark"><!-- mark -->
+                        <i class="mark-10">
+                            <span>3</span>
+                        </i>
+                    </div><!-- .mark -->
+                </div><!-- .mark-line -->
+            </section><!-- .info-panel -->
+		<section class="message-wrap"><!-- message-wrap -->
+			<div class="message-form"><!-- message-form -->
+                            {% endverbatim %}
+				<form action="{{ path('store_create_message') }}" method="post" {{ form_enctype(form) }}>
+					<div class="load-photo"><!-- load-photo -->
+						<div class="select-fl">
+							{{ form_widget(form.imgfile) }}
+						</div>
+						<div class="slide-bt">
+							<i class="del"></i>
+							<span class="slide">
+								<a href="#"></a>
+							</span>
+							<i class="loader"></i>
+						</div>
+					</div><!-- .load-photo -->
+					<div class="load-photo"><!-- load-photo -->
+						<div class="select-fl">
+							<input type="file" name="" id="">
+						</div>
+						<div class="slide-bt">
+							<i class="del"></i>
+							<span class="slide">
+								<a href="#"></a>
+							</span>
+							<i class="loader"></i>
+						</div>
+					</div><!-- .load-photo -->
+					<div class="load-photo"><!-- load-photo -->
+						<div class="select-fl">
+							<input type="file" name="" id="">
+						</div>
+						<div class="slide-bt">
+							<i class="del"></i>
+							<span class="slide">
+								<a href="#"></a>
+							</span>
+							<i class="loader"></i>
+						</div>
+					</div><!-- .load-photo -->
+					<div class="clear"></div>
+					<div class="info-fl">
+						{{ form_widget(form.text, { 'attr': {'placeholder' : 'Информация', 'cols' : '30', 'rows' : '10'} }) }}
+					</div>
+					<div class="question-fl">
+						{{ form_widget(form.question, { 'attr': {'placeholder' : 'Контрольный вопрос', 'cols' : '30', 'rows' : '10'} }) }}
+					</div>
+					<div class="answer-fl">
+                                                {% for answer in form.answers %}
+                                                    {{ form_widget(answer.answer, { 'attr': {'placeholder' : 'Правильный ответ'} }) }}
+                                                {% endfor %}
+					</div>
+					<div class="slide-bt message-send">
+						<span class="slide">
+							<a href="#"></a>
+						</span>
+						<i class="loader"></i>
+					</div>
+					<div class="slide-bt vertical message-cancel">
+						<i class="del"></i>
+						<span class="slide">
+							<a href="#"></a>
+						</span>
+					</div>
+				</form>
+                                
+			</div><!-- .message-form -->
+		</section><!-- .message-wrap -->
+		<section class="full-panel">
+			<a href="#" class="c-icon-1 c-icon"></a>
+			<a href="#" class="c-icon-2 c-icon"></a>
+			<a href="#" class="c-icon-3 c-icon"></a>
+			<a href="#" class="c-icon-4 c-icon"></a>
+			<a href="/flipper" class="c-icon-5 c-icon"></a>
+                        <a href="#" id="show-helps" class="c-icon-6 c-icon"></a>
+                        <a href="/user_basket" class="c-icon-7 c-icon"></a>
+			<a href="#" class="c-icon-8 c-icon"></a>
+			<a href="#" class="c-icon-9 c-icon"></a>
+			<a href="#" class="c-icon-10 c-icon"></a>
+			<a href="#" class="c-icon-11 c-icon"></a>
+		</section>
+	</div><!-- .fliper -->
+</body>
+</html>

@@ -1252,7 +1252,166 @@ i.icon-star{
 .full-panel.flipper-panel a.c-icon-5:active{
     background-position: -516px -273px;
 }
-
+/* messages */
+.message-wrap{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+.message-form{
+	width: 783px;
+	padding-left: 27px;
+	margin: 40px auto 0;
+	background: url(../images/lines.png) 0 209px no-repeat;
+	position: relative;
+}
+.message-form .load-photo{
+	width: 185px;
+	float: left;
+	margin-left: 52px;
+}
+.message-form .load-photo:first-child{
+	margin-left: 90px;
+}
+.message-form .load-photo .select-fl{
+	width: 185px;
+	height: 185px;
+	background: url(../images/sprite.png) -2212px -340px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+}
+.message-form .load-photo .select-fl:hover{
+	background-position: -2399px -340px;
+}
+.message-form .load-photo .select-fl input{
+	height: 200px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+	cursor: pointer;
+	font-size: 200px;
+}
+.message-form .slide-bt{
+	width: 152px;
+	text-align: center;
+}
+.message-form .slide-bt.message-send{
+	margin-left: 322px;
+}
+.message-form .load-photo .slide-bt{
+	margin: 9px auto 0;
+}
+.message-form .slide-bt i{
+	background: url(../images/sprite.png);
+	display: inline-block;
+	vertical-align: middle;
+	cursor: pointer;
+}
+.message-form .slide-bt i.del{
+	width: 22px;
+	height: 24px;
+	background-position: -2425px -769px;
+}
+.message-form .slide-bt i.del:hover{
+	background-position: -2451px -769px;
+}
+.message-form .slide-bt i.loader{
+	width: 27px;
+	height: 24px;
+	background-position: -2481px -768px;
+}
+.message-form .slide-bt i.loader:hover{
+	background-position: -2511px -768px;
+}
+.message-form .slide-bt .slide{
+	display: inline-block;
+	position: relative;
+	width: 87px;
+	height: 17px;
+	background: url(../images/sprite.png) -2590px -344px;
+	vertical-align: middle;
+}
+.message-form .slide-bt .slide a{
+	position: absolute;
+	width: 45px;
+	height: 10px;
+	background: url(../images/sprite.png) -2590px -362px;
+	left: 4px;
+	top: 3px;
+}
+.info-fl,
+.question-fl,
+.answer-fl{
+	width: 755px;
+	height: 65px;
+	background: url(../images/sprite.png) -3110px -509px;
+	padding: 20px 10px;
+	margin-top: 31px;
+}
+.info-fl textarea,
+.question-fl textarea,
+.answer-fl input{
+	border:0;
+	resize: none;
+	outline: 0;
+	color: #0099ff;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+}
+.question-fl{
+	height: 43px;
+	background-position: -3110px -721px;
+}
+.answer-fl{
+	height: 30px;
+	width: 640px;
+	background-position: -2425px -649px;
+	padding: 3px 10px;
+	margin-bottom: 29px;
+}
+.info-fl.focus{
+	background-position: -3110px -616px;
+}
+.question-fl.focus{
+	background-position: -3109px -804px;
+}
+.answer-fl.focus{
+	background-position: -2425px -686px;
+}
+.message-form .slide-bt.message-cancel{
+	position: absolute;
+	top: 98px;
+	left: -10px;
+	width: 22px;
+}
+.message-form .slide-bt.message-cancel .slide{
+	height: 87px;
+	width: 17px;
+	background-position: -2591px -373px;
+}
+.message-form .slide-bt.message-cancel .slide a{
+	height: 45px;
+	width: 10px;
+	background-position: -2591px -465px;
+	left: 4px;
+	top: 4px;
+}
+::-webkit-input-placeholder{
+	font-family: Arial;
+	color: #01363b;
+	font-size: 16px;
+	font-weight: bold;
+}
+:-moz-placeholder {
+	font-family: Arial;
+	color: #01363b;
+	font-size: 16px;
+	font-weight: bold;
+}
 .lightAmount{
     color: red !important;
 }

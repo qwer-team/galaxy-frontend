@@ -232,7 +232,33 @@ $(document).ready(function() {
         $(this).parent().find('span').html(cur);
         return false;
     });
+    /* new */
+	$('.slide-bt .slide a').click(function(){
+		if(!$(this).parents('.slide-bt').hasClass('vertical')){
+			if($(this).hasClass('on')){
+				$(this).animate({left: 4}, 300);
+			}else{
+				$(this).animate({left: 38}, 300);
+			}
+		}else{
+			if($(this).hasClass('on')){
+				$(this).animate({top: 4}, 300);
+			}else{
+				$(this).animate({top: 38}, 300);
+			}
+		}
+		$(this).toggleClass('on');
+		return false;
+	});
+	$('.message-form input, .message-form textarea').focus(function(){
+		$(this).parent().toggleClass('focus');
+	});
+	$('.message-form input, .message-form textarea').blur(function(){
+		$(this).parent().toggleClass('focus');
+	});
+
 });
+
 function del_spaces(str)
 {
     str = str.replace(/\s/g, '');

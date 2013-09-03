@@ -171,7 +171,7 @@ function FlipperCtrl($scope, $http, $timeout) {
                 style: "margin-left:25%"
             };
 
-            swfobject.embedSWF("/bundles/galaxyfrontend/flash/black.swf", "myContent", "400", "400", "9.0.0",
+            swfobject.embedSWF("/bundles/galaxyfrontend/flash/black.swf", "myContent", "690", "550", "9.0.0",
                     "expressInstall.swf", flashvars, params, attributes);
         } else {
             $scope.pointImagePath = data.pointImagePath;
