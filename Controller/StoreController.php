@@ -255,7 +255,7 @@ class StoreController extends Controller {
     private function depositeToActiveRates($value) {
         $user = $this->getUser();
         $fundsInfo = $user->getFundsInfo();
-        $transferValue = $value / 0.76;
+        $transferValue = $value / $fundsInfo->rates->deposite;
         return $transferValue;
     }
 
