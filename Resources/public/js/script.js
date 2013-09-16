@@ -13,6 +13,8 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.lightAmount = '';
     $scope.jumpActive = false;
     $scope.getActive = false;
+    $scope.blackPar = false;
+    $scope.blackParameter = 0;
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
@@ -158,7 +160,9 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        if (data.tag == "black")
+        var arr = data.image.split('.');
+        
+        if (arr[arr.length - 1] == "swf")
         {
             var flashvars = {
             };
@@ -170,11 +174,18 @@ function FlipperCtrl($scope, $http, $timeout) {
                 name: "myContent",
                 style: "margin-left:25%"
             };
-
-            swfobject.embedSWF("/bundles/galaxyfrontend/flash/black.swf", "myContent", "690", "550", "9.0.0",
+            var w = 690;
+            var h = 550;
+            if(data.tag == 'black'){
+                w = 1600;
+                h = 895;
+                $scope.blackPar = true;
+                $scope.blackParameter = data.req.request.subtype.parameter;
+            }
+            swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
                     "expressInstall.swf", flashvars, params, attributes);
         } else {
-            $scope.pointImagePath = data.pointImagePath;
+            $scope.pointImagePath = "/bundles/galaxyfrontend/" + data.image;
             $scope.pointImage = true;
         }
     }

@@ -214,7 +214,9 @@ class FlipperController extends Controller {
             if ($response->result == "success") {
                 $result["pointType"] = $response->response->type->name;
                 $tag = $response->response->type->tag;
+                $image = $response->response->type->image;
                 $result["tag"] = $tag;
+                $result["image"] = $image;
                 $pointImageFolder = $this->container->getParameter("image.folder");
                 $imagePath = str_replace("{tag}", $tag, $pointImageFolder);
                 $result["pointImagePath"] = $imagePath;
