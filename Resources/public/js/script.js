@@ -171,7 +171,7 @@ function FlipperCtrl($scope, $http, $timeout) {
             var attributes = {
                 id: "myContent",
                 name: "myContent",
-                style: "margin-left:25%"
+                style: "margin-left: -250px; margin-top: -100px;"
             };
             var w = 690;
             var h = 550;
@@ -181,8 +181,6 @@ function FlipperCtrl($scope, $http, $timeout) {
                 $scope.blackPar = true;
                 $scope.blackParameter = data.req.response.subtype.parameter;
             }
-            $scope.blackPar = true;
-            $scope.blackParameter = data.req.response.subtype.parameter;
             swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
                     "expressInstall.swf", flashvars, params, attributes);
         } else {
