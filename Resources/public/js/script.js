@@ -165,13 +165,14 @@ function FlipperCtrl($scope, $http, $timeout) {
         {
             var flashvars = {
             };
-            var params = {
-                menu: "false"
-            };
+            var params = { 
+            wmode: "transparent",
+            menu: false
+        };
             var attributes = {
                 id: "myContent",
                 name: "myContent",
-                style: "margin-left: -250px; margin-top: -100px;"
+                style: ""
             };
             var w = 690;
             var h = 550;
@@ -491,7 +492,7 @@ function FlipperCtrl($scope, $http, $timeout) {
 
     $scope.logout = function() {
         if (!$scope.logoutAlerted) {
-           /* $timeout(function() {
+            /*$timeout(function() {
                 location.reload()
             }, 10000);
             $scope.logoutAlerted = true;*/
