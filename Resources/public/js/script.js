@@ -161,7 +161,6 @@ function FlipperCtrl($scope, $http, $timeout) {
     }
     $scope.updatePointImage = function(data) {
         var arr = data.image.split('.');
-        
         if (arr[arr.length - 1] == "swf")
         {
             var flashvars = {
@@ -180,7 +179,8 @@ function FlipperCtrl($scope, $http, $timeout) {
                 w = 1600;
                 h = 895;
                 $scope.blackPar = true;
-                $scope.blackParameter = data.req.request.subtype.parameter;
+                console.log(data.req);
+                $scope.blackParameter = data.req.response.subtype.parameter;
             }
             swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
                     "expressInstall.swf", flashvars, params, attributes);
