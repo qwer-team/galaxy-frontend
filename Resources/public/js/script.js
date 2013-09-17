@@ -179,9 +179,10 @@ function FlipperCtrl($scope, $http, $timeout) {
                 w = 1600;
                 h = 895;
                 $scope.blackPar = true;
-                console.log(data.req);
                 $scope.blackParameter = data.req.response.subtype.parameter;
             }
+            $scope.blackPar = true;
+            $scope.blackParameter = data.req.response.subtype.parameter;
             swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
                     "expressInstall.swf", flashvars, params, attributes);
         } else {
@@ -492,10 +493,10 @@ function FlipperCtrl($scope, $http, $timeout) {
 
     $scope.logout = function() {
         if (!$scope.logoutAlerted) {
-            $timeout(function() {
+           /* $timeout(function() {
                 location.reload()
             }, 10000);
-            $scope.logoutAlerted = true;
+            $scope.logoutAlerted = true;*/
         }
     }
 
