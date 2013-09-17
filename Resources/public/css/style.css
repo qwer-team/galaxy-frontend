@@ -437,7 +437,7 @@ header .logout:active{
 section.prizes-carusel,
 section.flipper-sec{
     width: 877px;
-    margin: 132px auto 0;
+    margin: 0 0 auto 0;
     padding-bottom: 195px;
     position: relative;
 }
