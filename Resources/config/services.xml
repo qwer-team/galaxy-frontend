@@ -18,7 +18,7 @@
         <parameter key="gameurl">http://demo11.qwer.com.ua/games</parameter>
         <parameter key="jump.url">http://demo11.qwer.com.ua/jump</parameter>
         <parameter key="space.url">http://localhost:8080/gala</parameter>
-        <parameter key="questions.url">>http://demo11.qwer.com.ua/api/questions</parameter>
+        <parameter key="questions.url">http://demo11.qwer.com.ua/api/questions</parameter>
         <!-- User -->
         <parameter key="user_provider.service.class">Galaxy\FrontendBundle\Service\Security\UserProvider</parameter>
         <parameter key="user_info.service.class">Galaxy\FrontendBundle\Service\UserInfoService</parameter>
