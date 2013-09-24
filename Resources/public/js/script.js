@@ -142,12 +142,12 @@ function FlipperCtrl($scope, $http, $timeout) {
                 .error($scope.userError);
     };
     /*$scope.updateQuestionTime = function(time) {
-        alert($scope.question.procent + "piska");
-        if (parseInt($scope.question.procent) > 0) {
-            $scope.question.procent--;
-            $timeout($scope.updateQuestionTime(time), time);
-        }
-    }*/
+     alert($scope.question.procent + "piska");
+     if (parseInt($scope.question.procent) > 0) {
+     $scope.question.procent--;
+     $timeout($scope.updateQuestionTime(time), time);
+     }
+     }*/
     $scope.updateQuestionTime = function(time) {
         stop = $timeout(function() {
             if (parseInt($scope.question.procent) > 0) {
@@ -180,33 +180,34 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.updatePointImage = function(data) {
         if (data.image != null) {
             var arr = data.image.split('.');
-        }
-        if (arr[arr.length - 1] == "swf")
-        {
-            var flashvars = {
-            };
-            var params = {
-                wmode: "transparent",
-                menu: false
-            };
-            var attributes = {
-                id: "myContent",
-                name: "myContent",
-                style: ""
-            };
-            var w = 690;
-            var h = 550;
-            if (data.tag == 'black') {
-                w = 1600;
-                h = 895;
-                $scope.blackPar = true;
-                $scope.blackParameter = data.req.response.subtype.parameter;
+
+            if (arr[arr.length - 1] == "swf")
+            {
+                var flashvars = {
+                };
+                var params = {
+                    wmode: "transparent",
+                    menu: false
+                };
+                var attributes = {
+                    id: "myContent",
+                    name: "myContent",
+                    style: ""
+                };
+                var w = 690;
+                var h = 550;
+                if (data.tag == 'black') {
+                    w = 1600;
+                    h = 895;
+                    $scope.blackPar = true;
+                    $scope.blackParameter = data.req.response.subtype.parameter;
+                }
+                swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
+                        "expressInstall.swf", flashvars, params, attributes);
+            } else {
+                $scope.pointImagePath = "/bundles/galaxyfrontend/" + data.image;
+                $scope.pointImage = true;
             }
-            swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
-                    "expressInstall.swf", flashvars, params, attributes);
-        } else {
-            $scope.pointImagePath = "/bundles/galaxyfrontend/" + data.image;
-            $scope.pointImage = true;
         }
     }
 
