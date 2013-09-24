@@ -299,6 +299,7 @@ class FlipperController extends Controller {
                 $fundsInfo = $service->getFundsInfo($userId);
                 $user->setFundsInfo($fundsInfo);
                 $result = $service->getQuestion($userId);
+                print_r($result);
                 $result->rightAnswer = null;
                 $time = new \DateTime($result->started);
                 $now = new \DateTime();
