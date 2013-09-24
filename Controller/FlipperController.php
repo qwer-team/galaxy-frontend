@@ -287,7 +287,7 @@ class FlipperController extends Controller {
 
             $expires = null;
             $curdate = new \DateTime;
-            if (isset($response->data->locked_expires_a) &&
+            if (isset($response->data->locked_expires_at) &&
                     $response->data->locked_expires_at) {
                 $expires = new \DateTime($response->data->locked_expires_at);
             }
@@ -304,10 +304,12 @@ class FlipperController extends Controller {
                 $now = new \DateTime();
                 $interval = $now->diff($time);
                 $intervalSeconds = $interval->i * 60 + $interval->s;
+                $questionSeconds = $result->seconds;
                 $seconds = $result->seconds - $intervalSeconds;
 
                 $result->interval = $intervalSeconds;
                 $result->seconds = $seconds;
+                $result->procent = (int)($seconds / $questionSeconds * 100);
             }
         }
 

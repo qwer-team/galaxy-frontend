@@ -27,19 +27,7 @@
             <div style="position: absolute;  left:850px; top: 400px; width: 120px; height: 120px; z-index: 1000;display: none;" ng-show="pointImage">
                 <img border="0" ng-src="{{ pointImagePath }}" alt="Point">
             </div>
-            <div style="position: absolute; left:650px; top: 250px; width: 650px; height: 120px; z-index: 1000;background-color: white; display: none;"
-                 ng-show="user.gameInfo.questions">
-            {{question.text}}__time {{question.seconds}}
-                <ul >
-                    <li >
-                        <label ng-repeat="answer in question.answers">
-                            <input  type="radio" ng-model="$parent.rightAnswer" name="answer" value="{{$index}}">{{ answer }}
-                        </label>
-                    </li>
-                </ul>
-
-                <input ng-click="answer()" type="submit" value="pli">
-            </div>
+            
         </section>
             <section>
             <div style="position: absolute; left:850px; top: 400px; width: 400px; height: 200px; z-index: 1000;display: none; background-color: white" ng-show="userLog">
@@ -170,6 +158,33 @@
                     </div><!-- .mark -->
                 </div><!-- .mark-line -->
             </section><!-- .info-panel -->
+            <section class="prizes-carusel fliper-question" ng-show="user.gameInfo.questions"><!-- message-wrap -->
+			<div class="message-form flip-info" ><!-- message-form -->
+				<form action="/">
+					<div class="load-photo"><!-- load-photo -->
+						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+					</div><!-- .load-photo -->
+					<div class="load-photo"><!-- load-photo -->
+						<img src="/bundles/galaxyfrontend/images/i2.png" alt="">
+					</div><!-- .load-photo -->
+					<div class="load-photo"><!-- load-photo -->
+						<img src="/bundles/galaxyfrontend/images/i2.png" alt="">
+					</div><!-- .load-photo -->
+					<div class="clear"></div>
+					
+					<div class="question">{{question.text}}</div>
+
+					<div ng-repeat="answer in question.answers" class="answer-fl">
+						<div  ng-click="asw({{$index}})" class="ansver">{{ answer }}</div>
+						<div class="line"></div>
+					</div>
+					<div class="time-line">
+						<div class="time proc-{{question.procent}}"></div>
+					</div>
+				</form>
+			</div><!-- .message-form -->
+		</section><!-- .message-wrap -->
+              
             <div style="position: absolute; left: 50%; margin-left: -800px; margin-top: 0px;">
                 <div style="border: 2px none rgb(0, 0, 0); background-color: rgb(0, 0, 0); position: absolute; z-index: 3; margin-top: 337px; height: 10px; color: rgb(255, 255, 255); margin-left: 92%; width: 10px;" ng-show="blackPar">
                     <h1 class="ng-binding">{{ blackParameter }}</h1>

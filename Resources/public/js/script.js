@@ -15,6 +15,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.getActive = false;
     $scope.blackPar = false;
     $scope.blackParameter = 0;
+    $scope.procent = 0;
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
@@ -97,12 +98,17 @@ function FlipperCtrl($scope, $http, $timeout) {
                 $scope.elements = data;
             });
         }
+
         if (data.gameInfo.questions.length > 0) {
             console.log('questoins');
             $http.get('/question').success(function(data) {
-                $scope.question = data;
+                console.log(data.procent)
                 if (!$scope.questionTimeout) {
-                    $timeout($scope.updateQuestionTime, 1000);
+                    $scope.question = data;
+                    $scope.question.procent--;
+                    var time = parseInt($scope.question.seconds) * 1000 / 100;
+                    $scope.updateQuestionTime(time);
+                    console.log(time);
                     $scope.questionTimeout = true;
                 }
                 if (data.result != 'fail') {
@@ -135,12 +141,24 @@ function FlipperCtrl($scope, $http, $timeout) {
         $http.get('/user').success($scope.updateUserInfo)
                 .error($scope.userError);
     };
-    $scope.updateQuestionTime = function() {
-        if ($scope.question.seconds > 0) {
-            $scope.question.seconds--;
+    /*$scope.updateQuestionTime = function(time) {
+        alert($scope.question.procent + "piska");
+        if (parseInt($scope.question.procent) > 0) {
+            $scope.question.procent--;
+            $timeout($scope.updateQuestionTime(time), time);
         }
-        $timeout($scope.updateQuestionTime, 1000);
-    }
+    }*/
+    $scope.updateQuestionTime = function(time) {
+        stop = $timeout(function() {
+            if (parseInt($scope.question.procent) > 0) {
+                $scope.question.procent--;
+                $scope.updateQuestionTime(time);
+            } else {
+                $timeout.cancel(stop);
+            }
+        }, time);
+    };
+
     $scope.hasMonyeForPrize = function() {
         if (!$scope.elements) {
             return false;
@@ -160,15 +178,17 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        var arr = data.image.split('.');
+        if (data.image != null) {
+            var arr = data.image.split('.');
+        }
         if (arr[arr.length - 1] == "swf")
         {
             var flashvars = {
             };
-            var params = { 
-            wmode: "transparent",
-            menu: false
-        };
+            var params = {
+                wmode: "transparent",
+                menu: false
+            };
             var attributes = {
                 id: "myContent",
                 name: "myContent",
@@ -176,7 +196,7 @@ function FlipperCtrl($scope, $http, $timeout) {
             };
             var w = 690;
             var h = 550;
-            if(data.tag == 'black'){
+            if (data.tag == 'black') {
                 w = 1600;
                 h = 895;
                 $scope.blackPar = true;
@@ -493,9 +513,9 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.logout = function() {
         if (!$scope.logoutAlerted) {
             /*$timeout(function() {
-                location.reload()
-            }, 10000);
-            $scope.logoutAlerted = true;*/
+             location.reload()
+             }, 10000);
+             $scope.logoutAlerted = true;*/
         }
     }
 
@@ -510,11 +530,11 @@ function FlipperCtrl($scope, $http, $timeout) {
             $scope.updateUserInfo(data.user);
         }
     };
-    $scope.answer = function() {
-        if (!$scope.rightAnswer) {
+    $scope.asw = function(rightAnswer) {
+        if (rightAnswer) {
             return;
         }
-        var url = '/answer/' + $scope.question.id + "/" + $scope.rightAnswer;
+        var url = '/answer/' + $scope.question.id + "/" + rightAnswer;
         $http.get(url).success($scope.answerResult);
     }
     $scope.answerResult = function(data, status) {
