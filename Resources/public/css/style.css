@@ -1587,6 +1587,9 @@ i.icon-star{
     left: 3px;
     bottom: 3px;
 }
+.fliper-question .time-line .time.proc-0{
+    height:0px;
+}
 .fliper-question .time-line .time.proc-1{
     height:0px;
 }

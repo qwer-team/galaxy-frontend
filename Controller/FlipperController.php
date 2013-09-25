@@ -299,17 +299,21 @@ class FlipperController extends Controller {
                 $fundsInfo = $service->getFundsInfo($userId);
                 $user->setFundsInfo($fundsInfo);
                 $result = $service->getQuestion($userId);
-                $result->rightAnswer = null;
-                $time = new \DateTime($result->started);
-                $now = new \DateTime();
-                $interval = $now->diff($time);
-                $intervalSeconds = $interval->i * 60 + $interval->s;
-                $questionSeconds = $result->seconds;
-                $seconds = $result->seconds - $intervalSeconds;
+                if (isset($result->messageId)) {
+                    $result->rightAnswer = null;
+                    $time = new \DateTime($result->started);
+                    $now = new \DateTime();
+                    $interval = $now->diff($time);
+                    $intervalSeconds = $interval->i * 60 + $interval->s;
+                    $questionSeconds = $result->seconds;
+                    $seconds = $result->seconds - $intervalSeconds;
 
-                $result->interval = $intervalSeconds;
-                $result->seconds = $seconds;
-                $result->procent = (int)($seconds / $questionSeconds * 100);
+                    $result->interval = $intervalSeconds;
+                    $result->seconds = $seconds;
+                    $result->procent = (int) ($seconds / $questionSeconds * 100);
+                } else {
+                    $this->updateFunds();
+                }
             }
         }
 
@@ -418,7 +422,6 @@ class FlipperController extends Controller {
         $token = $this->container->get('security.context')->getToken();
         $user = $token->getUser();
         $game = $user->getGameInfo();
-
         $hasQuestion = false;
         if ($game->questions) {
             foreach ($game->questions as $question) {

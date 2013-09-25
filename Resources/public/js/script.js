@@ -16,6 +16,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.blackPar = false;
     $scope.blackParameter = 0;
     $scope.procent = 0;
+    $scope.questionTimeout = false;
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
@@ -98,24 +99,9 @@ function FlipperCtrl($scope, $http, $timeout) {
                 $scope.elements = data;
             });
         }
-
-        if (data.gameInfo.questions.length > 0) {
-            console.log('questoins');
-            $http.get('/question').success(function(data) {
-                console.log(data.procent)
-                if (!$scope.questionTimeout) {
-                    $scope.question = data;
-                    $scope.question.procent--;
-                    var time = parseInt($scope.question.seconds) * 1000 / 100;
-                    $scope.updateQuestionTime(time);
-                    console.log(time);
-                    $scope.questionTimeout = true;
-                }
-                if (data.result != 'fail') {
-                    var url = "check/" + $scope.question.id;
-                    $http.get(url).success($scope.checkQuestion);
-                }
-            });
+        if (data.gameInfo.questions.length > 0)
+        {
+            $scope.getQuestion(1);
         }
         if (data.lockedExpiresAt) {
             var lock = new Date(data.lockedExpiresAt.date + " " + data.lockedExpiresAt.timezone);
@@ -128,33 +114,48 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.userError = function(data, status) {
         $scope.logout();
     }
-    $scope.questionTimeout = false;
+
+    $scope.getQuestion = function(check) {
+        $http.get('/question').success(function(data) {
+            console.log(data)
+            if (!$scope.questionTimeout && check != 0) {
+                $scope.question = data;
+                var time = parseInt($scope.question.seconds) * 1000 / 100;
+                $scope.updateQuestionTime(time);
+                $scope.questionTimeout = true;
+            } else {
+                $scope.getUser();
+            }
+            if (data.result != 'fail') {
+                var url = "check/" + $scope.question.id;
+                $http.get(url).success($scope.checkQuestion);
+            }
+        });
+
+    }
+
+
     $scope.checkQuestion = function(data, status) {
         if (data.result == null) {
             var url = "check/" + $scope.question.id;
             $http.get(url).success($scope.checkQuestion);
-        } else {
-            $scope.getUser();
         }
     }
     $scope.getUser = function() {
         $http.get('/user').success($scope.updateUserInfo)
                 .error($scope.userError);
     };
-    /*$scope.updateQuestionTime = function(time) {
-     alert($scope.question.procent + "piska");
-     if (parseInt($scope.question.procent) > 0) {
-     $scope.question.procent--;
-     $timeout($scope.updateQuestionTime(time), time);
-     }
-     }*/
+
     $scope.updateQuestionTime = function(time) {
         stop = $timeout(function() {
             if (parseInt($scope.question.procent) > 0) {
                 $scope.question.procent--;
                 $scope.updateQuestionTime(time);
             } else {
+                $scope.questionTimeout = false;
+                $scope.user.gameInfo.questions = null;
                 $timeout.cancel(stop);
+                $scope.getQuestion(0);
             }
         }, time);
     };
@@ -532,9 +533,6 @@ function FlipperCtrl($scope, $http, $timeout) {
         }
     };
     $scope.asw = function(rightAnswer) {
-        if (rightAnswer) {
-            return;
-        }
         var url = '/answer/' + $scope.question.id + "/" + rightAnswer;
         $http.get(url).success($scope.answerResult);
     }
