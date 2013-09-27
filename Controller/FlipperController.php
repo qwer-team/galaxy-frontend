@@ -342,8 +342,6 @@ class FlipperController extends Controller {
             $service = $this->get("galaxy.user_info.service");
             $result = $service->answerQuestion($questionId, $answer);
             $user = $this->getUser();
-            $userInfoService = $this->get("galaxy.user_info.service");
-            $userId = $user->getId();
 
 
             $userService = $this->get("galaxy.user.service");
@@ -358,10 +356,7 @@ class FlipperController extends Controller {
                 $result = array("result" => "disabled");
                 $this->container->get('security.context')->setToken();
             } else {
-                $gameInfo = $userInfoService->getGameInfo($userId);
-                $fundsInfo = $userInfoService->getFundsInfo($userId);
-                $user->setGameInfo($gameInfo);
-                $user->setFundsInfo($fundsInfo);
+                $result->user = $this->updateFunds();
             }
         }
         $response = new Response();

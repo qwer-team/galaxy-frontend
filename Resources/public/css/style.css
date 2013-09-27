@@ -1547,6 +1547,9 @@ i.icon-star{
 .fliper-question .answer-fl:hover{
     background-position: -2315px -676px;
 }
+.fliper-question .answer-fl.right{
+    background-position: -2315px -676px;
+}
 .fliper-question .answer-fl.error{
     background-position: -2315px -724px;
 }

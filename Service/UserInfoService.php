@@ -5,25 +5,21 @@ namespace Galaxy\FrontendBundle\Service;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Qwer\Curl\Curl;
 
-class UserInfoService extends ContainerAware
-{
+class UserInfoService extends ContainerAware {
 
-    public function getGameInfo($userId)
-    {
+    public function getGameInfo($userId) {
         $rawUrl = $this->container->getParameter("user_providers.game_info.url");
         $url = str_replace("{userId}", $userId, $rawUrl);
         return $response = json_decode($this->makeRequest($url));
     }
 
-    public function getFundsInfo($userId)
-    {
+    public function getFundsInfo($userId) {
         $rawUrl = $this->container->getParameter("user_providers.funds_info.url");
         $url = str_replace("{userId}", $userId, $rawUrl);
         return $response = json_decode($this->makeRequest($url));
     }
-   
-    public function getLogsInfo($userId, $page, $length)
-    {
+
+    public function getLogsInfo($userId, $page, $length) {
         $rawUrl = $this->container->getParameter("user_providers.log_info.url");
         $find = array("{userId}", "{page}", "{length}");
         $replace = array($userId, $page, $length);
@@ -32,23 +28,20 @@ class UserInfoService extends ContainerAware
         return $response = json_decode($this->makeRequest($url));
     }
 
-    public function getLogsCount($userId)
-    {
+    public function getLogsCount($userId) {
         $rawUrl = $this->container->getParameter("user_providers.log_info_count.url");
         $url = str_replace("{userId}", $userId, $rawUrl);
         $response = json_decode($this->makeRequest($url));
         return $response;
     }
 
-    public function getPrizesFromSpace()
-    {
+    public function getPrizesFromSpace() {
         $url = $this->container->getParameter("space.prizes_info.url");
         $response = json_decode($this->makeRequest($url));
         return $response;
     }
 
-    public function getPrizeInfo()
-    {
+    public function getPrizeInfo() {
         $response = $this->getPrizesFromSpace();
 
         $elements = array();
@@ -68,16 +61,14 @@ class UserInfoService extends ContainerAware
         return $elements;
     }
 
-    public function getQuestion($userId)
-    {
+    public function getQuestion($userId) {
         $rawUrl = $this->container->getParameter("game.get_question.url");
         $url = str_replace("{userId}", $userId, $rawUrl);
         $response = $this->makeRequest($url);
         return json_decode($response);
     }
 
-    public function answerQuestion($questionId, $answer)
-    {
+    public function answerQuestion($questionId, $answer) {
         $rawUrl = $this->container->getParameter("game.answer_question.url");
         $search = array(
             "{questionId}", "{answer}"
@@ -91,20 +82,18 @@ class UserInfoService extends ContainerAware
         return json_decode($response);
     }
 
-    public function increaseFlipper($id, $flipperId)
-    {
+    public function increaseFlipper($id, $flipperId) {
         $rawUrl = $this->container->getParameter("game.inc_flipper.url");
         $find = array("{id}", "{flipperId}");
         $replace = array($id, $flipperId);
 
         $url = str_replace($find, $replace, $rawUrl);
-        
+
         $response = json_decode($this->makeRequest($url));
         return $response;
     }
 
-    private function makeRequest($url, $data = null)
-    {
+    private function makeRequest($url, $data = null) {
         return Curl::makeRequest($url, $data);
     }
 

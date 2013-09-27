@@ -120,6 +120,7 @@ function FlipperCtrl($scope, $http, $timeout) {
             console.log(data)
             if (!$scope.questionTimeout && check != 0) {
                 $scope.question = data;
+                $scope.user.gameInfo.userAnswer = 100;
                 var time = parseInt($scope.question.seconds) * 1000 / 100;
                 $scope.updateQuestionTime(time);
                 $scope.questionTimeout = true;
@@ -147,15 +148,14 @@ function FlipperCtrl($scope, $http, $timeout) {
     };
 
     $scope.updateQuestionTime = function(time) {
-        stop = $timeout(function() {
+        $scope.stopAnswer = $timeout(function() {
             if (parseInt($scope.question.procent) > 0) {
                 $scope.question.procent--;
                 $scope.updateQuestionTime(time);
             } else {
                 $scope.questionTimeout = false;
-                $scope.user.gameInfo.questions = null;
-                $timeout.cancel(stop);
-                $scope.getQuestion(0);
+                $timeout.cancel($scope.stopAnswer);
+                $scope.asw(100);
             }
         }, time);
     };
@@ -534,10 +534,15 @@ function FlipperCtrl($scope, $http, $timeout) {
     };
     $scope.asw = function(rightAnswer) {
         var url = '/answer/' + $scope.question.id + "/" + rightAnswer;
+        $scope.questionTimeout = false;
+        $timeout.cancel($scope.stopAnswer);
         $http.get(url).success($scope.answerResult);
     }
     $scope.answerResult = function(data, status) {
-        $scope.getUser();
+        $scope.user = data.user;
+        $scope.user.gameInfo.questions[0] = data.question;
+        $scope.question = data.question;
+        $scope.user.gameInfo.userAnswer = data.userAnswer;
     }
 }
 
