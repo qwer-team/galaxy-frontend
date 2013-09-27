@@ -117,7 +117,6 @@ function FlipperCtrl($scope, $http, $timeout) {
 
     $scope.getQuestion = function(check) {
         $http.get('/question').success(function(data) {
-            console.log(data)
             if (!$scope.questionTimeout && check != 0) {
                 $scope.question = data;
                 $scope.user.gameInfo.userAnswer = 100;
@@ -127,10 +126,10 @@ function FlipperCtrl($scope, $http, $timeout) {
             } else {
                 $scope.getUser();
             }
-            if (data.result != 'fail') {
+            /*if (data.result != 'fail') {
                 var url = "check/" + $scope.question.id;
                 $http.get(url).success($scope.checkQuestion);
-            }
+            }*/
         });
 
     }
