@@ -532,7 +532,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         }
     };
     $scope.asw = function(rightAnswer) {
-        if ($scope.question.rightAnswer !== null) {
+        if ($scope.question.rightAnswer === null) {
             var url = '/answer/' + $scope.question.id + "/" + rightAnswer;
             $scope.questionTimeout = false;
             $timeout.cancel($scope.stopAnswer);
