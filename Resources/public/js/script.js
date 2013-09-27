@@ -127,9 +127,9 @@ function FlipperCtrl($scope, $http, $timeout) {
                 $scope.getUser();
             }
             /*if (data.result != 'fail') {
-                var url = "check/" + $scope.question.id;
-                $http.get(url).success($scope.checkQuestion);
-            }*/
+             var url = "check/" + $scope.question.id;
+             $http.get(url).success($scope.checkQuestion);
+             }*/
         });
 
     }
@@ -532,10 +532,12 @@ function FlipperCtrl($scope, $http, $timeout) {
         }
     };
     $scope.asw = function(rightAnswer) {
-        var url = '/answer/' + $scope.question.id + "/" + rightAnswer;
-        $scope.questionTimeout = false;
-        $timeout.cancel($scope.stopAnswer);
-        $http.get(url).success($scope.answerResult);
+        if ($scope.question.status != 4) {
+            var url = '/answer/' + $scope.question.id + "/" + rightAnswer;
+            $scope.questionTimeout = false;
+            $timeout.cancel($scope.stopAnswer);
+            $http.get(url).success($scope.answerResult);
+        }
     }
     $scope.answerResult = function(data, status) {
         $scope.user = data.user;
