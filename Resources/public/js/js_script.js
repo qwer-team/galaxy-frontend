@@ -116,7 +116,7 @@ $(document).ready(function() {
             $('.mark.price .transfer-count').attr("transActive", newTrans);
             if ($('.mark.price .transfer-count').attr("transActive") > 0 && !$('.mark.price span').parent().hasClass("active")) {
                 $('.mark.price .transfer-count:hidden').fadeToggle(300);
-            }else {
+            } else {
                 $('.mark.price .transfer-count:visible').fadeToggle(300);
             }
             if ($('.mark.bank .transfer-count').attr("transSafe") > 0) {
@@ -184,10 +184,10 @@ $(document).ready(function() {
             $('.mark.bank .transfer-count').attr("transSafe", newTrans);
             if ($('.mark.bank .transfer-count').attr("transSafe") > 0 && !$('.mark.bank span').parent().hasClass("active")) {
                 $('.mark.bank .transfer-count:hidden').fadeToggle(300);
-            }else {
+            } else {
                 $('.mark.bank .transfer-count:visible').fadeToggle(300);
             }
-             if ($('.mark.price .transfer-count').attr("transActive") > 0) {
+            if ($('.mark.price .transfer-count').attr("transActive") > 0) {
                 $('.mark.price .transfer-count:hidden').fadeToggle(300);
             } else {
                 $('.mark.price .transfer-count:visible').fadeToggle(300);
@@ -233,29 +233,29 @@ $(document).ready(function() {
         return false;
     });
     /* new */
-	$('.slide-bt .slide a').click(function(){
-		if(!$(this).parents('.slide-bt').hasClass('vertical')){
-			if($(this).hasClass('on')){
-				$(this).animate({left: 4}, 300);
-			}else{
-				$(this).animate({left: 38}, 300);
-			}
-		}else{
-			if($(this).hasClass('on')){
-				$(this).animate({top: 4}, 300);
-			}else{
-				$(this).animate({top: 38}, 300);
-			}
-		}
-		$(this).toggleClass('on');
-		return false;
-	});
-	$('.message-form input, .message-form textarea').focus(function(){
-		$(this).parent().toggleClass('focus');
-	});
-	$('.message-form input, .message-form textarea').blur(function(){
-		$(this).parent().toggleClass('focus');
-	});
+    $('.slide-bt .slide a').click(function() {
+        if (!$(this).parents('.slide-bt').hasClass('vertical')) {
+            if ($(this).hasClass('on')) {
+                $(this).animate({left: 4}, 300);
+            } else {
+                $(this).animate({left: 38}, 300);
+            }
+        } else {
+            if ($(this).hasClass('on')) {
+                $(this).animate({top: 4}, 300);
+            } else {
+                $(this).animate({top: 38}, 300);
+            }
+        }
+        $(this).toggleClass('on');
+        return false;
+    });
+    $('.message-form input, .message-form textarea').focus(function() {
+        $(this).parent().toggleClass('focus');
+    });
+    $('.message-form input, .message-form textarea').blur(function() {
+        $(this).parent().toggleClass('focus');
+    });
 
 });
 
@@ -263,4 +263,132 @@ function del_spaces(str)
 {
     str = str.replace(/\s/g, '');
     return str;
+}
+$(window).load(function() {
+    $(".bt-horisontal .slide .slider-l").slider({
+        min: 0,
+        max: 100,
+        stop: function(event, ui) {
+            var obj = $(this);
+            var sval = $(this).slider("value");
+            console.log(sval);
+            if (sval == 100) {
+                $(this).parents('.slide-bt').find('.del').removeClass('active');
+                $(this).parents('.slide-bt').find('.loader').addClass('active');
+            } else if (sval == 0) {
+                $(this).parents('.slide-bt').find('.loader').removeClass('active');
+                $(this).parents('.slide-bt').find('.del').addClass('active');
+            } else if (sval >= 30) {
+                $(this).parents('.slide-bt').find('.del').removeClass('active');
+                $(this).parents('.slide-bt').find('.loader').addClass('active');
+                $(this).find('.ui-slider-handle').animate({'left': '100%'}, 200, function() {
+                    $(obj).slider("value", 100);
+                });
+            } else {
+                $(this).find('.ui-slider-handle').animate({'left': 0}, 200, function() {
+                    $(obj).slider("value", 0);
+                });
+            }
+        }
+    });
+    $(".bt-vertical .slide .slider-l").slider({
+        orientation: "vertical",
+        min: 0,
+        max: 100,
+        stop: function(event, ui) {
+            var obj = $(this);
+            var sval = $(this).slider("value");
+            console.log(sval);
+            if (sval == 0) {
+                $(this).parents('.slide-bt').find('.del').removeClass('active');
+                $(this).parents('.slide-bt').find('.loader').addClass('active');
+            } else if (sval == 100) {
+                $(this).parents('.slide-bt').find('.loader').removeClass('active');
+                $(this).parents('.slide-bt').find('.del').addClass('active');
+            } else if (sval >= 30) {
+                $(this).parents('.slide-bt').find('.loader').removeClass('active');
+                $(this).parents('.slide-bt').find('.del').addClass('active');
+                $(this).find('.ui-slider-handle').animate({'bottom': '100%'}, 200, function() {
+                    $(obj).slider("value", 100);
+                });
+            } else {
+
+                $(this).find('.ui-slider-handle').animate({'bottom': '0'}, 200, function() {
+                    $(obj).slider("value", 0);
+                });
+            }
+        }
+    });
+    $(".infol-block").mCustomScrollbar({
+        autoDraggerLength: false
+    });
+    /* begin 24.09.13 dlia skrolinga shop jurnal*/
+    $(".shop-jurnal").mCustomScrollbar({
+        autoDraggerLength: false
+    });
+    /* end */
+
+
+    /* 16.09 */
+    textareaSlide($(".info-fl textarea"));
+    textareaSlide($(".question-fl textarea"));
+    $('.question-fl textarea').focus(function() {
+        $(this).parents('.question-fl').toggleClass('focus');
+    });
+    $('.question-fl textarea').blur(function() {
+        $(this).parents('.question-fl').toggleClass('focus');
+    });
+});
+function textareaSlide(txarea) {
+    var textArea = txarea;//$(".info-fl textarea");
+    textArea.wrap("<div class='textarea-wrapper' />");
+    var textAreaWrapper = textArea.parent(".textarea-wrapper");
+    textAreaWrapper.mCustomScrollbar({
+        scrollInertia: 0,
+        advanced: {autoScrollOnFocus: false}
+    });
+    var hiddenDiv = $(document.createElement("div")),
+            content = null;
+    if (txarea.parents('.question-fl').length) {
+        hiddenDiv.addClass("hiddendiv-q");
+    } else {
+        hiddenDiv.addClass("hiddendiv");
+    }
+    $("body").prepend(hiddenDiv);
+    textArea.bind("keyup", function(e) {
+        content = $(this).val();
+        var clength = content.length;
+        var cursorPosition = textArea.getCursorPosition();
+        content = "<span>" + content.substr(0, cursorPosition) + "</span>" + content.substr(cursorPosition, content.length);
+        content = content.replace(/\n/g, "<br />");
+        hiddenDiv.html(content + "<br />");
+        $(this).css("height", hiddenDiv.height());
+        textAreaWrapper.mCustomScrollbar("update");
+        var hiddenDivSpan = hiddenDiv.children("span"),
+                hiddenDivSpanOffset = 0,
+                viewLimitBottom = (parseInt(hiddenDiv.css("min-height"))) - hiddenDivSpanOffset,
+                viewLimitTop = hiddenDivSpanOffset,
+                viewRatio = Math.round(hiddenDivSpan.height() + textAreaWrapper.find(".mCSB_container").position().top);
+        if (viewRatio > viewLimitBottom || viewRatio < viewLimitTop) {
+            if ((hiddenDivSpan.height() - hiddenDivSpanOffset) > 0) {
+                textAreaWrapper.mCustomScrollbar("scrollTo", hiddenDivSpan.height() - hiddenDivSpanOffset);
+            } else {
+                textAreaWrapper.mCustomScrollbar("scrollTo", "top");
+            }
+        }
+    });
+    $.fn.getCursorPosition = function() {
+        var el = $(this).get(0),
+                pos = 0;
+        if ("selectionStart" in el) {
+            pos = el.selectionStart;
+        } else if ("selection" in document) {
+            el.focus();
+            var sel = document.selection.createRange(),
+                    selLength = document.selection.createRange().text.length;
+            sel.moveStart("character", -el.value.length);
+            pos = sel.text.length - selLength;
+        }
+        return pos;
+    }
 }

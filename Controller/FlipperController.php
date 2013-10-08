@@ -212,22 +212,20 @@ class FlipperController extends Controller {
             $response = json_decode($this->makeRequest($jumpUrl, $data));
             $result = array("result" => "success", "req" => $response);
             if ($response->result == "success") {
+                //print_r($response);
                 $result["pointType"] = $response->response->type->name;
                 $tag = $response->response->type->tag;
                 $image = $response->response->type->image;
                 $result["tag"] = $tag;
                 $result["image"] = $image;
+                if($tag == "message")
+                {
+                    $result["message"] = $response->response->message;
+                }
                 $pointImageFolder = $this->container->getParameter("image.folder");
                 $imagePath = str_replace("{tag}", $tag, $pointImageFolder);
                 $result["pointImagePath"] = $imagePath;
-                $userInfoService = $this->get("galaxy.user_info.service");
-                $fundsInfo = $userInfoService->getFundsInfo($userId);
-                $gameInfo = $userInfoService->getGameInfo($userId);
-                $user->setFundsInfo($fundsInfo);
-                $user->setGameInfo($gameInfo);
-
-                $token->setUser($user);
-                $result["user"] = $user->jsonSerialize();
+                $result["user"] = $this->updateFunds();
                 $tag == "black" ? $this->container->get('security.context')->setToken() : '';
             } else {
                 $result["result"] = $response->result;
@@ -326,7 +324,6 @@ class FlipperController extends Controller {
         $token = $this->container->get('security.context')->getToken();
         $user = $token->getUser();
         $game = $user->getGameInfo();
-
         $hasQuestion = false;
         if ($game->questions) {
             foreach ($game->questions as $question) {
@@ -336,14 +333,11 @@ class FlipperController extends Controller {
                 }
             }
         }
-
         $result = array("result" => "fail");
         if ($hasQuestion) {
             $service = $this->get("galaxy.user_info.service");
             $result = $service->answerQuestion($questionId, $answer);
             $user = $this->getUser();
-
-
             $userService = $this->get("galaxy.user.service");
             $response = $userService->getUser($user->getUsername());
             $expires = null;
@@ -387,14 +381,12 @@ class FlipperController extends Controller {
                 break;
             }
         }
-
         $basketIds = array();
         foreach ($basket as $item) {
             if ($item->bought) {
                 $basketIds[] = $item->elementId;
             }
         }
-
         $all = true;
         foreach ($prizeCur->elements as $element) {
             if (!in_array($element->id, $basketIds)) {
@@ -402,7 +394,6 @@ class FlipperController extends Controller {
                 break;
             }
         }
-
         if ($all) {
             return $prizeCur->name;
         }
@@ -462,13 +453,15 @@ class FlipperController extends Controller {
     }
 
     private function updateFunds() {
-        $user = $this->getUser();
+        $token = $this->container->get('security.context')->getToken();
+        $user = $user = $token->getUser();
         $userId = $user->getId();
         $userInfoService = $this->get("galaxy.user_info.service");
         $fundsInfo = $userInfoService->getFundsInfo($userId);
         $gameInfo = $userInfoService->getGameInfo($userId);
         $user->setFundsInfo($fundsInfo);
         $user->setGameInfo($gameInfo);
+        $token->setUser($user);
         return $user->jsonSerialize();
     }
 

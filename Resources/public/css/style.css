@@ -1277,9 +1277,7 @@ i.icon-star{
     margin-bottom: 33px;
     background: url(../images/sprite.png) -2212px -340px;
 }
-.fliper-question .message-form .load-photo{
-    margin-bottom: 0;
-}
+
 .message-form .load-photo img{
     border-radius: 15px;
     margin: 4px 0 0 5px;
@@ -2087,4 +2085,26 @@ i.icon-star{
 }
 .fliper-question .answer-fl:active{
     background-position: -2315px -674px;
+}
+
+.shop-jurnal{
+	margin:0;
+    padding:0;
+	overflow: hidden;
+}
+
+.shop-jurnal.scrolling-container{
+	width: 812px;
+	height: 558px;
+	padding: 39px 8px 35px 35px;
+	position: relative;
+	background: url(../images/shop_jurnal_fl.png) no-repeat;
+}
+
+.jurnal{
+	padding:2px 0;
+	margin:0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #66ff66;
 }

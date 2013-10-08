@@ -17,6 +17,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.blackParameter = 0;
     $scope.procent = 0;
     $scope.questionTimeout = false;
+    $scope.message = false;
     $scope.unlightAmount = function() {
         $scope.lightAmount = '';
     }
@@ -178,7 +179,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        if (data.image != null) {
+        if (data.image != null && data.tag != "message") {
             var arr = data.image.split('.');
 
             if (arr[arr.length - 1] == "swf")
@@ -507,6 +508,14 @@ function FlipperCtrl($scope, $http, $timeout) {
             $scope.updatePointImage(data);
             if (data.tag == "black") {
                 $scope.logout();
+            }
+            if (data.tag == "message" && !data.questions) {
+                $scope.message = data.message;
+                setTimeout(function() {
+                    $(".infol-block").mCustomScrollbar({
+                        autoDraggerLength: false
+                    });
+                }, 500)
             }
         }
     }

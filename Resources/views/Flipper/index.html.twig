@@ -13,11 +13,14 @@
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery-ui-1.10.3.custom.min.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/js_script.js' )  }}"></script>
         <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/swfobject.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.mousewheel.min.js' )  }}"></script>
+        <script type="text/javascript" src="{{ asset ( 'bundles/galaxyfrontend/js/jquery.mCustomScrollbar.concat.min.js' )  }}"></script>
     {% endblock %}
     {% block css %}
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/angular-slider.css' ) }}"/>
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/jquery-ui-1.10.3.custom.css' ) }}"/>
         <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/style.css' ) }}"/>
+        <link rel="stylesheet" href="{{ asset ( 'bundles/galaxyfrontend/css/jquery.mCustomScrollbar.css' ) }}"/>
     {% endblock %}
     </head>
     {% verbatim %}
@@ -158,9 +161,9 @@
                     </div><!-- .mark -->
                 </div><!-- .mark-line -->
             </section><!-- .info-panel -->
-            <section class="prizes-carusel fliper-question" ng-show="user.gameInfo.questions"><!-- message-wrap -->
+            <section class="prizes-carusel fliper-question" ><!-- message-wrap -->
 			<div class="message-form flip-info" ><!-- message-form -->
-				<form action="/">
+				<form action="/" ng-show="user.gameInfo.questions">
 					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
 						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
 					</div><!-- .load-photo -->
@@ -180,6 +183,21 @@
 					</div>
 					<div class="time-line">
 						<div class="time proc-{{question.procent}}"></div>
+					</div>
+				</form>
+                                <form action="/" ng-show="message">
+					<div class="load-photo"><!-- load-photo -->
+						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+					</div><!-- .load-photo -->
+					<div class="load-photo"><!-- load-photo -->
+						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+					</div><!-- .load-photo -->
+					<div class="load-photo"><!-- load-photo -->
+						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+					</div><!-- .load-photo -->
+					<div class="clear"></div>
+					<div class="infol-block scrolling-container">
+						{{ message }}
 					</div>
 				</form>
 			</div><!-- .message-form -->
