@@ -186,7 +186,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         if (data.image != null && data.tag != "message" && !data.questions) {
             var arr = data.image.split('.');
 
-            if (arr[arr.length - 1] == "swf")
+            if (swfobject.hasFlashPlayerVersion("9.0.18"))
             {
                 var flashvars = {
                 };
@@ -207,10 +207,10 @@ function FlipperCtrl($scope, $http, $timeout) {
                     $scope.blackPar = true;
                     $scope.blackParameter = data.req.response.subtype.parameter;
                 }
-                swfobject.embedSWF("/bundles/galaxyfrontend/" + data.image, "myContent", w, h, "9.0.0",
+                swfobject.embedSWF(data.file1, "myContent", w, h, "9.0.0",
                         "expressInstall.swf", flashvars, params, attributes);
             } else {
-                $scope.pointImagePath = "/bundles/galaxyfrontend/" + data.image;
+                $scope.pointImagePath = data.file2;
                 $scope.pointImage = true;
             }
         }

@@ -216,8 +216,16 @@ class FlipperController extends Controller {
                 $result["pointType"] = $response->response->type->name;
                 $tag = $response->response->type->tag;
                 $image = isset($response->response->type->image) ? $response->response->type->image : "";
+                $file1 = isset($response->response->type->file1) ? $response->response->type->file1 : "";
+                $file2 = isset($response->response->type->file2) ? $response->response->type->file2 : "";
+                $file3 = isset($response->response->type->file3) ? $response->response->type->file3 : "";
+                $file4 = isset($response->response->type->file4) ? $response->response->type->file4 : "";
                 $result["tag"] = $tag;
                 $result["image"] = $image;
+                $result["file1"] = $file1;
+                $result["file2"] = $file2;
+                $result["file3"] = $file3;
+                $result["file4"] = $file4;
                 if($tag == "message")
                 {
                     $result["message"] = $response->response->message;
