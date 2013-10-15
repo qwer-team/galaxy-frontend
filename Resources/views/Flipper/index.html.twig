@@ -165,13 +165,13 @@
 			<div class="message-form flip-info" ><!-- message-form -->
 				<form action="/" ng-show="user.gameInfo.questions">
 					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
-						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+						<img src="{{ question.image1 }}" alt="">
 					</div><!-- .load-photo -->
 					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
-						<img src="/bundles/galaxyfrontend/images/i2.png" alt="">
+						<img src="{{ question.image2 }}" alt="">
 					</div><!-- .load-photo -->
 					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
-						<img src="/bundles/galaxyfrontend/images/i2.png" alt="">
+						<img src="{{ question.image3 }}" alt="">
 					</div><!-- .load-photo -->
 					<div class="clear"></div>
 					
@@ -187,17 +187,17 @@
 				</form>
                                 <form action="/" ng-show="message">
 					<div class="load-photo"><!-- load-photo -->
-						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+						<img src="{{message.image1}}" alt="">
 					</div><!-- .load-photo -->
 					<div class="load-photo"><!-- load-photo -->
-						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+						<img src="{{message.image2}}" alt="">
 					</div><!-- .load-photo -->
 					<div class="load-photo"><!-- load-photo -->
-						<img src="/bundles/galaxyfrontend/images/i1.png" alt="">
+						<img src="{{message.image3}}" alt="">
 					</div><!-- .load-photo -->
 					<div class="clear"></div>
-					<div class="infol-block scrolling-container">
-						{{ message }}
+					<div class="infol-block scrolling-container" ng-bind-html-unsafe="message.text">
+						{{ message.text }}
 					</div>
 				</form>
 			</div><!-- .message-form -->
@@ -293,6 +293,6 @@
             
 </div>
             <br>
-           
-{% endverbatim %}
+           {% endverbatim %}
+
 </html>

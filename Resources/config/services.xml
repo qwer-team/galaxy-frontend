@@ -13,6 +13,7 @@
         <parameter key="image.resize.min.height">30</parameter>
        
         <parameter key="gala.url">http://demo11.qwer.com.ua</parameter>
+        <parameter key="gala.user.url">http://demo10.qwer.com.ua</parameter>
         <parameter key="usersurl">http://demo10.qwer.com.ua/users</parameter>
         <parameter key="docsurl">http://demo11.qwer.com.ua/documents</parameter>
         <parameter key="gameurl">http://demo11.qwer.com.ua/games</parameter>
@@ -191,7 +192,7 @@
                 <argument type="string" >%kernel.root_dir%/../web/images/</argument>
             </call>
             <call method="setrelUrl">
-                <argument type="string" >/images/</argument>
+                <argument type="string" >%gala.user.url%/images/</argument>
             </call>
             <call method="setWidth">
                 <argument type="string" >%image.resize.width%</argument>

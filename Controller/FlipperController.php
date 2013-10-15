@@ -215,7 +215,7 @@ class FlipperController extends Controller {
                 //print_r($response);
                 $result["pointType"] = $response->response->type->name;
                 $tag = $response->response->type->tag;
-                $image = $response->response->type->image;
+                $image = isset($response->response->type->image) ? $response->response->type->image : "";
                 $result["tag"] = $tag;
                 $result["image"] = $image;
                 if($tag == "message")

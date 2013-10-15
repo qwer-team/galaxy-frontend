@@ -1,4 +1,8 @@
-var galaxy = angular.module("galaxy", ['uiSlider']);
+var galaxy = angular.module("galaxy", ['uiSlider'])
+        /*.config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+    }
+)*/;
 
 function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipMessage = "empty";
@@ -179,7 +183,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        if (data.image != null && data.tag != "message") {
+        if (data.image != null && data.tag != "message" && !data.questions) {
             var arr = data.image.split('.');
 
             if (arr[arr.length - 1] == "swf")
@@ -307,6 +311,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.pointMin = 1;
     $scope.pointMax = 1000;
     $scope.jump = function() {
+        $scope.message = false;
         var dist = $scope.distance();
         var gameInfo = $scope.user.gameInfo;
         var superjumps = gameInfo.superJumps;
