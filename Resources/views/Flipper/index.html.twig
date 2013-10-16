@@ -163,16 +163,18 @@
             </section><!-- .info-panel -->
             <section class="prizes-carusel fliper-question" ><!-- message-wrap -->
 			<div class="message-form flip-info" ><!-- message-form -->
-				<form action="/" ng-show="user.gameInfo.questions">
-					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
-						<img src="{{ question.image1 }}" alt="">
-					</div><!-- .load-photo -->
-					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
-						<img src="{{ question.image2 }}" alt="">
-					</div><!-- .load-photo -->
-					<div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
-						<img src="{{ question.image3 }}" alt="">
-					</div><!-- .load-photo -->
+				<form action="/" ng-show="user.gameInfo.questions" >
+                                        <div ng-show="question.image1 != '' && question.image1 != '' && question.image1 != '' && true || false">
+                                            <div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
+                                                    <img src="{{ question.image1 }}" alt="">
+                                            </div><!-- .load-photo -->
+                                            <div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
+                                                    <img src="{{ question.image2 }}" alt="">
+                                            </div><!-- .load-photo -->
+                                            <div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
+                                                    <img src="{{ question.image3 }}" alt="">
+                                            </div><!-- .load-photo -->
+                                        </div>
 					<div class="clear"></div>
 					
 					<div class="question">{{question.text}}</div>
