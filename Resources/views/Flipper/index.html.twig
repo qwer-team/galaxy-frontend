@@ -60,7 +60,7 @@
                 <div class="header-content">
                     <a href="#" class="logo"></a>
                     <a href="#" class="logout"></a>
-                    <div class="user-name">
+                    <div class="user-name" ng-click="getQuestion(1)">
                        {{ user.username}}: <span>{{user.id}}</span>
                     </div>
                     <div class="clear"></div>
@@ -163,7 +163,7 @@
             </section><!-- .info-panel -->
             <section class="prizes-carusel fliper-question" ><!-- message-wrap -->
 			<div class="message-form flip-info" ><!-- message-form -->
-				<form action="/" ng-show="user.gameInfo.questions" >
+				<form action="/" ng-show="question" >
                                         <div ng-show="question.image1 != '' && question.image1 != '' && question.image1 != '' && true || false">
                                             <div ng-click="getQuestion(0)" class="load-photo"><!-- load-photo -->
                                                     <img src="{{ question.image1 }}" alt="">
@@ -209,7 +209,7 @@
                 <div style="border: 2px none rgb(0, 0, 0); background-color: rgb(0, 0, 0); position: absolute; z-index: 3; margin-top: 337px; height: 10px; color: rgb(255, 255, 255); margin-left: 92%; width: 10px;" ng-show="blackPar">
                     <h1 class="ng-binding">{{ blackParameter }}</h1>
                 </div>
-                <section class="flipper-sec"><!-- flipper-sec -->
+                <section class="flipper-sec" ng-show="pointImage"><!-- flipper-sec -->
                     <div id="myContent">
                     </div>
                 </section><!-- .flipper-sec -->

@@ -104,10 +104,10 @@ function FlipperCtrl($scope, $http, $timeout) {
                 $scope.elements = data;
             });
         }
-        if (data.gameInfo.questions.length > 0)
+        /*if (data.gameInfo.questions.length > 0)
         {
             $scope.getQuestion(1);
-        }
+        }*/
         if (data.lockedExpiresAt) {
             var lock = new Date(data.lockedExpiresAt.date + " " + data.lockedExpiresAt.timezone);
             var now = new Date();
@@ -122,6 +122,7 @@ function FlipperCtrl($scope, $http, $timeout) {
 
     $scope.getQuestion = function(check) {
         $http.get('/question').success(function(data) {
+            $scope.pointImage = false;
             if (!$scope.questionTimeout && check != 0) {
                 $scope.question = data;
                 $scope.user.gameInfo.userAnswer = 100;
@@ -131,10 +132,9 @@ function FlipperCtrl($scope, $http, $timeout) {
             } else {
                 $scope.getUser();
             }
-            /*if (data.result != 'fail') {
-             var url = "check/" + $scope.question.id;
-             $http.get(url).success($scope.checkQuestion);
-             }*/
+            if (data.result == 'fail') {
+             $scope.question = null;
+             }
         });
 
     }
@@ -183,7 +183,7 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        if (data.image != null && data.tag != "message" && !data.questions) {
+        if (data.image != null && !$scope.question) {
             var arr = data.image.split('.');
 
             if (swfobject.hasFlashPlayerVersion("9.0.18"))
@@ -209,6 +209,7 @@ function FlipperCtrl($scope, $http, $timeout) {
                 }
                 swfobject.embedSWF(data.file1, "myContent", w, h, "9.0.0",
                         "expressInstall.swf", flashvars, params, attributes);
+                $scope.pointImage = true;
             } else {
                 $scope.pointImagePath = data.file2;
                 $scope.pointImage = true;
