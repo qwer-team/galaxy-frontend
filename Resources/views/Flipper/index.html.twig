@@ -68,7 +68,7 @@
             </header><!-- .header -->
             <section class="prize-state state-all"  ng-show="capturedPrize">
                 <div class="hex">
-                    <img src="" alt="">
+                    <img src="{{elements[capturedPrize.elementId].prizeImg1}}" alt="">
                     <a href="#"></a>
                     <div class="hx"></div>
                     <span>{{elements["count"][elements[capturedPrize.elementId].prizeName]}}</span>
@@ -77,7 +77,7 @@
                 <div class="hex prize-two">
                     <span class="count-1">{{elements[capturedPrize.elementId].available}}</span>
                     <span class="count-2">{{elements[capturedPrize.elementId].price}}</span>
-                    {{elements[capturedPrize.elementId].img1}}
+                    <img border="0" ng-src="{{elements[capturedPrize.elementId].img1}}" alt="Point">
                     <a href="#" ng-show="hasMonyeForPrize()" ng-click="buyElement()"></a>
                     <div class="hx"></div>
                     

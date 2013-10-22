@@ -46,12 +46,12 @@ class UserInfoService extends ContainerAware {
 
         $elements = array();
         foreach ($response as $prize) {
-            $prizeName = $prize->name;
             foreach ($prize->elements as $element) {
                 $elements[$element->id] = array(
                     "name" => $element->name,
-                    "prizeName" => $prizeName,
+                    "prizeName" => $prize->name,
                     "img1" => $element->img1,
+                    "prizeImg1" => $prize->img1,
                     "available" => $element->available,
                     "account" => $element->account,
                     "price" => $element->price,
