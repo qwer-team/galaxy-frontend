@@ -1,8 +1,8 @@
 var galaxy = angular.module("galaxy", ['uiSlider'])
         /*.config(function($interpolateProvider){
-        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
-    }
-)*/;
+         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+         }
+         )*/;
 
 function FlipperCtrl($scope, $http, $timeout) {
     $scope.tooltipMessage = "empty";
@@ -105,9 +105,9 @@ function FlipperCtrl($scope, $http, $timeout) {
             });
         }
         /*if (data.gameInfo.questions.length > 0)
-        {
-            $scope.getQuestion(1);
-        }*/
+         {
+         $scope.getQuestion(1);
+         }*/
         if (data.lockedExpiresAt) {
             var lock = new Date(data.lockedExpiresAt.date + " " + data.lockedExpiresAt.timezone);
             var now = new Date();
@@ -133,8 +133,8 @@ function FlipperCtrl($scope, $http, $timeout) {
                 $scope.getUser();
             }
             if (data.result == 'fail') {
-             $scope.question = null;
-             }
+                $scope.question = null;
+            }
         });
 
     }
@@ -183,37 +183,34 @@ function FlipperCtrl($scope, $http, $timeout) {
         return true;
     }
     $scope.updatePointImage = function(data) {
-        if (data.image != null && !$scope.question) {
-            var arr = data.image.split('.');
-
-            if (swfobject.hasFlashPlayerVersion("9.0.18"))
-            {
-                var flashvars = {
-                };
-                var params = {
-                    wmode: "transparent",
-                    menu: false
-                };
-                var attributes = {
-                    id: "myContent",
-                    name: "myContent",
-                    style: ""
-                };
-                var w = 690;
-                var h = 550;
-                if (data.tag == 'black') {
-                    w = 1600;
-                    h = 895;
-                    $scope.blackPar = true;
-                    $scope.blackParameter = data.req.response.subtype.parameter;
-                }
-                swfobject.embedSWF(data.file1, "myContent", w, h, "9.0.0",
-                        "expressInstall.swf", flashvars, params, attributes);
-                $scope.pointImage = true;
-            } else {
-                $scope.pointImagePath = data.file2;
-                $scope.pointImage = true;
+        console.log(data)
+        if (swfobject.hasFlashPlayerVersion("9.0.18"))
+        {
+            var flashvars = {
+            };
+            var params = {
+                wmode: "transparent",
+                menu: false
+            };
+            var attributes = {
+                id: "myContent",
+                name: "myContent",
+                style: ""
+            };
+            var w = 690;
+            var h = 550;
+            if (data.tag == 'black') {
+                w = 1600;
+                h = 895;
+                $scope.blackPar = true;
+                $scope.blackParameter = data.req.response.subtype.parameter;
             }
+            swfobject.embedSWF(data.file1, "myContent", w, h, "9.0.0",
+                    "expressInstall.swf", flashvars, params, attributes);
+            $scope.pointImage = true;
+        } else {
+            $scope.pointImagePath = data.file2;
+            $scope.pointImage = true;
         }
     }
 
@@ -313,6 +310,7 @@ function FlipperCtrl($scope, $http, $timeout) {
     $scope.pointMax = 1000;
     $scope.jump = function() {
         $scope.message = false;
+        $scope.pointImage = false;
         var dist = $scope.distance();
         var gameInfo = $scope.user.gameInfo;
         var superjumps = gameInfo.superJumps;
