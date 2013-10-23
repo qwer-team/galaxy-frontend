@@ -28,7 +28,10 @@
         <div id="disableActions" style="position:absolute; width:100%; height:100%; z-index:3; display: none"> </div>
         <section>
             <div style="position: absolute;  left:850px; top: 400px; width: 120px; height: 120px; z-index: 1000;display: none;" ng-show="pointImage">
-                <img border="0" ng-src="{{ pointImagePath }}" alt="Point">
+                <section class="flipper-sec" ng-show="pointImage"><!-- flipper-sec -->
+                    <div id="myContent">
+                    </div>
+                </section><!-- .flipper-sec -->
             </div>
             
         </section>
@@ -209,10 +212,6 @@
                 <div style="border: 2px none rgb(0, 0, 0); background-color: rgb(0, 0, 0); position: absolute; z-index: 3; margin-top: 337px; height: 10px; color: rgb(255, 255, 255); margin-left: 92%; width: 10px;" ng-show="blackPar">
                     <h1 class="ng-binding">{{ blackParameter }}</h1>
                 </div>
-                <section class="flipper-sec" ng-show="pointImage"><!-- flipper-sec -->
-                    <div id="myContent">
-                    </div>
-                </section><!-- .flipper-sec -->
             </div>
             <section class="full-panel">
                 <div class="coordinats-selection" ng-class="jumpActive && 'active' || ''">
